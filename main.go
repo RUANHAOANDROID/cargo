@@ -13,5 +13,7 @@ func main() {
 	display.LCDRow("CGO Test", 8, 8, DISP_FONT24)
 	display.LCDRow("Test oooo", 8, 40, DISP_FONT12)
 	display.LCDRow("-hao88.cloud", 80, 60, DISP_FONT12)
-	pkg.Log.Print("Start......")
+	scanner := Scanner{}
+	scanner.Receive()
+	pkg.Log.Print("End......")
 }

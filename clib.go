@@ -13,6 +13,7 @@ package main
 import "C"
 import (
 	"cargo/pkg"
+	"fmt"
 	"unsafe"
 )
 
@@ -56,4 +57,35 @@ func (d Display) LCDRow(text string, x int16, y int16, mode C.uint) {
 	cX := C.uint16_t(x)
 	cY := C.uint16_t(y)
 	C.LCD_Display_Row(cTitle, cY, cX, mode)
+}
+
+type Scanner struct {
+	qrChan chan string
+}
+
+func NewScanner() *Scanner {
+	return &Scanner{
+		qrChan: make(chan string),
+	}
+}
+func (s *Scanner) Receive() {
+	index := C.int(0)
+	qrfd0 := C.QRCode_Open(index)
+	index = C.int(1)
+	qrfd1 := C.QRCode_Open(index)
+	C.Beep_Init()
+	var tmpBuff [1024]C.uchar
+	for {
+		//value := (*C.char)(unsafe.Pointer(&goSlice[0]))
+		ret := C.QRCode_RxStr(qrfd0, &tmpBuff[0], 1024, 100)
+		if ret <= 0 {
+			ret = C.QRCode_RxStr(qrfd1, &tmpBuff[0], 1024, 100)
+		}
+		if ret > 0 {
+			C.Sys_BeepMs(200)
+			fmt.Print(tmpBuff[:ret])
+			pkg.Log.Println(tmpBuff[:1024])
+		}
+	}
+
 }
