@@ -13,6 +13,7 @@ package main
 import "C"
 import (
 	"cargo/pkg"
+	"encoding/hex"
 	"fmt"
 	"unsafe"
 )
@@ -71,20 +72,29 @@ func NewScanner() *Scanner {
 func (s *Scanner) Receive() {
 	index := C.int(0)
 	qrfd0 := C.QRCode_Open(index)
-	index = C.int(1)
-	qrfd1 := C.QRCode_Open(index)
+	//index = C.int(1)
+	//qrfd1 := C.QRCode_Open(index)
 	C.Beep_Init()
 	var tmpBuff [1024]C.uchar
 	for {
 		//value := (*C.char)(unsafe.Pointer(&goSlice[0]))
 		ret := C.QRCode_RxStr(qrfd0, &tmpBuff[0], 1024, 100)
-		if ret <= 0 {
-			ret = C.QRCode_RxStr(qrfd1, &tmpBuff[0], 1024, 100)
-		}
+		//if ret <= 0 {
+		//	fmt.Println("ret <= 0")
+		//	ret = C.QRCode_RxStr(qrfd1, &tmpBuff[0], 1024, 100)
+		//}
 		if ret > 0 {
 			C.Sys_BeepMs(200)
-			fmt.Print(tmpBuff[:ret])
-			pkg.Log.Println(tmpBuff[:1024])
+			uChars := tmpBuff[:ret]
+			fmt.Println(uChars)
+			// Convert the C array to a Go []byte
+			byteSlice := make([]byte, len(uChars))
+			for i, v := range uChars {
+				byteSlice[i] = byte(v)
+			}
+			hexString := hex.EncodeToString(byteSlice)
+			fmt.Println(hexString)
+			s.qrChan <- hexString
 		}
 	}
 
