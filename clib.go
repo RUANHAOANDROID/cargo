@@ -13,7 +13,6 @@ package main
 import "C"
 import (
 	"cargo/pkg"
-	"encoding/hex"
 	"fmt"
 	"unsafe"
 )
@@ -92,7 +91,7 @@ func (s *Scanner) Receive() {
 			for i, v := range uChars {
 				byteSlice[i] = byte(v)
 			}
-			hexString := hex.EncodeToString(byteSlice)
+			hexString := string(byteSlice)
 			fmt.Println(hexString)
 			s.qrChan <- hexString
 		}
