@@ -13,16 +13,17 @@ func main() {
 	display.Init()
 	display.ClearScreen()
 
-	display.LCDRow("CGO Test", 8, 8, clib.DISP_FONT24)
+	display.LCDRow("C Test", 8, 8, clib.DISP_FONT24)
 	display.LCDRow(pkg.NowTimeStr(), 8, 40, clib.DISP_FONT12)
 	display.LCDRow("-hao88.cloud", 80, 60, clib.DISP_FONT12)
-	scanner := clib.NewScanner()
+	qrCoder := clib.NewScanner()
 	go func() {
-		scanner.Receive()
+		qrCoder.Receive()
 	}()
-	card := clib.NewCardM1()
+	//card := clib.NewCardM1()
+	card := clib.NewICCarder()
 	go func() {
-		card.TestMifare()
+		card.ICReadGO()
 	}()
 
 	go func() {
@@ -31,7 +32,7 @@ func main() {
 			fmt.Println(number)
 		}
 	}()
-	for qrCode := range scanner.QrChan {
+	for qrCode := range qrCoder.QrChan {
 		fmt.Print("chan->")
 		fmt.Println(qrCode)
 	}
