@@ -13,16 +13,17 @@ package clib
 */
 import "C"
 import (
+	"cargo/msg"
 	"fmt"
 )
 
 type Scanner struct {
-	QrChan chan string
+	QRChan chan msg.Message
 }
 
-func NewScanner() *Scanner {
+func NewScanner(msgChan chan msg.Message) *Scanner {
 	return &Scanner{
-		QrChan: make(chan string),
+		QRChan: msgChan,
 	}
 }
 
@@ -51,7 +52,7 @@ func (q *Scanner) Receive() {
 			}
 			hexString := string(byteSlice)
 			fmt.Println(hexString)
-			q.QrChan <- hexString
+			q.QRChan <- msg.Message{Type: msg.QRCODE, Content: hexString}
 		}
 	}
 }
