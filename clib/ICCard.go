@@ -10,6 +10,8 @@ package clib
 #include "stdlib.h"
 #include "stdio.h"
 #include "string.h"
+#include "unistd.h"
+
 void dump_data(char *str,unsigned char *text,int len)
 {
 	int i;
@@ -21,7 +23,7 @@ void dump_data(char *str,unsigned char *text,int len)
     printf("\n");
 }
 
-void test_mifare(void){
+void ic_read(void){
     int ret = -1;
     uint8_t key[] = "\xFF\xFF\xFF\xFF\xFF\xFF";
     uint8_t data[16],data_len = 16;
@@ -29,44 +31,19 @@ void test_mifare(void){
     int i;
 
     PICC_Open(0);
-
-    for(i = 0 ;i < 16;i++){
-        if(ret) ret = Mifare_PowerOn(0,&snr,&snr_len);
+	while(1){
+        if(ret) ret = Mifare_PowerOn(0,snr,&snr_len);
         printf("\n==========Block[%2d]==========\n",i);
         if(!ret) ret = Mifare_AuthenBlock(i * 4,0,key);
-
         if(!ret) ret = Mifare_ReadBlock(0 + i * 4,data);
         if(!ret) dump_data("Mifare Read0",data,data_len);
-
-        if(!ret) ret = Mifare_ReadBlock(1 + i * 4,data);
-        if(!ret) dump_data("Mifare Read1",data,data_len);
-
-
-        if(!ret) ret = Mifare_ReadBlock(2 + i * 4,data);
-        if(!ret) dump_data("Mifare Read2",data,data_len);
-
-    }
-
-}
-void ic_read(void) {
-    int ret = -1;
-    uint8_t key[] = "\xFF\xFF\xFF\xFF\xFF\xFF";
-    uint8_t data[16], data_len = 16;
-    uint8_t snr[16], snr_len;
-    //PICC_Open(0);
-    int i = 0;
-    if (ret) ret = Mifare_PowerOn(0, snr, &snr_len);
-    if (!ret) ret = Mifare_AuthenBlock(MIFARE_KEY_A, 0, key);
-    if (!ret) ret = Mifare_ReadBlock(0, data);
-    if (!ret) {
-		dump_data("read ic ",data,data_len);
-    }
+		usleep(1000000);
+	}
 }
 */
 import "C"
 import (
 	"cargo/msg"
-	"time"
 )
 
 type ICCarder struct {
@@ -79,11 +56,5 @@ func NewICCarder(msgChan chan msg.Message) *ICCarder {
 	}
 }
 func (c ICCarder) ICReadGO() {
-	//C.PICC_Open(0)
-
-	for {
-		time.Sleep(time.Millisecond * 500)
-		C.test_mifare()
-		c.msgChan <- msg.Message{Type: msg.IC_CARD, Content: 123466}
-	}
+	C.ic_read()
 }
