@@ -18,15 +18,13 @@ func main() {
 	display.LCDRow(pkg.NowTimeStr(), 8, 40, clib.DISP_FONT12)
 	display.LCDRow("-hao88.cloud", 80, 60, clib.DISP_FONT12)
 	qrCoder := clib.NewScanner(msgChan)
+	card := clib.NewICCarder(msgChan)
 	go func() {
 		qrCoder.Receive()
 	}()
-
-	card := clib.NewICCarder(msgChan)
 	go func() {
 		card.ICReadGO()
 	}()
-
 	for msg := range msgChan {
 		pkg.Log.Println("msg chan->", msg.Type, msg.Content)
 	}

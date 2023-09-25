@@ -4,6 +4,8 @@ export CGO_ENABLED=1
 export GOARCH=arm
 export GOARM=7
 export CC=arm-linux-gnueabihf-gcc
+export GODEBUG=cgocheck=2
+
 # 构建 Go 项目
 go build
 
