@@ -8,7 +8,7 @@ import (
 
 // main  -lpos -lm -lpng -lfontconfig -lfreetype -liconv
 func main() {
-	pkg.Log.Print("Start......")
+	pkg.Log.Print("Start......1")
 	msgChan := make(chan msg.Message)
 	display := clib.Display{}
 	display.Init()
@@ -17,14 +17,8 @@ func main() {
 	display.LCDRow("C Test", 8, 8, clib.DISP_FONT24)
 	display.LCDRow(pkg.NowTimeStr(), 8, 40, clib.DISP_FONT12)
 	display.LCDRow("-hao88.cloud", 80, 60, clib.DISP_FONT12)
-	qrCoder := clib.NewScanner(msgChan)
-	card := clib.NewICCarder(msgChan)
-	go func() {
-		qrCoder.Receive()
-	}()
-	go func() {
-		card.ICReadGO()
-	}()
+	go clib.Start(msgChan)
+	go clib.StartC()
 	for msg := range msgChan {
 		pkg.Log.Println("msg chan->", msg.Type, msg.Content)
 	}

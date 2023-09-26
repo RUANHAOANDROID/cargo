@@ -12,6 +12,9 @@ package clib
 #include "string.h"
 #include "unistd.h"
 #include <arpa/inet.h>
+
+#define BUFFER_SIZE 1024 * 2
+char buffer[BUFFER_SIZE];
 void dump_data(char *str,unsigned char *text,int len)
 {
 	int i;
@@ -23,49 +26,6 @@ void dump_data(char *str,unsigned char *text,int len)
     printf("\n");
 }
 
-void ic_read(void){
-    int ret = -1;
-    uint8_t key[] = "\xFF\xFF\xFF\xFF\xFF\xFF";
-    uint8_t data[16],data_len = 16;
-    uint8_t snr[16],snr_len;
-    int i;
-
-    PICC_Open(0);
-	while(1){
-        if(ret) ret = Mifare_PowerOn(0,snr,&snr_len);
-        printf("\n==========Block[%2d]==========\n",i);
-        if(!ret) ret = Mifare_AuthenBlock(i * 4,0,key);
-        if(!ret) ret = Mifare_ReadBlock(0 + i * 4,data);
-        if(!ret) dump_data("Mifare Read0",data,data_len);
-		//usleep(1000000);
-		usleep(100000);
-	}
-}
-uint8_t key[] = "\xFF\xFF\xFF\xFF\xFF\xFF";
-uint8_t data[4];
-uint8_t snr[4],snr_len;
-uint8_t cardNo[4];
-int ic_read2(){
- 	printf("\n==========C read ic ==========\n");
-    int ret = -1;
-    int i;
-    if(ret) ret = Mifare_PowerOn(0,snr,&snr_len);
-    printf("\n==========Block[%2d]==========\n",i);
-    if(!ret) ret = Mifare_AuthenBlock(i * 4,0,key);
-    if(!ret) ret = Mifare_ReadBlock(0 + i * 4,data);
-    if(!ret) {
-		dump_data("Mifare Read0",data,4);
-		cardNo[0]=data[0];
-		cardNo[1]=data[1];
-		cardNo[2]=data[2];
-		cardNo[3]=data[3];
-		printf("%02X ",(unsigned char)cardNo[0]);
-		printf("%02X ",(unsigned char)cardNo[1]);
-		printf("%02X ",(unsigned char)cardNo[2]);
-		printf("%02X ",(unsigned char)cardNo[3]);
-	}
-	return ret;
-}
 int connect_to_server(const char *server_ip, int server_port) {
     // 创建套接字
     int client_socket = socket(AF_INET, SOCK_STREAM, 0);
@@ -127,7 +87,7 @@ void close_connection(int client_socket) {
 int client_socket;
 int start(void) {
     printf("C start\n");
-    const char *server_ip = "0.0.0.0";  // 修改为你的服务器IP地址
+    const char *server_ip = "127.0.0.1";  // 修改为你的服务器IP地址
     const int server_port = 9999;         // 修改为服务器监听的端口号
 
     client_socket = connect_to_server(server_ip, server_port);
@@ -151,17 +111,56 @@ int start_card(){
 	}
 }
 int start_qr(){
-		printf("C send1\n");
+	printf("C start_qr\n");
+	int qrfd1,qrfd2,ret;
+	unsigned char TmpBuff[1024];
+    qrfd1 = QRCode_Open(0);
+    qrfd2 = QRCode_Open(1);
+	uint8_t type = 0x02;
 	while(1){
+		ret = QRCode_RxStr(qrfd1, TmpBuff, 1024, 100);
+		if(ret <= 0)
+			ret = QRCode_RxStr(qrfd2, TmpBuff, 1024, 100);
+		if(ret > 0)
+		{
+			Sys_BeepMs(100);
+			memset(buffer, 0, sizeof(buffer));
+			buffer[0]=type;
+			char str[1024];
+			snprintf(str, sizeof(str), "%s", TmpBuff);
+  			memcpy(buffer + 1, TmpBuff, sizeof(TmpBuff));
+			printf("length: [%d]\n",ret);
+			printf("\nQRCODE-> : %s\n",str);
+			send(client_socket, buffer, BUFFER_SIZE, 0);
+		}
+	}
+}
 
-  		sleep(1); // 等待1秒钟再发送下一条消息
-        const char *message = "Hello, 2!";
-        if (send_message(client_socket, message) == -1) {
-            printf("send message==--1\n");
-            fprintf(stderr, "Failed to send message\n");
-            close_connection(client_socket);
-            return 1;
-        }
+void ic_read(void){
+    int ret = -1;
+    uint8_t key[] = "\xFF\xFF\xFF\xFF\xFF\xFF";
+    uint8_t data[16],data_len = 16;
+    uint8_t snr[16],snr_len;
+    int i;
+    PICC_Open(0);
+	uint8_t type = 0x01;
+	while(1){
+        if(ret) ret = Mifare_PowerOn(0,snr,&snr_len);
+        printf("\n==========Block[%2d]==========\n",i);
+        if(!ret) ret = Mifare_AuthenBlock(i * 4,0,key);
+        if(!ret) ret = Mifare_ReadBlock(0 + i * 4,data);
+        //if(!ret) dump_data("Mifare Read0",data,data_len);
+        if(!ret){
+			dump_data("Mifare Read0",data,data_len);
+			memset(buffer, 0, sizeof(buffer));
+			buffer[0]=type;
+			buffer[1]=data[0];
+			buffer[2]=data[1];
+			buffer[3]=data[2];
+			buffer[4]=data[3];
+			send(client_socket, buffer, BUFFER_SIZE, 0);
+		}
+		usleep(1000000);
 	}
 }
 
@@ -172,6 +171,7 @@ import (
 	"cargo/msg"
 	"cargo/pkg"
 	"fmt"
+	"time"
 	"unsafe"
 )
 
@@ -183,25 +183,6 @@ func NewICCarder(msgChan chan msg.Message) *ICCarder {
 	return &ICCarder{
 		msgChan: msgChan,
 	}
-}
-func (c ICCarder) ICReadGO() {
-	//C.ic_read()
-	C.PICC_Open(0)
-	cardNumber := C.int(0)
-	for {
-		//time.Sleep(time.Second)
-		C.CString("12345678")
-		ret := ICRead2GO(cardNumber)
-		pkg.Log.Println("ret=", ret)
-		if ret == 0 {
-			pkg.Log.Println("D=", cardNumber)
-		}
-	}
-}
-
-func ICRead2GO(number C.int) int {
-	ret := C.ic_read2()
-	return int(ret)
 }
 
 type Scanner struct {
@@ -286,4 +267,12 @@ func (d Display) LCDRow(text string, x int16, y int16, mode C.uint) {
 	cX := C.uint16_t(x)
 	cY := C.uint16_t(y)
 	C.LCD_Display_Row(cTitle, cY, cX, mode)
+}
+func StartC() {
+	pkg.Log.Println("Start C fun ")
+	time.Sleep(time.Second)
+	C.start()
+	time.Sleep(time.Second)
+	go C.start_qr()
+	go C.ic_read()
 }
