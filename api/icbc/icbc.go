@@ -2,6 +2,7 @@ package icbc
 
 import (
 	"bytes"
+	"cargo/config"
 	"cargo/pkg"
 	"encoding/json"
 	"fmt"
@@ -11,6 +12,7 @@ import (
 	"time"
 )
 
+var conf *config.Config
 var checkUrl string
 var verifyUrl string
 var contentType = "application/json; charset=utf-8"
@@ -35,7 +37,7 @@ func CheckTicket(ticket string, protocolNo string) (CheckResponse, error) {
 		Data:         data,
 		CorpId:       "2000001924",
 		CorpId2:      "2000001924",
-		StrTESn:      Authenticator("yccode", "ss"),
+		StrTESn:      Authenticator("yccode", conf.Uchi.EqpCode),
 		Version:      "1",
 		PrintControl: "0",
 		TimeStamp:    pkg.Fmt2HMS(localData),
@@ -58,6 +60,15 @@ func CheckTicket(ticket string, protocolNo string) (CheckResponse, error) {
 	var checkResponse CheckResponse
 	err = json.NewDecoder(resp.Body).Decode(&checkResponse)
 	pkg.Log.Info(checkResponse)
+	go func() {
+		verifyRequest := VerifyRequest{
+			CorpId:     conf.Icbc.CorpId,
+			CorpId2:    conf.Icbc.CorpId2,
+			ProtocolNo: protocolNo,
+			StrTESn:    Authenticator("yccode", conf.Uchi.EqpCode),
+		}
+		VerifyTicket(verifyRequest)
+	}()
 	return checkResponse, err
 }
 

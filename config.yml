@@ -1,0 +1,13 @@
+app:
+  appname: cargo
+  version: 1.3.8
+  platform: 1
+
+icbc:
+  checkUrl: "http://119.29.194.87:9988"
+  verifyUrl: "http://119.29.194.87:9988"
+  CorpId: "2000001924"
+  CorpId2: "2000001924"
+
+uchi:
+  eqpcode: EQP2023032313
