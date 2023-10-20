@@ -8,6 +8,6 @@ icbc:
   verifyUrl: "http://119.29.194.87:9988"
   CorpId: "2000001924"
   CorpId2: "2000001924"
-
+  Bcss: BCSSHecsun0001
 uchi:
   eqpcode: EQP2023032313

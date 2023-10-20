@@ -13,16 +13,10 @@ import (
 )
 
 var conf *config.Config
-var checkUrl string
-var verifyUrl string
+
 var contentType = "application/json; charset=utf-8"
 var pathCheckTicket = "/ticket/checkTicket"
 var pathVerifyTicket = "/ticket/verifyTicket"
-
-func init() {
-	checkUrl = "http://119.29.194.87:9988"
-	verifyUrl = "http://119.29.194.87:9988"
-}
 
 // CheckTicket 模拟发起HTTP请求 protocolNo 类型
 func CheckTicket(ticket string, protocolNo string) (CheckResponse, error) {
@@ -35,8 +29,8 @@ func CheckTicket(ticket string, protocolNo string) (CheckResponse, error) {
 	}
 	requestEntity := CheckRequest{
 		Data:         data,
-		CorpId:       "2000001924",
-		CorpId2:      "2000001924",
+		CorpId:       conf.Icbc.CorpId,
+		CorpId2:      conf.Icbc.CorpId2,
 		StrTESn:      Authenticator("yccode", conf.Uchi.EqpCode),
 		Version:      "1",
 		PrintControl: "0",
@@ -50,7 +44,7 @@ func CheckTicket(ticket string, protocolNo string) (CheckResponse, error) {
 		log.Fatal(err)
 	}
 	clt := http.Client{}
-	resp, err := clt.Post(checkUrl+pathCheckTicket, contentType, bytes.NewBuffer(requestBody))
+	resp, err := clt.Post(conf.Icbc.CheckUrl+pathCheckTicket, contentType, bytes.NewBuffer(requestBody))
 	pkg.Log.Error(resp)
 	if err != nil {
 		pkg.Log.Error(err)
@@ -79,7 +73,7 @@ func VerifyTicket(request VerifyRequest) (VerifyResponse, error) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	resp, err := clt.Post(verifyUrl+pathVerifyTicket, contentType, bytes.NewBuffer(jsonRequest))
+	resp, err := clt.Post(conf.Icbc.VerifyUrl+pathVerifyTicket, contentType, bytes.NewBuffer(jsonRequest))
 	pkg.Log.Info(resp)
 	var verifyResp VerifyResponse
 	if resp.StatusCode != 200 {
@@ -93,7 +87,7 @@ func VerifyTicket(request VerifyRequest) (VerifyResponse, error) {
 }
 func Authenticator(ycCode string, deviceId string) string {
 	//return ycCode + deviceId
-	return "BCSSHecsun0001EQP20221109000002"
+	return "BCSSHecsun0001E" + deviceId
 }
 
 /**
