@@ -1,0 +1,29 @@
+kind: pipeline
+name: arm-cargo-build
+type: docker
+
+steps:
+  - name: build
+    image: ubuntu:16.04
+    volumes: #挂载卷
+      - name: gcc                     # SDK
+        path: /gcc         # SDK 路径
+      - name: go            # gradle缓存
+        path: /go    # “gradle镜像”的缓存路径
+      - name: go-cache
+        path: /go/pkg/cache
+    commands:
+      - export GCC=$GCC:/gcc/bin
+      - export GOPATH=$GOPATH:/go/bin
+      - ls -l
+      - ./drone/run.sh
+volumes:
+  - name: gcc
+    host:
+      path: /mnt/user/appdata/drone/tools/cargo/opt/EmbedSky/gcc-linaro-5.3.1-2016.05-x86_64_arm-linux-gnueabihf
+  - name: go
+    host:
+      path: /mnt/disk1/appdata/drone/tools/gosdk/go
+  - name: go-cache
+    host:
+      path: /mnt/disk1/appdata/drone/tools/cargo/go-cache
