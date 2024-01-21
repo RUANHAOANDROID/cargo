@@ -1,7 +1,6 @@
 kind: pipeline
 name: arm-cargo-build
 type: docker
-
 steps:
   - name: build
     image: ubuntu:16.04
