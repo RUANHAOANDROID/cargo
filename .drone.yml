@@ -21,7 +21,7 @@ steps:
       - go version
       - arm-linux-gnueabihf-gcc --version
       - go env -w GONOSUMDB=*
-#      - export GOPROXY=http://mirrors.aliyun.com/goproxy/
+      - export GOPROXY=http://mirrors.aliyun.com/goproxy/
 #      - go clean -modcache
 #      - go mod tidy
       #      - export GOPROXY=http://goprox.cn
