@@ -29,7 +29,7 @@ steps:
       port: 22
       target: /user/app/cargo
       source: runner
-  - name: ssh
+  - name: remote-runner
     image: appleboy/drone-ssh
     settings:
       host:
