@@ -19,7 +19,8 @@ steps:
       - go version
       - chmod +x build.sh
       - go version
-#      - export GOPROXY=http://goprox.cn
+      - go env -w GONOSUMDB=*
+      #      - export GOPROXY=http://goprox.cn
       - ./build.sh
       - ls
 volumes:
