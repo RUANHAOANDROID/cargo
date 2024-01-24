@@ -22,20 +22,27 @@ steps:
       - export GOPROXY=http://mirrors.aliyun.com/goproxy/
       - ./build.sh
       - ssh
-  - name: upload
-    image: appleboy/drone-scp
+  - name: ssh
+    image: appleboy/drone-ssh
     settings:
       host:
-       - 192.168.8.39
+        - 192.168.8.39
       username: root
       password: root
-      source: /drone/src/cargo
-      target: /usr/app/cargo
+      port: 22
+      command_timeout: 5m
+      script:
+        - echo "Hello World"
+#  - name: upload
+#    image: appleboy/drone-scp
+#    settings:
+#      host:
+#       - 192.168.8.39
+#      username: root
+#      password: root
+#      source: /drone/src/cargo
+#      target: /usr/app/cargo
 
-  - name: remote-commond
-    image: ubuntu:16.04
-    commands:
-      - ssh root@192.168.8.39 "cd /usr/app/ && ./cargo"
 volumes:
   - name: gcc
     host:
