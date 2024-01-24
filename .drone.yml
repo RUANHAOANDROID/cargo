@@ -21,6 +21,7 @@ steps:
       - go version
       - go env -w GONOSUMDB=*
       - export GOPROXY=http://mirrors.aliyun.com/goproxy/
+      - go clean -modcache
       - go mod tidy
       #      - export GOPROXY=http://goprox.cn
       - ./build.sh
