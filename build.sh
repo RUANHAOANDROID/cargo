@@ -11,7 +11,7 @@ go build
 #列出
 pwd
 ls -l
-scp /home/hao/Desktop/workspace/cargo/cargo root@192.168.8.39:/usr/app/cargo
+scp /drone/src/cargo root@192.168.8.39:/usr/app/cargo
 
 
 
