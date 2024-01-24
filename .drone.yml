@@ -27,7 +27,7 @@ steps:
       username: root
       password: root
       port: 22
-      target: /user/app/cargo
+      target: /hao88/app/cargo
       source: runner
   - name: remote-runner
     image: appleboy/drone-ssh
@@ -39,7 +39,7 @@ steps:
       port: 22
       command_timeout: 5m
       script:
-        - ./user/app/cargo/runner
+        - ./hao88/app/cargo/runner
 volumes:
   - name: gcc
     host:
