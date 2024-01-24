@@ -14,7 +14,7 @@ func main() {
 	display.Init()
 	display.ClearScreen()
 
-	display.LCDRow("C Test A", 8, 8, clib.DISP_FONT24)
+	display.LCDRow("C Test D", 8, 8, clib.DISP_FONT24)
 	display.LCDRow(pkg.NowTimeStr(), 8, 40, clib.DISP_FONT12)
 	display.LCDRow("-hao88.cloud", 80, 60, clib.DISP_FONT12)
 	go clib.Start(msgChan)
