@@ -42,7 +42,9 @@ steps:
         - cd /hao88/app/cargo
         - chmod +x runner
         - ldd ./runner
-        - nohup ./runner &
+        - ./runner
+#        - ./runner & disown
+
 volumes:
   - name: gcc
     host:
