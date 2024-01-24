@@ -9,8 +9,8 @@ steps:
         path: /gcc
       - name: gosdk
         path: /go
-      - name: go-cache
-        path: /go/pkg/cache
+#      - name: go-cache
+#        path: /go/pkg/cache
     commands:
       - ls /go/bin
       - ls /gcc
@@ -33,6 +33,6 @@ volumes:
   - name: gosdk
     host:
       path: /mnt/disk1/appdata/drone/tools/gosdk/go
-  - name: go-cache
-    host:
-      path: /mnt/disk1/appdata/drone/tools/cargo/go-cache
+#  - name: go-cache
+#    host:
+#      path: /mnt/disk1/appdata/drone/tools/cargo/go-cache
