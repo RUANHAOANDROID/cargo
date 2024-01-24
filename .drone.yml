@@ -17,7 +17,7 @@ steps:
       - ls -l
       - chmod +x run.sh
       - ls -l
-      - .run.sh
+      - ./build.sh
 volumes:
   - name: gcc
     host:
