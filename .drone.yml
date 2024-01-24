@@ -19,6 +19,8 @@ steps:
       - go version
       - chmod +x build.sh
       - go version
+      - sudo apt-get install --reinstall ca-certificates
+      - sudo apt-get update
 #      - export GOPROXY=http://goprox.cn
       - ./build.sh
       - ls
