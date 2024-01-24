@@ -20,6 +20,7 @@ steps:
       - chmod +x build.sh
       - go version
       - ./build.sh
+      - ls
 volumes:
   - name: gcc
     host:
