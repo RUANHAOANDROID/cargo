@@ -15,7 +15,7 @@ steps:
       - ls /go/bin
       - ls /gcc
       - export PATH=$PATH:/go/bin/
-      - export GCC=$GCC:/gcc/bin/
+      - export PATH=$PATH:/gcc/bin/
       - go version
       - chmod +x build.sh
       - go version

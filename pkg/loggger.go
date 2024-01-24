@@ -3,7 +3,7 @@ package pkg
 import (
 	"bytes"
 	"fmt"
-	rotatelogs "github.com/lestrrat-go/file-rotatelogs"
+	rotatelogs "github.com/lestrrat/go-file-rotatelogs"
 	"github.com/rifflock/lfshook"
 	"github.com/sirupsen/logrus"
 	"os"
@@ -69,12 +69,12 @@ func (s *consoleFormatter) Format(entry *logrus.Entry) ([]byte, error) {
 	var newLog string
 	if entry.HasCaller() {
 		fName := filepath.Base(entry.Caller.File)
-		newLog = fmt.Sprintf("[%s] %s %s:%d %s\n",
-			entry.Level,
-			entry.Caller.Function,
-			fName,
-			entry.Caller.Line,
-			entry.Message)
+		//newLog = fmt.Sprintf("[%s] %s %s:%d %s\n",
+		//	entry.Level,
+		//	entry.Caller.Function,
+		//	fName,
+		//	entry.Caller.Line,
+		//	entry.Message)
 		newLog = fmt.Sprintf("[%s] %s %s:%d:%s\n", entry.Level, entry.Caller.Function, fName, entry.Caller.Line, entry.Message)
 	} else {
 		newLog = fmt.Sprintf("[%s][%s] %s\n",
