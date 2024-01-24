@@ -12,8 +12,7 @@ steps:
       - name: go-cache
         path: /go/pkg/cache
     commands:
-      - export GCC=$GCC:/gcc/bin
-      - export GOPATH=$GOPATH:/go/bin
+      - export PATH=$PATH:/go/bin/
       - ls -l
       - chmod +x build.sh
       - cd ..
