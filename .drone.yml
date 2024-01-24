@@ -21,7 +21,6 @@ steps:
       - go env -w GONOSUMDB=*
       - export GOPROXY=http://mirrors.aliyun.com/goproxy/
       - ./build.sh
-      - ssh
   - name: ssh
     image: appleboy/drone-ssh
     settings:
