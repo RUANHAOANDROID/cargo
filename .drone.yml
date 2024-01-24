@@ -9,10 +9,9 @@ steps:
         path: /gcc
       - name: gosdk
         path: /go
-#      - name: go-cache
-#        path: /go/pkg/cache
+    #      - name: go-cache
+    #        path: /go/pkg/cache
     commands:
-
       - export PATH=$PATH:/go/bin/
       - export PATH=$PATH:/gcc/bin/
       - chmod +x build.sh
@@ -21,6 +20,15 @@ steps:
       - go env -w GONOSUMDB=*
       - export GOPROXY=http://mirrors.aliyun.com/goproxy/
       - ./build.sh
+  - name: scp-cargo
+    image: appleboy/drone-scp
+    settings:
+      host: 192.168.8.39
+      username: root
+      password: root
+      port: 22
+      target: /user/app/cargo
+      source: cargo
   - name: ssh
     image: appleboy/drone-ssh
     settings:
@@ -31,19 +39,7 @@ steps:
       port: 22
       command_timeout: 5m
       script:
-        - echo "Hello World"
-        - scp
-        - rz
-#  - name: upload
-#    image: appleboy/drone-scp
-#    settings:
-#      host:
-#       - 192.168.8.39
-#      username: root
-#      password: root
-#      source: /drone/src/cargo
-#      target: /usr/app/cargo
-
+        - echo "./user/app/cargo"
 volumes:
   - name: gcc
     host:
