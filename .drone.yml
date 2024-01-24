@@ -43,6 +43,7 @@ steps:
         - cd /hao88/app/cargo
         - ls
         - chmod +x runner
+        - ldd ./runner
         - nohup ./runner &
         - ls
 volumes:
