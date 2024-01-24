@@ -9,6 +9,7 @@ export GODEBUG=cgocheck=2
 # 构建 Go 项目
 go build
 #列出
+pwd
 ls -l
 scp /home/hao/Desktop/workspace/cargo/cargo root@192.168.8.39:/usr/app/cargo
 
