@@ -23,7 +23,8 @@ steps:
       - ls /go
       - ls /go/bin
       - cd /go/bin
-      - go version
+      - ls
+      - ./go version
       - ls /gcc
       - go version
       - ./build.sh
