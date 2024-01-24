@@ -20,10 +20,10 @@ steps:
       - chmod +x build.sh
       - go version
       - arm-linux-gnueabihf-gcc --version
-      - go env -w GONOSUMDB=*
-      - export GOPROXY=http://mirrors.aliyun.com/goproxy/
-      - go clean -modcache
-      - go mod tidy
+#      - go env -w GONOSUMDB=*
+#      - export GOPROXY=http://mirrors.aliyun.com/goproxy/
+#      - go clean -modcache
+#      - go mod tidy
       #      - export GOPROXY=http://goprox.cn
       - ./build.sh
       - ls
