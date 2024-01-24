@@ -20,6 +20,9 @@ steps:
       - ls -l
       - cd ..
       - ls -l
+      - ls /go
+      - ls /go/bin
+      - ls /gcc
       - go version
       - ./build.sh
 volumes:
