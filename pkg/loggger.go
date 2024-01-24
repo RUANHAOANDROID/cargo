@@ -3,8 +3,7 @@ package pkg
 import (
 	"bytes"
 	"fmt"
-	rotatelogs "github.com/lestrrat-go/file-rotatelogs"
-	"github.com/rifflock/lfshook"
+
 	"github.com/sirupsen/logrus"
 	"os"
 	"path/filepath"
@@ -33,25 +32,25 @@ func create() *logrus.Logger {
 	//控制台输出的格式
 	Log.SetFormatter(&consoleFormatter{})
 	os.Mkdir(logPath, os.ModePerm) //在运行程序的目录下创建logs目录
-	writer, _ := rotatelogs.New(
-		logPath+todayFileName(),
-		rotatelogs.WithLinkName(logPath),
-		rotatelogs.WithMaxAge(time.Duration(604800)*time.Second),
-		rotatelogs.WithRotationTime(time.Duration(604800)*time.Second),
-	)
-	writerMap := lfshook.WriterMap{
-		logrus.InfoLevel:  writer,
-		logrus.FatalLevel: writer,
-		logrus.DebugLevel: writer,
-		logrus.WarnLevel:  writer,
-		logrus.ErrorLevel: writer,
-		logrus.PanicLevel: writer,
-	}
+	//writer, _ := rotatelogs.New(
+	//	logPath+todayFileName(),
+	//	rotatelogs.WithLinkName(logPath),
+	//	rotatelogs.WithMaxAge(time.Duration(604800)*time.Second),
+	//	rotatelogs.WithRotationTime(time.Duration(604800)*time.Second),
+	//)
+	//writerMap := lfshook.WriterMap{
+	//	logrus.InfoLevel:  writer,
+	//	logrus.FatalLevel: writer,
+	//	logrus.DebugLevel: writer,
+	//	logrus.WarnLevel:  writer,
+	//	logrus.ErrorLevel: writer,
+	//	logrus.PanicLevel: writer,
+	//}
 	//启用调用者信息
 	Log.SetReportCaller(true)
 	//设定输出文件的格式
-	hook := lfshook.NewHook(writerMap, &mineFormatter{})
-	Log.AddHook(hook)
+	//hook := lfshook.NewHook(writerMap, &mineFormatter{})
+	//Log.AddHook(hook)
 	return Log
 }
 
