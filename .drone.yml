@@ -24,7 +24,7 @@ steps:
   - name: upload
     image: appleboy/drone-scp
     settings:
-      host: 192.168.8.130
+      host: 192.168.8.39
       username: root
       password: root
       source: /drone/src/cargo
