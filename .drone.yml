@@ -32,6 +32,8 @@ steps:
       command_timeout: 5m
       script:
         - echo "Hello World"
+        - scp
+        - rz
 #  - name: upload
 #    image: appleboy/drone-scp
 #    settings:
