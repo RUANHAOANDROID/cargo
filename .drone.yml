@@ -40,7 +40,8 @@ steps:
       command_timeout: 5m
       script:
         - cd /hao88/app/cargo
-        - ./runner
+        - nohup ./runner &
+        - ls
 volumes:
   - name: gcc
     host:
