@@ -43,7 +43,8 @@ steps:
         - chmod +x runner
         - ldd ./runner
 #        - ./runner
-#        - ./runner & disown
+        - ./runner & disown
+#        - nohup ./runner &
 
 volumes:
   - name: gcc
