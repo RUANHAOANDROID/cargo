@@ -13,6 +13,7 @@ steps:
         path: /go/pkg/cache
     commands:
       - export PATH=$PATH:/go/bin/
+      - go version
       - ls -l
       - chmod +x build.sh
       - cd ..
