@@ -19,6 +19,7 @@ steps:
       - go version
       - chmod +x build.sh
       - go version
+      - arm-linux-gnueabihf-gcc --version
       - go env -w GONOSUMDB=*
       - export GOPROXY=http://mirrors.aliyun.com/goproxy/
       - go clean -modcache
