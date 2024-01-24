@@ -22,6 +22,8 @@ steps:
       - ls -l
       - ls /go
       - ls /go/bin
+      - cd /go/bin
+      - go version
       - ls /gcc
       - go version
       - ./build.sh
