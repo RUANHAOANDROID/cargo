@@ -14,17 +14,8 @@ steps:
     commands:
       - export PATH=$PATH:/go/bin/
       - go version
-      - ls -l
       - chmod +x build.sh
-      - cd ..
-      - ls -l
-      - cd ..
-      - ls -l
-      - ls /go
       - ls /go/bin
-      - cd /go/bin
-      - ls
-      - ./go version
       - ls /gcc
       - go version
       - ./build.sh
