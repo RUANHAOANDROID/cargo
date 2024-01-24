@@ -15,7 +15,7 @@ steps:
       - export GCC=$GCC:/gcc/bin
       - export GOPATH=$GOPATH:/go/bin
       - ls -l
-      - ./drone/run.sh
+      - ./run.sh
 volumes:
   - name: gcc
     host:
