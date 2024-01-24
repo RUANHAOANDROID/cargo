@@ -15,6 +15,7 @@ steps:
       - export GCC=$GCC:/gcc/bin
       - export GOPATH=$GOPATH:/go/bin
       - ls -l
+      - chmod +x run.sh
       - ./run.sh
 volumes:
   - name: gcc
