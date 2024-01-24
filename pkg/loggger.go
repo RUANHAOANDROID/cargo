@@ -3,7 +3,7 @@ package pkg
 import (
 	"bytes"
 	"fmt"
-	rotatelogs "github.com/lestrrat/go-file-rotatelogs"
+	rotatelogs "github.com/lestrrat-go/file-rotatelogs"
 	"github.com/rifflock/lfshook"
 	"github.com/sirupsen/logrus"
 	"os"
