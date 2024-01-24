@@ -16,7 +16,11 @@ steps:
       - export GOPATH=/go/bin
       - ls -l
       - chmod +x build.sh
+      - cd ..
       - ls -l
+      - cd ..
+      - ls -l
+      - go version
       - ./build.sh
 volumes:
   - name: gcc
