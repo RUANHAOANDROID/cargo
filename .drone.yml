@@ -42,7 +42,7 @@ steps:
         - cd /hao88/app/cargo
         - chmod +x runner
         - ldd ./runner
-        - ./runner
+#        - ./runner
 #        - ./runner & disown
 
 volumes:
