@@ -12,21 +12,28 @@ steps:
 #      - name: go-cache
 #        path: /go/pkg/cache
     commands:
-      - ls /go/bin
-      - ls /gcc
+
       - export PATH=$PATH:/go/bin/
       - export PATH=$PATH:/gcc/bin/
-      - go version
       - chmod +x build.sh
-      - go version
       - arm-linux-gnueabihf-gcc --version
+      - go version
       - go env -w GONOSUMDB=*
       - export GOPROXY=http://mirrors.aliyun.com/goproxy/
-#      - go clean -modcache
-#      - go mod tidy
-      #      - export GOPROXY=http://goprox.cn
       - ./build.sh
-      - ls
+  - name: upload
+    image: plugins/scp
+    settings:
+      host: 192.168.8.130
+      username: root
+      password: root
+      source: /drone/src/cargo
+      target: /usr/app/cargo
+
+  - name: remote-commond
+    image: ubuntu:16.04
+    commands:
+      - ssh root@192.168.8.39 "cd /usr/app/ && ./cargo"
 volumes:
   - name: gcc
     host:
