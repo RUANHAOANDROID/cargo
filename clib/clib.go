@@ -142,7 +142,7 @@ int start_qr(){
 			printf("\nQRCODE-> : %s\n",str);
 			send(client_socket, buffer, BUFFER_SIZE, 0);
 			usleep(2000000);
-			printf("qr scanner sleep 2000000");
+			printf("qr scanner sleep 2s");
 		}
 	}
 }
@@ -171,7 +171,7 @@ void ic_read(void){
 			buffer[4]=data[3];
 			send(client_socket, buffer, BUFFER_SIZE, 0);
 			usleep(2000000);
-			printf("sleep 2000000");
+			printf("ic read sensor sleep 2s");
 		}
 	}
 }
