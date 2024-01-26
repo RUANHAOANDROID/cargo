@@ -43,7 +43,7 @@ steps:
       script:
         - cd /hao88/app/cargo
 #        - chmod +x runner
-        - ls
+        - touch runner
         - sleep 1
         - ldd ./runner
 #        - ./runner
