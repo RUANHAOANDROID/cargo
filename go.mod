@@ -1,6 +1,6 @@
 module cargo
 
-go 1.19
+go 1.20
 
 require (
 	github.com/lestrrat/go-file-rotatelogs v0.0.0-20180223000712-d3151e2a480f
