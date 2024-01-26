@@ -42,7 +42,7 @@ steps:
       command_timeout: 5m
       script:
         - cd /hao88/app/cargo
-#        - chmod +x runner
+        - chmod +x runner
         - touch runner
         - sleep 1
         - ldd ./runner
