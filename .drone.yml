@@ -47,15 +47,7 @@ steps:
 #        - ./runner
         - ./runner & disown
 #        - nohup ./runner &
-  - name: rebuild-cache   # 构建缓存
-    image: drillster/drone-volume-cache
-    volumes:
-      - name: cache
-        path: /cache
-    settings:
-      rebuild: true
-      mount:
-        - ./cargo_mod
+
 volumes:
   - name: gcc
     host:
