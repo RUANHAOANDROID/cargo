@@ -46,6 +46,7 @@ steps:
         - ldd ./runner
 #        - ./runner
 #        - ./runner & disown
+        - sleep 1
         - nohup ./runner &
         - ls
 volumes:
