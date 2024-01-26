@@ -7,7 +7,7 @@ steps:
     image: drillster/drone-volume-cache
     volumes:
       - name: cache
-        path: /cache
+        path: /root/go/pkg/mod
     settings:
       restore: true
       mount:
@@ -19,8 +19,8 @@ steps:
         path: /gcc
       - name: gosdk
         path: /go
-    #      - name: go-cache
-    #        path: /go/pkg/cache
+      - name: go-cache
+        path: /root/go/pkg/mod/cache/
     commands:
       - bash
       - export PATH=$PATH:/go/bin/
@@ -31,7 +31,7 @@ steps:
       - go env -w GONOSUMDB=*
       - export GOPROXY=http://mirrors.aliyun.com/goproxy/
       - ./build.sh
-      - sleep 36000
+#      - sleep 36000
   - name: scp-file
     image: appleboy/drone-scp
     settings:
@@ -73,6 +73,9 @@ volumes:
   - name: gosdk
     host:
       path: /mnt/disk1/appdata/drone/tools/gosdk/go
+  - name: go_cache
+    host:
+      path: /mnt/disk1/appdata/drone/tools/cargo/go-cache
   - name: cache
     host:
       path: /mnt/disk1/appdata/drone/tools/cargo/cache
