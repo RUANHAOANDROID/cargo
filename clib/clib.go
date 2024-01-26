@@ -170,9 +170,9 @@ void ic_read(void){
 			buffer[3]=data[2];
 			buffer[4]=data[3];
 			send(client_socket, buffer, BUFFER_SIZE, 0);
+			usleep(2000000);
+			printf("sleep 2000000");
 		}
-		usleep(2000000);
-		printf("sleep 2000000");
 	}
 }
 
@@ -299,6 +299,7 @@ func StartC(wg sync.WaitGroup) {
 		C.ic_read()
 	}()
 	wg.Wait()
+	pkg.Log.Println("close tcp connection")
 	defer C.close_tcp_connection()
 	//C.start_tcp()
 	//time.Sleep(time.Second)
