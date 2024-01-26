@@ -2,16 +2,6 @@ kind: pipeline
 name: arm-cargo-build
 type: docker
 steps:
-  - name: restore-cache # 加载缓存
-    pull: if-not-exists # 如果镜像不存在则拉取,免去每次都要重新下载
-    image: drillster/drone-volume-cache
-    volumes:
-      - name: cache
-        path: /root/go/pkg/mod
-    settings:
-      restore: true
-      mount:
-        - ./cargo_mod
   - name: build
     image: ubuntu:16.04
     volumes: #挂载卷
@@ -76,6 +66,3 @@ volumes:
   - name: gocache
     host:
       path: /mnt/disk1/appdata/drone/tools/cargo/gocache
-  - name: cache
-    host:
-      path: /mnt/disk1/appdata/drone/tools/cargo/cache
