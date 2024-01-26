@@ -41,10 +41,10 @@ steps:
         - cd /hao88/app/cargo
         - chmod +x runner
         - touch runner
-        - ldconfig
+#        - ldconfig
         - ldd ./runner
-        - sleep 2
-        - nohup ./runner &
+#        - sleep 2
+#        - nohup ./runner &
 #        - ./runner
         - ls
 volumes:
