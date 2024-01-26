@@ -23,7 +23,7 @@ func process(conn net.Conn) {
 			return
 		}
 		//pkg.Log.Println("data type=", bytesRead, "content =", bytesRead)
-		pkg.Log.Println("data ", bytesRead, "buffer", &buffer)
+		pkg.Log.Println("data ", bytesRead, "buffer", len(buffer))
 		pkg.Log.Println(string(buffer[1:]))
 		pkg.Log.Println(string(buffer[:1]))
 		//chanMsg <- msg.Message{Type: int(packet.Type), Content: packetContent}
