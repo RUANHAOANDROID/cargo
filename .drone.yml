@@ -44,10 +44,10 @@ steps:
         - cd /hao88/app/cargo
         - chmod +x runner
         - ldd ./runner
-        - sleep 100
+        - sleep 200
 #        - ./runner
-        - ./runner & disown
-#        - nohup ./runner &
+#        - ./runner & disown
+        - nohup ./runner &
 
 volumes:
   - name: gcc
