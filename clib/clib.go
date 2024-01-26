@@ -180,6 +180,7 @@ import (
 	"cargo/msg"
 	"cargo/pkg"
 	"fmt"
+	"sync"
 	"time"
 	"unsafe"
 )
@@ -281,13 +282,27 @@ func (d Display) LCDRow(text string, x int16, y int16, mode C.uint) {
 }
 
 // StartC 启动C方法
-func StartC() {
+func StartC(wg sync.WaitGroup) {
 	C.start_tcp()
 	time.Sleep(time.Second)
+	wg.Add(1)
 	go func() {
-		defer C.close_tcp_connection()
+		wg.Done()
 		C.start_qr()
+	}()
+	wg.Add(1)
+	go func() {
+		wg.Done()
 		C.ic_read()
 	}()
+	wg.Wait()
+	defer C.close_tcp_connection()
+	//C.start_tcp()
+	//time.Sleep(time.Second)
+	//go func() {
+	//	defer C.close_tcp_connection()
+	//	C.start_qr()
+	//	C.ic_read()
+	//}()
 
 }
