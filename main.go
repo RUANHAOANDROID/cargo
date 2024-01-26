@@ -21,6 +21,7 @@ func main() {
 	go clib.StartC()
 	for msg := range msgChan {
 		pkg.Log.Println("msg chan->", msg.Type, msg.Content)
+		pkg.APlay(pkg.SoundFiles[0])
 	}
 	pkg.Log.Print("End......")
 }
