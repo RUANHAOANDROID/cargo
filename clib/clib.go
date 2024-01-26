@@ -15,6 +15,7 @@ package clib
 
 #define BUFFER_SIZE 1024 * 2
 char buffer[BUFFER_SIZE];
+int stop_requested = 0;
 void dump_data(char *str,unsigned char *text,int len)
 {
 	int i;
@@ -83,6 +84,11 @@ int send_message(int client_socket, const char *message) {
 void close_connection(int client_socket) {
     // 关闭套接字
     close(client_socket);
+
+}
+void stop(){
+	stop_requested=1;
+	close_connection(client_socket)
 }
 int client_socket;
 int start_tcp(void) {
@@ -99,7 +105,7 @@ int start_tcp(void) {
 }
 int start_card(){
 		printf("C send1\n");
-	while(1){
+	while(!stop_requested){
   		sleep(1); // 等待1秒钟再发送下一条消息
         const char *message = "Hello, Send1!";
         if (send_message(client_socket, message) == -1) {
@@ -117,7 +123,7 @@ int start_qr(){
     qrfd1 = QRCode_Open(0);
     qrfd2 = QRCode_Open(1);
 	uint8_t type = 0x02;
-	while(1){
+	while(!stop_requested){
 		ret = QRCode_RxStr(qrfd1, TmpBuff, 1024, 100);
 		if(ret <= 0)
 			ret = QRCode_RxStr(qrfd2, TmpBuff, 1024, 100);
@@ -144,7 +150,7 @@ void ic_read(void){
     int i;
     PICC_Open(0);
 	uint8_t type = 0x01;
-	while(1){
+	while(!stop_requested){
         if(ret) ret = Mifare_PowerOn(0,snr,&snr_len);
         printf("\n==========Block[%2d]==========\n",i);
         if(!ret) ret = Mifare_AuthenBlock(i * 4,0,key);
@@ -273,6 +279,7 @@ func (d Display) LCDRow(text string, x int16, y int16, mode C.uint) {
 
 // StartC 启动C方法
 func StartC() {
+	defer C.close_connection()
 	C.start_tcp()
 	time.Sleep(time.Second)
 	go C.start_qr()

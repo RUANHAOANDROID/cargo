@@ -20,7 +20,7 @@ func main() {
 	display.LCDRow(pkg.NowTimeStr(), 8, 40, clib.DISP_FONT12)
 	display.LCDRow("-hao88.cloud", 80, 60, clib.DISP_FONT12)
 	wg.Add(1)
-	go clib.StartFlow(&msgChan)
+	go clib.StartTcpServer(&msgChan)
 	go clib.StartC()
 	for msg := range msgChan {
 		pkg.Log.Println("msg chan->", msg.Type, msg.Content)
