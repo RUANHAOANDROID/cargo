@@ -6,6 +6,7 @@ import (
 	"cargo/pkg"
 	"fmt"
 	"net"
+	"time"
 )
 
 const bufferSize = 1024 // 1MB 缓冲区大小
@@ -26,9 +27,13 @@ func process(conn net.Conn) {
 		pkg.Log.Println("data ", bytesRead, "buffer", len(buffer))
 		pkg.Log.Println(string(buffer[1:]))
 		pkg.Log.Println(string(buffer[:1]))
-		display.ClearScreen()
-		display.LCDRow(string(buffer[1:]), 8, 40, DISP_FONT12)
-		pkg.APlay(pkg.SoundFiles[10])
+		go func() {
+			pkg.APlay(pkg.SoundFiles[10])
+			display.ClearScreen()
+			time.Sleep(time.Second)
+			display.LCDRow(string(buffer[1:]), 8, 40, DISP_FONT12)
+		}()
+
 		//chanMsg <- msg.Message{Type: int(packet.Type), Content: packetContent}
 		//conn.Write([]byte(recvStr)) // 发送数据
 	}
