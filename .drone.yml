@@ -12,16 +12,13 @@ steps:
       - name: gocache
         path: /root/go/pkg/mod/
     commands:
-      - bash
       - export PATH=$PATH:/go/bin/
       - export PATH=$PATH:/gcc/bin/
       - chmod +x build.sh
       - arm-linux-gnueabihf-gcc --version
-      - go version
       - go env -w GONOSUMDB=*
       - export GOPROXY=http://mirrors.aliyun.com/goproxy/
       - ./build.sh
-#      - sleep 36000
   - name: scp-file
     image: appleboy/drone-scp:1.6
     settings:
@@ -45,10 +42,11 @@ steps:
         - chmod +x runner
         - touch runner
         - ldd ./runner
-#        - ./runner
 #        - ./runner & disown
         - sleep 2
+        - ldconfig
         - nohup ./runner &
+        - ldconfig
         - ./runner
         - ls
 volumes:
