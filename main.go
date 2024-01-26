@@ -4,6 +4,7 @@ import (
 	"cargo/clib"
 	"cargo/msg"
 	"cargo/pkg"
+	"time"
 )
 
 // main  -lpos -lm -lpng -lfontconfig -lfreetype -liconv
@@ -17,8 +18,12 @@ func main() {
 	display.LCDRow("C Test E", 8, 8, clib.DISP_FONT24)
 	display.LCDRow(pkg.NowTimeStr(), 8, 40, clib.DISP_FONT12)
 	display.LCDRow("-hao88.cloud", 80, 60, clib.DISP_FONT12)
-	go clib.Start(msgChan)
+	go clib.StartFlow(msgChan)
 	go clib.StartC()
+	go func() {
+		time.Sleep(time.Second)
+		display.LCDRow(pkg.NowTimeStr(), 8, 40, clib.DISP_FONT12)
+	}()
 	for msg := range msgChan {
 		pkg.Log.Println("msg chan->", msg.Type, msg.Content)
 	}
