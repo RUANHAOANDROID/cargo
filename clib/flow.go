@@ -26,6 +26,7 @@ func process(conn net.Conn) {
 		pkg.Log.Println("data ", bytesRead, "buffer", len(buffer))
 		pkg.Log.Println(string(buffer[1:]))
 		pkg.Log.Println(string(buffer[:1]))
+		go display.ClearScreen()
 		go display.LCDRow(string(buffer[1:]), 8, 40, DISP_FONT12)
 		pkg.APlay(pkg.SoundFiles[10])
 		//chanMsg <- msg.Message{Type: int(packet.Type), Content: packetContent}
