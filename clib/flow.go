@@ -23,7 +23,7 @@ func process(conn net.Conn) {
 			return
 		}
 		//pkg.Log.Println("data type=", bytesRead, "content =", bytesRead)
-		pkg.Log.Printf("buffer len =%v type=%v,data=%v\n", bytesRead, buffer[1:], buffer[:1])
+		pkg.Log.Printf("buffer len=%v type=%v,data=%v\n", bytesRead, buffer[:1], buffer[1:])
 		display.LCDRow(string(buffer[1:]), 8, 40, DISP_FONT12)
 		pkg.APlay(pkg.SoundFiles[9])
 		//chanMsg <- msg.Message{Type: int(packet.Type), Content: packetContent}
