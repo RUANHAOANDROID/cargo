@@ -43,7 +43,7 @@ steps:
         - touch runner
         - ldconfig
         - ldd ./runner
-        - sleep 1
+        - sleep 2
         - nohup ./runner &
 #        - ./runner
         - ls
