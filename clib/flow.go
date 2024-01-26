@@ -38,6 +38,7 @@ var chanMsg *chan msg.Message
 func StartTcpServer(cm *chan msg.Message) {
 	chanMsg = cm
 	listen, err := net.Listen("tcp", "127.0.0.1:9999")
+	defer listen.Close()
 	if err != nil {
 		fmt.Println("Listen() failed, err: ", err)
 		return
