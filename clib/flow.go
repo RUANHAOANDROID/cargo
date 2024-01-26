@@ -23,8 +23,7 @@ func process(conn net.Conn) {
 			return
 		}
 		//pkg.Log.Println("data type=", bytesRead, "content =", bytesRead)
-		pkg.Log.Println("buffer", bytesRead, len(buffer))
-		pkg.Log.Printf("type=%v,data=%v", buffer[1:], buffer[:1])
+		pkg.Log.Printf("buffer len =%v type=%v,data=%v\n", bytesRead, buffer[1:], buffer[:1])
 		display.LCDRow(string(buffer[1:]), 8, 40, DISP_FONT12)
 		pkg.APlay(pkg.SoundFiles[9])
 		//chanMsg <- msg.Message{Type: int(packet.Type), Content: packetContent}
@@ -48,7 +47,6 @@ func StartTcpServer(cm *chan msg.Message) {
 			fmt.Println("Accept() failed, err: ", err)
 			continue
 		}
-		fmt.Println("new message")
 		go process(conn) // 启动一个goroutine来处理客户端的连接请求
 	}
 }
