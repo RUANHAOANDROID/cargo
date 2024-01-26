@@ -254,12 +254,14 @@ func (d Display) Init() {
 	pkg.Log.Println("display height", cLedWidth)
 }
 
+// ClearScreen 清理屏幕
 func (d Display) ClearScreen() {
 	cScreen := C.uint32_t(1)
 	pkg.Log.Println("display ClearScreen")
 	C.LCD_ClearScreen(cScreen)
 }
 
+// LCDRow 显示文字
 func (d Display) LCDRow(text string, x int16, y int16, mode C.uint) {
 	pkg.Log.Println(text, x, y, mode)
 	cTitle := C.CString(text)
@@ -268,6 +270,8 @@ func (d Display) LCDRow(text string, x int16, y int16, mode C.uint) {
 	cY := C.uint16_t(y)
 	C.LCD_Display_Row(cTitle, cY, cX, mode)
 }
+
+// StartC 启动C方法
 func StartC() {
 	pkg.Log.Println("Start C fun ")
 	time.Sleep(time.Second)
