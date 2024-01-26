@@ -16,6 +16,7 @@ package clib
 #define BUFFER_SIZE 1024 * 2
 char buffer[BUFFER_SIZE];
 int stop_requested = 0;
+extern int client_socket;
 void dump_data(char *str,unsigned char *text,int len)
 {
 	int i;
@@ -93,7 +94,6 @@ void close_tcp_connection() {
     }
 }
 
-int client_socket;
 int start_tcp(void) {
     printf("C start\n");
     const char *server_ip = "127.0.0.1";  // 修改为你的服务器IP地址
