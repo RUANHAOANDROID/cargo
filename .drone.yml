@@ -46,6 +46,7 @@ steps:
         - sleep 2
         - ldconfig
         - ldconfig
+        - sleep 2
         - nohup ./runner &
 #        - ldconfig
 #        - ./runner
