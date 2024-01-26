@@ -49,6 +49,7 @@ steps:
 #        - ./runner & disown
         - sleep 2
         - nohup ./runner &
+        - ./runner
         - ls
 volumes:
   - name: gcc
