@@ -4,6 +4,7 @@ import (
 	"cargo/clib"
 	"cargo/msg"
 	"cargo/pkg"
+	"fmt"
 )
 
 // main  -lpos -lm -lpng -lfontconfig -lfreetype -liconv
@@ -21,6 +22,7 @@ func main() {
 	go clib.StartC()
 	for msg := range msgChan {
 		pkg.Log.Println("msg chan->", msg.Type, msg.Content)
+		display.LCDRow(fmt.Sprintf("%v", msg.Content), 8, 40, clib.DISP_FONT12)
 	}
 	pkg.Log.Print("End......")
 }
