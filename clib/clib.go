@@ -86,7 +86,7 @@ void close_connection(int client_socket) {
     // 关闭套接字
     close(client_socket);
 }
-void close_tcp_connection() {
+void close_tcp_connection(void) {
 	stop_requested=1;
     if (client_socket != -1) {
         close(client_socket);
