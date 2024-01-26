@@ -84,15 +84,10 @@ int send_message(int client_socket, const char *message) {
 }
 
 void close_connection(int client_socket) {
-    // 关闭套接字
-    close(client_socket);
-}
-void close_tcp_connection(void) {
 	stop_requested=1;
-    if (client_socket != -1) {
-        close(client_socket);
-        client_socket = -1;  // 将 client_socket 重置为无效值
-    }
+	client_socket=-1;
+	// 关闭套接字
+    close(client_socket);
 }
 
 int start_tcp(void) {
@@ -302,7 +297,7 @@ func StartC(wg sync.WaitGroup) {
 	}()
 	wg.Wait()
 	pkg.Log.Println("close tcp connection")
-	defer C.close_tcp_connection()
+	defer C.close_connection(-1)
 	//C.start_tcp()
 	//time.Sleep(time.Second)
 	//go func() {
