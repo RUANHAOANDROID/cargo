@@ -141,6 +141,8 @@ int start_qr(){
 			printf("length: [%d]\n",ret);
 			printf("\nQRCODE-> : %s\n",str);
 			send(client_socket, buffer, BUFFER_SIZE, 0);
+			usleep(2000000);
+			printf("qr scanner sleep 2000000");
 		}
 	}
 }
@@ -155,7 +157,7 @@ void ic_read(void){
 	uint8_t type = 0x01;
 	while(!stop_requested){
         if(ret) ret = Mifare_PowerOn(0,snr,&snr_len);
-        printf("\n==========Block[%2d]==========\n",i);
+        //printf("\n==========Block[%2d]==========\n",i);
         if(!ret) ret = Mifare_AuthenBlock(i * 4,0,key);
         if(!ret) ret = Mifare_ReadBlock(0 + i * 4,data);
         //if(!ret) dump_data("Mifare Read0",data,data_len);
@@ -169,7 +171,8 @@ void ic_read(void){
 			buffer[4]=data[3];
 			send(client_socket, buffer, BUFFER_SIZE, 0);
 		}
-		usleep(1000000);
+		usleep(2000000);
+		printf("sleep 2000000");
 	}
 }
 
