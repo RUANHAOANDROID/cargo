@@ -85,10 +85,14 @@ void close_connection(int client_socket) {
     // 关闭套接字
     close(client_socket);
 }
-void stop_senser(void) {
-    stop_requested = 1;
-    close_connection(client_socket);
+void close_tcp_connection() {
+	stop_requested=1;
+    if (client_socket != -1) {
+        close(client_socket);
+        client_socket = -1;  // 将 client_socket 重置为无效值
+    }
 }
+
 int client_socket;
 int start_tcp(void) {
     printf("C start\n");
@@ -278,7 +282,7 @@ func (d Display) LCDRow(text string, x int16, y int16, mode C.uint) {
 
 // StartC 启动C方法
 func StartC() {
-	defer C.close_connection()
+	defer C.close_tcp_connection()
 	C.start_tcp()
 	time.Sleep(time.Second)
 	go C.start_qr()
