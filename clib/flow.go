@@ -16,7 +16,6 @@ func process(conn net.Conn) {
 	buffer := make([]byte, bufferSize)
 	for {
 		// 读取数据包
-		pkg.Log.Println("process --")
 		bytesRead, err := conn.Read(buffer)
 		if err != nil {
 			fmt.Println("Error reading data:", err)
