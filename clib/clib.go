@@ -282,9 +282,12 @@ func (d Display) LCDRow(text string, x int16, y int16, mode C.uint) {
 
 // StartC 启动C方法
 func StartC() {
-	defer C.close_tcp_connection()
 	C.start_tcp()
 	time.Sleep(time.Second)
-	go C.start_qr()
-	go C.ic_read()
+	go func() {
+		defer C.close_tcp_connection()
+		C.start_qr()
+		C.ic_read()
+	}()
+
 }
