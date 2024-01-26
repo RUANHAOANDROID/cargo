@@ -47,6 +47,7 @@ func StartFlow(cm chan msg.Message) {
 			fmt.Println("Accept() failed, err: ", err)
 			continue
 		}
+		fmt.Println("new message")
 		go process(conn) // 启动一个goroutine来处理客户端的连接请求
 	}
 }
