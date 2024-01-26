@@ -33,9 +33,9 @@ func process(conn net.Conn) {
 	}
 }
 
-var chanMsg chan msg.Message
+var chanMsg *chan msg.Message
 
-func StartFlow(cm chan msg.Message) {
+func StartFlow(cm *chan msg.Message) {
 	chanMsg = cm
 	listen, err := net.Listen("tcp", "127.0.0.1:9999")
 	if err != nil {
