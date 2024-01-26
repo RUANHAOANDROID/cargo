@@ -84,11 +84,12 @@ int send_message(int client_socket, const char *message) {
 void close_connection(int client_socket) {
     // 关闭套接字
     close(client_socket);
-
+	return 0;
 }
-void stop(){
+void stop(void){
 	stop_requested=1;
 	close_connection(client_socket)
+	return 0;
 }
 int client_socket;
 int start_tcp(void) {
