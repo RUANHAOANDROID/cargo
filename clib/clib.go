@@ -13,7 +13,7 @@ package clib
 #include "unistd.h"
 #include <arpa/inet.h>
 
-#define BUFFER_SIZE 1024 * 2
+#define BUFFER_SIZE 1024
 char buffer[BUFFER_SIZE];
 int stop_requested = 0;
 int client_socket=-1;
