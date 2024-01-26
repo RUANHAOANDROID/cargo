@@ -45,6 +45,7 @@ steps:
 #        - ./runner & disown
         - sleep 2
         - ldconfig
+        - ldconfig
         - nohup ./runner &
 #        - ldconfig
 #        - ./runner
