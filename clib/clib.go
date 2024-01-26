@@ -16,7 +16,7 @@ package clib
 #define BUFFER_SIZE 1024 * 2
 char buffer[BUFFER_SIZE];
 int stop_requested = 0;
-extern int client_socket;
+extern int client_socket=-1;
 void dump_data(char *str,unsigned char *text,int len)
 {
 	int i;
