@@ -27,7 +27,7 @@ func main() {
 	}()
 	go clib.StartC(wg)
 	for msg := range msgChan {
-		pkg.Log.Println("msg chan->", msg.Type, msg.Content)
+		pkg.Log.Printf("msg chan-> type=%v,content=%v \n", msg.Type, msg.Content)
 	}
 	pkg.Log.Print("End......")
 }
