@@ -22,9 +22,11 @@ func main() {
 	go clib.StartFlow(msgChan)
 	go clib.StartC()
 	go func() {
-		time.Sleep(1 * time.Second)
-		display.LCDRow(pkg.NowTimeStr(), 8, 40, clib.DISP_FONT12)
-		fmt.Println("time change")
+		for true {
+			time.Sleep(1 * time.Second)
+			display.LCDRow(pkg.NowTimeStr(), 8, 40, clib.DISP_FONT12)
+			fmt.Println("time change")
+		}
 	}()
 	for msg := range msgChan {
 		pkg.Log.Println("msg chan->", msg.Type, msg.Content)
