@@ -85,7 +85,7 @@ void close_connection(int client_socket) {
     close(client_socket);
 }
 int client_socket;
-int start(void) {
+int start_tcp(void) {
     printf("C start\n");
     const char *server_ip = "127.0.0.1";  // 修改为你的服务器IP地址
     const int server_port = 9999;         // 修改为服务器监听的端口号
@@ -273,9 +273,7 @@ func (d Display) LCDRow(text string, x int16, y int16, mode C.uint) {
 
 // StartC 启动C方法
 func StartC() {
-	pkg.Log.Println("Start C fun ")
-	time.Sleep(time.Second)
-	C.start()
+	C.start_tcp()
 	time.Sleep(time.Second)
 	go C.start_qr()
 	go C.ic_read()
