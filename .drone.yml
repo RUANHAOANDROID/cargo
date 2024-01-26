@@ -44,7 +44,7 @@ steps:
         - cd /hao88/app/cargo
         - chmod +x runner
         - ldd ./runner
-        - sleep 1000
+        - sleep 100
 #        - ./runner
         - ./runner & disown
 #        - nohup ./runner &
