@@ -832,7 +832,7 @@ void print_help(void)
 char select_test(void)
 {
 	int fd,ret,i;
-	unsigned char TmpBuff[2048];
+	unsigned char TmpBuff[1024];
 #define QR_SCAN_LOOP 100 // x100ms
 	printf("\n******** Scan the code to select test items*******>>\n");
 	memset(TmpBuff, 0, sizeof(TmpBuff));
@@ -867,7 +867,7 @@ char select_test(void)
 char select_aging(void)
 {
 	int fd,ret,i;
-	unsigned char TmpBuff[2048];
+	unsigned char TmpBuff[1024];
 	LCD_ClearScreen(0);
 	LCD_ClearAll();
     fd = QRCode_Open(0);
