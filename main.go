@@ -4,6 +4,7 @@ import (
 	"cargo/clib"
 	"cargo/msg"
 	"cargo/pkg"
+	"fmt"
 	"time"
 )
 
@@ -23,6 +24,7 @@ func main() {
 	go func() {
 		time.Sleep(1 * time.Second)
 		display.LCDRow(pkg.NowTimeStr(), 8, 40, clib.DISP_FONT12)
+		fmt.Println("time change")
 	}()
 	for msg := range msgChan {
 		pkg.Log.Println("msg chan->", msg.Type, msg.Content)
