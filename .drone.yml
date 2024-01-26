@@ -33,7 +33,7 @@ steps:
       - ./build.sh
 #      - sleep 36000
   - name: scp-file
-    image: appleboy/drone-scp
+    image: appleboy/drone-scp:1.6
     settings:
       host: 192.168.8.39
       username: root
@@ -42,7 +42,7 @@ steps:
       target: /hao88/app/cargo
       source: runner
   - name: remote-runner
-    image: appleboy/drone-ssh
+    image: appleboy/drone-ssh:1.7
     settings:
       host:
         - 192.168.8.39
