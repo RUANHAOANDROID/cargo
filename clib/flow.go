@@ -8,7 +8,7 @@ import (
 	"net"
 )
 
-const bufferSize = 1024 * 2 // 1MB 缓冲区大小
+const bufferSize = 1024 // 1MB 缓冲区大小
 
 func process(conn net.Conn) {
 	display := Display{}
