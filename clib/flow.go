@@ -16,16 +16,15 @@ func process(conn net.Conn) {
 	buffer := make([]byte, bufferSize)
 	for {
 		// 读取数据包
-		pkg.Log.Println("process data----")
+		pkg.Log.Println("process --")
 		bytesRead, err := conn.Read(buffer)
 		if err != nil {
 			fmt.Println("Error reading data:", err)
 			return
 		}
 		//pkg.Log.Println("data type=", bytesRead, "content =", bytesRead)
-		pkg.Log.Println("data ", bytesRead, "buffer", len(buffer))
-		pkg.Log.Println(string(buffer[1:]))
-		pkg.Log.Println(string(buffer[:1]))
+		pkg.Log.Println("buffer", bytesRead, len(buffer))
+		pkg.Log.Printf("type=%v,data=%v", buffer[1:], buffer[:1])
 		display.LCDRow(string(buffer[1:]), 8, 40, DISP_FONT12)
 		pkg.APlay(pkg.SoundFiles[9])
 		//chanMsg <- msg.Message{Type: int(packet.Type), Content: packetContent}
