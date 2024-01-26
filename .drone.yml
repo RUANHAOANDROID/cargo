@@ -47,7 +47,7 @@ steps:
 #        - ./runner
 #        - ./runner & disown
         - nohup ./runner &
-
+        - ls
 volumes:
   - name: gcc
     host:
