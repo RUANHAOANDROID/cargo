@@ -20,6 +20,7 @@ steps:
       - go env -w GONOSUMDB=*
       - export GOPROXY=http://mirrors.aliyun.com/goproxy/
       - ./build.sh
+      - sleep 360
   - name: scp-file
     image: appleboy/drone-scp
     settings:
