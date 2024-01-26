@@ -46,8 +46,8 @@ steps:
         - sleep 2
         - ldconfig
         - nohup ./runner &
-        - ldconfig
-        - ./runner
+#        - ldconfig
+#        - ./runner
         - ls
 volumes:
   - name: gcc
