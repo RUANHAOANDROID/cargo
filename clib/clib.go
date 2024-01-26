@@ -85,9 +85,9 @@ void close_connection(int client_socket) {
     // 关闭套接字
     close(client_socket);
 }
-void stop_senser(void){
-	stop_requested=1;
-	close_connection(client_socket)
+void stop_senser(int client_socket) {
+    stop_requested = 1;
+    close_connection(client_socket);
 }
 int client_socket;
 int start_tcp(void) {
