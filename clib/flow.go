@@ -34,17 +34,17 @@ func process(conn net.Conn) {
 		}
 		if bytesRead > 0 && buffer[1] != 0 {
 			pkg.Log.Printf("buffer len=%v buffer=%v\n", bytesRead, buffer)
-			types := string(buffer[:1])
+			types := int(buffer[0])
 			pkg.Log.Println(types)
 			switch types {
-			case "1":
+			case 1:
 				content := byteArrayToDecimal(buffer[1:])
 				cInt := strconv.Itoa(content)
 				fmt.Println(cInt)
 				//chanMsg <-msg.Message{Type:int(types),Content: content}
 				pkg.APlay(pkg.SoundFiles[8])
 				display.LCDRow(cInt, 8, 40, DISP_FONT12)
-			case "2":
+			case 2:
 				content := string(buffer[1:])
 				fmt.Println(content)
 				pkg.APlay(pkg.SoundFiles[9])
