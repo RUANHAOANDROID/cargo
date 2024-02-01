@@ -23,7 +23,7 @@ func main() {
 	wg.Add(1)
 	go func() {
 		wg.Done()
-		clib.StartTcpServer(&msgChan)
+		clib.StartTcpServer(msgChan)
 	}()
 	go clib.StartC(wg)
 	for msg := range msgChan {
