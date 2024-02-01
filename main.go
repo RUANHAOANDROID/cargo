@@ -52,6 +52,7 @@ func main() {
 			//pkg.Log.Println(resp)
 		case msg.QRCODE:
 			resp, err := icbc.CheckTicket(cMsg.Content, icbc.ProtoQr)
+			fmt.Println(resp.RetCode)
 			if err != nil {
 				pkg.APlay("sksb.wav")
 			}
