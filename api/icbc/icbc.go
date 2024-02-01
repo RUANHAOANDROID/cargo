@@ -5,7 +5,6 @@ import (
 	"cargo/pkg"
 	"encoding/json"
 	"fmt"
-	"log"
 	"math/rand"
 	"net/http"
 	"time"
@@ -24,6 +23,7 @@ const (
 
 // CheckTicket 模拟发起HTTP请求 protocolNo 类型
 func CheckTicket(ticket string, protocolNo string) (CheckResponse, error) {
+	pkg.Log.Printf("check ticket: protocolNo=%v,ticket =%v", protocolNo, ticket)
 	localData := time.Now().Local()
 	data := CheckData{
 		ClientType:   "006",
@@ -45,7 +45,7 @@ func CheckTicket(ticket string, protocolNo string) (CheckResponse, error) {
 
 	requestBody, err := json.Marshal(requestEntity)
 	if err != nil {
-		log.Fatal(err)
+		pkg.Log.Error(err)
 	}
 	clt := http.Client{}
 	resp, err := clt.Post(conf.Icbc.CheckUrl+pathCheckTicket, contentType, bytes.NewBuffer(requestBody))
@@ -57,7 +57,10 @@ func CheckTicket(ticket string, protocolNo string) (CheckResponse, error) {
 	//var res map[string]interface{}
 	var checkResponse CheckResponse
 	err = json.NewDecoder(resp.Body).Decode(&checkResponse)
-	pkg.Log.Info(checkResponse)
+	if err != nil {
+		pkg.Log.Error(err)
+	}
+	pkg.Log.Println(checkResponse)
 	go func() {
 		verifyRequest := VerifyRequest{
 			CorpId:     conf.Icbc.CorpId,
@@ -75,9 +78,12 @@ func VerifyTicket(request VerifyRequest) (VerifyResponse, error) {
 	clt := http.Client{}
 	jsonRequest, err := json.Marshal(request)
 	if err != nil {
-		log.Fatal(err)
+		pkg.Log.Error(err)
 	}
 	resp, err := clt.Post(conf.Icbc.VerifyUrl+pathVerifyTicket, contentType, bytes.NewBuffer(jsonRequest))
+	if err != nil {
+		pkg.Log.Error(err)
+	}
 	pkg.Log.Info(resp)
 	var verifyResp VerifyResponse
 	if resp.StatusCode != 200 {
