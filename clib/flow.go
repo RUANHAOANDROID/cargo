@@ -32,7 +32,7 @@ func process(conn net.Conn) {
 		}
 		if bytesRead > 0 && buffer[1] != 0 {
 			types := string(buffer[:1])
-			pkg.Log.Printf("buffer len=%v type=%v\n", bytesRead, types)
+			pkg.Log.Printf("buffer len=%v type=%v buffer=%v\n", bytesRead, types, buffer)
 			switch types {
 			case "1":
 				content := byteArrayToDecimal(buffer[1:])
