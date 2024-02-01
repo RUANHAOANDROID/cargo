@@ -11,7 +11,7 @@ import (
 
 const bufferSize = 1024 // 1MB 缓冲区大小
 
-var chanMsg *chan msg.Message
+var chanMsg chan msg.Message
 
 // byteArrayToDecimal 将字节数组转换为十进制数
 func byteArrayToDecimal(bytes []byte) int {
@@ -37,15 +37,16 @@ func process(conn net.Conn) {
 			types := int(buffer[0])
 			pkg.Log.Println(types)
 			switch types {
-			case 1:
+			case msg.IC_CARD:
 				content := byteArrayToDecimal(buffer[1:])
 				cInt := strconv.Itoa(content)
 				fmt.Println(cInt)
-				//chanMsg <-msg.Message{Type:int(types),Content: content}
+				chanMsg <- msg.Message{Type: msg.IC_CARD, Content: cInt}
 				pkg.APlay(pkg.SoundFiles[8])
 				display.LCDRow(cInt, 8, 40, DISP_FONT12)
-			case 2:
+			case msg.QRCODE:
 				content := string(buffer[1:])
+				chanMsg <- msg.Message{Type: msg.QRCODE, Content: content}
 				fmt.Println(content)
 				pkg.APlay(pkg.SoundFiles[9])
 			default:
@@ -60,7 +61,7 @@ func process(conn net.Conn) {
 	}
 }
 
-func StartTcpServer(cm *chan msg.Message) {
+func StartTcpServer(cm chan msg.Message) {
 	chanMsg = cm
 	listen, err := net.Listen("tcp", "127.0.0.1:9999")
 	defer listen.Close()

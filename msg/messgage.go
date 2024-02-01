@@ -6,7 +6,6 @@ type Message struct {
 }
 
 const (
-	QRCODE  = 0x00
-	ID_CARD = 0x01
-	IC_CARD = 0x02
+	QRCODE  = 2
+	IC_CARD = 1
 )
