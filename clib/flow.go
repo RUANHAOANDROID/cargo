@@ -6,10 +6,19 @@ import (
 	"cargo/pkg"
 	"fmt"
 	"net"
+	"strconv"
 )
 
 const bufferSize = 1024 // 1MB 缓冲区大小
 
+// byteArrayToDecimal 将字节数组转换为十进制数
+func byteArrayToDecimal(bytes []byte) int {
+	result := 0
+	for i := 0; i < len(bytes); i++ {
+		result = result*256 + int(bytes[i])
+	}
+	return result
+}
 func process(conn net.Conn) {
 	display := Display{}
 	defer conn.Close() // 关闭连接
@@ -23,10 +32,22 @@ func process(conn net.Conn) {
 		}
 		if bytesRead > 0 && buffer[1] != 0 {
 			types := string(buffer[:1])
-			content := string(buffer[1:])
-			pkg.Log.Printf("buffer len=%v type=%v,data=%v\n", bytesRead, types, content)
-			display.LCDRow(content, 8, 40, DISP_FONT12)
-			pkg.APlay(pkg.SoundFiles[9])
+			pkg.Log.Printf("buffer len=%v type=%v\n", bytesRead, types)
+			switch types {
+			case "1":
+				content := byteArrayToDecimal(buffer[1:])
+				cInt := strconv.Itoa(content)
+				fmt.Println(cInt)
+				pkg.APlay(pkg.SoundFiles[8])
+				display.LCDRow(cInt, 8, 40, DISP_FONT12)
+			case "2":
+				content := string(buffer[1:])
+				fmt.Println(content)
+				pkg.APlay(pkg.SoundFiles[9])
+			default:
+				fmt.Println("undefined type")
+			}
+
 			//chanMsg <- msg.Message{Type: int(packet.Type), Content: packetContent}
 			//conn.Write([]byte(recvStr)) // 发送数据
 		} else {
