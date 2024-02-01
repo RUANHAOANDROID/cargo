@@ -15,6 +15,12 @@ var contentType = "application/json; charset=utf-8"
 var pathCheckTicket = "/ticket/checkTicket"
 var pathVerifyTicket = "/ticket/verifyTicket"
 
+const (
+	ProtoQr    = "002" //二维码
+	ProtoIC    = "004" //景区
+	ProtoICAll = "009" //雪场
+)
+
 // CheckTicket 模拟发起HTTP请求 protocolNo 类型
 func CheckTicket(ticket string, protocolNo string) (CheckResponse, error) {
 	localData := time.Now().Local()

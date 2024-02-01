@@ -7,6 +7,7 @@ import (
 	"cargo/config"
 	"cargo/msg"
 	"cargo/pkg"
+	"fmt"
 	"sync"
 )
 
@@ -14,7 +15,7 @@ import (
 func main() {
 	var wg sync.WaitGroup
 	conf, err := config.Load("config.yml")
-	if err == nil {
+	if err != nil {
 		panic("not find config.yml")
 	}
 	icbc.SetConfig(conf)
@@ -33,8 +34,25 @@ func main() {
 		clib.StartTcpServer(msgChan)
 	}()
 	go clib.StartC(wg)
-	for msg := range msgChan {
-		pkg.Log.Printf("msg chan-> type=%v,content=%v \n", msg.Type, msg.Content)
+	for cMsg := range msgChan {
+		pkg.Log.Printf("msg chan-> type=%v,content=%v \n", cMsg.Type, cMsg.Content)
+		switch cMsg.Type {
+		case msg.IC_CARD:
+			resp, err := icbc.CheckTicket(cMsg.Content, icbc.ProtoIC)
+			if err != nil {
+				pkg.APlay("ding.wav")
+			}
+			pkg.APlay("")
+			pkg.Log.Println(resp)
+		case msg.QRCODE:
+			resp, err := icbc.CheckTicket(cMsg.Content, icbc.ProtoQr)
+			if err != nil {
+				pkg.APlay("wuxiaoma.wav")
+			}
+			pkg.Log.Println(resp)
+		default:
+			fmt.Println("undefined type")
+		}
 	}
 	pkg.Log.Print("End......")
 }
