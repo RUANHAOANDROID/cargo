@@ -17,8 +17,9 @@ var pathVerifyTicket = "/ticket/verifyTicket"
 
 const (
 	ProtoQr    = "002" //二维码
-	ProtoIC    = "004" //景区
-	ProtoICAll = "009" //雪场
+	ProtoID    = "003" //身份证
+	ProtoIC    = "004" //景区IC
+	ProtoICAll = "009" //雪场雪卡+IC
 )
 
 // CheckTicket 模拟发起HTTP请求 protocolNo 类型
@@ -28,13 +29,13 @@ func CheckTicket(ticket string, protocolNo string) (CheckResponse, error) {
 		ClientType:   "006",
 		CientTransNo: protocolNo + localData.Format("20060102150405") + random3(),
 		UpData:       ticket,
-		UpDataLength: string(len(ticket)),
+		UpDataLength: fmt.Sprint(len(ticket)),
 	}
 	requestEntity := CheckRequest{
 		Data:         data,
 		CorpId:       conf.Icbc.CorpId,
 		CorpId2:      conf.Icbc.CorpId2,
-		StrTESn:      Authenticator("yccode", conf.Uchi.EqpCode),
+		StrTESn:      Authenticator(conf.Uchi.EqpCode),
 		Version:      "1",
 		PrintControl: "0",
 		TimeStamp:    pkg.Fmt2HMS(localData),
@@ -62,7 +63,7 @@ func CheckTicket(ticket string, protocolNo string) (CheckResponse, error) {
 			CorpId:     conf.Icbc.CorpId,
 			CorpId2:    conf.Icbc.CorpId2,
 			ProtocolNo: protocolNo,
-			StrTESn:    Authenticator("yccode", conf.Uchi.EqpCode),
+			StrTESn:    Authenticator(conf.Uchi.EqpCode),
 		}
 		VerifyTicket(verifyRequest)
 	}()
@@ -88,9 +89,9 @@ func VerifyTicket(request VerifyRequest) (VerifyResponse, error) {
 	pkg.Log.Info(verifyResp)
 	return verifyResp, err
 }
-func Authenticator(ycCode string, deviceId string) string {
+func Authenticator(deviceId string) string {
 	//return ycCode + deviceId
-	return "BCSSHecsun0001E" + deviceId
+	return "BCSSHecsun0001" + deviceId
 }
 
 /**
