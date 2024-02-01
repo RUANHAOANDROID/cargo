@@ -42,13 +42,13 @@ func process(conn net.Conn) {
 				cInt := strconv.Itoa(content)
 				fmt.Println(cInt)
 				chanMsg <- msg.Message{Type: msg.IC_CARD, Content: cInt}
-				pkg.APlay(pkg.SoundFiles[8])
+				//pkg.APlay(pkg.SoundFiles[8])
 				display.LCDRow(cInt, 8, 40, DISP_FONT12)
 			case msg.QRCODE:
 				content := string(buffer[1:])
 				chanMsg <- msg.Message{Type: msg.QRCODE, Content: content}
 				fmt.Println(content)
-				pkg.APlay(pkg.SoundFiles[9])
+				//pkg.APlay(pkg.SoundFiles[9])
 			default:
 				fmt.Println("undefined type")
 			}
