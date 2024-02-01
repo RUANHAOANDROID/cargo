@@ -31,8 +31,9 @@ func process(conn net.Conn) {
 			return
 		}
 		if bytesRead > 0 && buffer[1] != 0 {
+			pkg.Log.Printf("buffer len=%v buffer=%v\n", bytesRead, buffer)
 			types := string(buffer[:1])
-			pkg.Log.Printf("buffer len=%v type=%v buffer=%v\n", bytesRead, types, buffer)
+			pkg.Log.Println(types)
 			switch types {
 			case "1":
 				content := byteArrayToDecimal(buffer[1:])
