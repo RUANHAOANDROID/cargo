@@ -49,8 +49,7 @@ func main() {
 				pkg.Log.Println("check ticket fail")
 				pkg.APlay("feifaka.wav")
 			}
-
-			pkg.Log.Println(resp)
+			//pkg.Log.Println(resp)
 		case msg.QRCODE:
 			resp, err := icbc.CheckTicket(cMsg.Content, icbc.ProtoQr)
 			if err != nil {
@@ -63,7 +62,7 @@ func main() {
 				pkg.Log.Println("check ticket fail")
 				pkg.APlay("feifaka.wav")
 			}
-			pkg.Log.Println(resp)
+			//pkg.Log.Println(resp)
 		default:
 			fmt.Println("undefined type")
 		}
