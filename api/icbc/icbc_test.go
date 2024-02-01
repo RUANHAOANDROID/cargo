@@ -37,7 +37,7 @@ func TestQRTicket(t *testing.T) {
 }
 func TestICTicket(t *testing.T) {
 	err := loadConfig(t)
-	resp, err := CheckTicket("15943090529708<MjAwMDAwMTkyNDIwMjQtMDItMDEyMDI0LTAzLTAx>", ProtoQr)
+	resp, err := CheckTicket("0123456789", ProtoQr)
 	if err != nil {
 		fmt.Println(err.Error())
 		t.Error(err)
