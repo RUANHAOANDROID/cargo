@@ -65,6 +65,7 @@ func CheckTicket(ticket string, protocolNo string) (CheckResponse, error) {
 		verifyRequest := VerifyRequest{
 			CorpId:     conf.Icbc.CorpId,
 			CorpId2:    conf.Icbc.CorpId2,
+			ResortId:   checkResponse.ResortId,
 			ProtocolNo: protocolNo,
 			StrTESn:    Authenticator(conf.Uchi.EqpCode),
 		}

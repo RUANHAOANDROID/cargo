@@ -8,6 +8,7 @@ type VerifyRequest struct {
 	StrTESn    string     `json:"strTESn"`
 	TimeStamp  string     `json:"timeStamp"`
 	Version    string     `json:"version"`
+	ResortId   string     `json:"resortId"`
 }
 type VerifyData struct {
 	CientTransNo    string      `json:"cientTransNo"`
