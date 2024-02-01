@@ -2,7 +2,6 @@ package icbc
 
 import (
 	"bytes"
-	"cargo/config"
 	"cargo/pkg"
 	"encoding/json"
 	"fmt"
@@ -11,8 +10,6 @@ import (
 	"net/http"
 	"time"
 )
-
-var conf *config.Config
 
 var contentType = "application/json; charset=utf-8"
 var pathCheckTicket = "/ticket/checkTicket"
