@@ -11,6 +11,8 @@ import (
 
 const bufferSize = 1024 // 1MB 缓冲区大小
 
+var chanMsg *chan msg.Message
+
 // byteArrayToDecimal 将字节数组转换为十进制数
 func byteArrayToDecimal(bytes []byte) int {
 	result := 0
@@ -39,6 +41,7 @@ func process(conn net.Conn) {
 				content := byteArrayToDecimal(buffer[1:])
 				cInt := strconv.Itoa(content)
 				fmt.Println(cInt)
+				//chanMsg <-msg.Message{Type:int(types),Content: content}
 				pkg.APlay(pkg.SoundFiles[8])
 				display.LCDRow(cInt, 8, 40, DISP_FONT12)
 			case "2":
@@ -56,8 +59,6 @@ func process(conn net.Conn) {
 		}
 	}
 }
-
-var chanMsg *chan msg.Message
 
 func StartTcpServer(cm *chan msg.Message) {
 	chanMsg = cm
