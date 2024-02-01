@@ -22,8 +22,9 @@ func process(conn net.Conn) {
 			return
 		}
 		if bytesRead > 0 && buffer[1] != 0 {
-			pkg.Log.Printf("buffer len=%v type=%v,data=%v\n", bytesRead, buffer[:1], buffer[1:])
+			types := string(buffer[:1])
 			content := string(buffer[1:])
+			pkg.Log.Printf("buffer len=%v type=%v,data=%v\n", bytesRead, types, content)
 			display.LCDRow(content, 8, 40, DISP_FONT12)
 			pkg.APlay(pkg.SoundFiles[9])
 			//chanMsg <- msg.Message{Type: int(packet.Type), Content: packetContent}
