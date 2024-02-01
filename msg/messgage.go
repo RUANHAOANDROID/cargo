@@ -2,7 +2,7 @@ package msg
 
 type Message struct {
 	Type    int
-	Content interface{}
+	Content string
 }
 
 const (
