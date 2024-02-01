@@ -43,8 +43,10 @@ func main() {
 				pkg.APlay("sksb.wav")
 			}
 			if resp.RetCode == "0" {
+				pkg.Log.Println("check ticket success")
 				pkg.APlay("skcg.wav")
 			} else {
+				pkg.Log.Println("check ticket fail")
 				pkg.APlay("feifaka.wav")
 			}
 
@@ -55,8 +57,10 @@ func main() {
 				pkg.APlay("sksb.wav")
 			}
 			if resp.RetCode == "0" {
+				pkg.Log.Println("check ticket success")
 				pkg.APlay("skcg.wav")
 			} else {
+				pkg.Log.Println("check ticket fail")
 				pkg.APlay("feifaka.wav")
 			}
 			pkg.Log.Println(resp)
