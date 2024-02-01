@@ -27,7 +27,7 @@ steps:
       password: root
       port: 22
       target: /hao88/app/cargo
-      source: runner
+      source: runner config.yml
   - name: remote-runner
     image: appleboy/drone-ssh:1.7
     settings:

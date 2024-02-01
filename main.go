@@ -2,7 +2,9 @@ package main
 
 import "C"
 import (
+	"cargo/api/icbc"
 	"cargo/clib"
+	"cargo/config"
 	"cargo/msg"
 	"cargo/pkg"
 	"sync"
@@ -11,6 +13,11 @@ import (
 // main  -lpos -lm -lpng -lfontconfig -lfreetype -liconv
 func main() {
 	var wg sync.WaitGroup
+	conf, err := config.Load("config.yml")
+	if err == nil {
+		panic("not find config.yml")
+	}
+	icbc.SetConfig(conf)
 	pkg.Log.Print("Start......1")
 	msgChan := make(chan msg.Message)
 	display := clib.Display{}
