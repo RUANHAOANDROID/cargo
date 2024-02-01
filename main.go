@@ -40,15 +40,16 @@ func main() {
 		case msg.IC_CARD:
 			resp, err := icbc.CheckTicket(cMsg.Content, icbc.ProtoIC)
 			if err != nil {
-				pkg.APlay("ding.wav")
+				pkg.APlay("feifaka.wav")
 			}
-			pkg.APlay("")
+			pkg.APlay("skcg.wav")
 			pkg.Log.Println(resp)
 		case msg.QRCODE:
 			resp, err := icbc.CheckTicket(cMsg.Content, icbc.ProtoQr)
 			if err != nil {
-				pkg.APlay("wuxiaoma.wav")
+				pkg.APlay("feifaka.wav")
 			}
+			pkg.APlay("skcg.wav")
 			pkg.Log.Println(resp)
 		default:
 			fmt.Println("undefined type")
