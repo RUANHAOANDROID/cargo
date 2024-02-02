@@ -104,8 +104,8 @@ int start_tcp(void) {
     return 0;
 }
 
-int start_qr(){
-	printf("c link --start_qr\n");
+int qr_read(){
+	printf("c link --qr_read\n");
 	int qrfd1,qrfd2,ret;
 	unsigned char TmpBuff[1024];
     qrfd1 = QRCode_Open(0);
@@ -134,7 +134,7 @@ int start_qr(){
 	}
 }
 
-void ic_read(void){
+void ic_read(){
 	printf("c link --ic_read\n");
     int ret = -1;
     uint8_t key[] = "\xFF\xFF\xFF\xFF\xFF\xFF";
@@ -280,7 +280,7 @@ func StartC(wg sync.WaitGroup) {
 	wg.Add(1)
 	go func() {
 		wg.Done()
-		C.start_qr()
+		C.qr_read()
 	}()
 	wg.Add(1)
 	go func() {
@@ -294,7 +294,7 @@ func StartC(wg sync.WaitGroup) {
 	//time.Sleep(time.Second)
 	//go func() {
 	//	defer C.close_tcp_connection()
-	//	C.start_qr()
+	//	C.qr_read()
 	//	C.ic_read()
 	//}()
 
