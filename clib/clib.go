@@ -134,8 +134,8 @@ int start_qr(){
 			char str[1024];
 			snprintf(str, sizeof(str), "%s", TmpBuff);
   			memcpy(buffer + 1, TmpBuff, sizeof(TmpBuff));
-			printf("length: [%d]\n",ret);
-			printf("\nQRCODE-> : %s\n",str);
+			printf("QRCODE length: [%d] CONTENT: [%s]\n",ret,str);
+			//printf("\nQRCODE-> : %s\n",str);
 			send(client_socket, buffer, BUFFER_SIZE, 0);
 			usleep(2000000);
 			printf("qr scanner sleep 2s\n");
