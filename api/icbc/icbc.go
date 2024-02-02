@@ -63,7 +63,7 @@ func CheckTicket(ticket string, protocolNo string) (CheckResponse, error) {
 	if err != nil {
 		pkg.Log.Error(err)
 	}
-	pkg.Log.Printf("resp code=%s,msg=%s\n", checkResponse.RetCode, checkResponse.RetMsg)
+	pkg.Log.Printf("resp code=%s,msg=%s,resortId=%s\n", checkResponse.RetCode, checkResponse.RetMsg, checkResponse.ResortId)
 	if checkResponse.RetCode == "0" {
 		pkg.Log.Println("check ticket success! verify ticket")
 		go func() {
@@ -107,6 +107,7 @@ func Authenticator(deviceId string) string {
 	//return ycCode + deviceId
 	return "BCSSHecsun0001" + deviceId
 }
+
 func removeNullCharacters(s string) string {
 	return strings.Replace(s, "\x00", "", -1)
 }
