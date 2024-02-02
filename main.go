@@ -17,6 +17,7 @@ func main() {
 			pkg.Log.Error("main panic:", r)
 		}
 	}()
+	pkg.SetCurrentTime()
 	var wg sync.WaitGroup
 	conf, err := config.Load("config.yml")
 	if err != nil {
@@ -33,6 +34,7 @@ func main() {
 	display.LCDRow(pkg.NowTimeStr(), 8, 40, clib.DISP_FONT12)
 	display.LCDRow("-hao88.cloud", 80, 60, clib.DISP_FONT12)
 	wg.Add(1)
+
 	go func() {
 		wg.Done()
 		clib.StartTcpServer(msgChan)
