@@ -142,7 +142,7 @@ void ic_read(void){
     PICC_Open(0);
 	uint8_t type = 0x01;
 	while(!stop_requested){
-		printf("c ->read mifare card\n")
+		printf("c ->read mifare card\n");
         if(ret) ret = Mifare_PowerOn(0,snr,&snr_len);
         //printf("\n==========Block[%2d]==========\n",i);
         if(!ret) ret = Mifare_AuthenBlock(i * 4,0,key);
