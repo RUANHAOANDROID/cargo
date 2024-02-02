@@ -7,7 +7,6 @@ import (
 	"cargo/config"
 	"cargo/msg"
 	"cargo/pkg"
-	"fmt"
 	"sync"
 )
 
@@ -38,6 +37,7 @@ func main() {
 		pkg.Log.Printf("msg chan-> type=%v,content=%v \n", cMsg.Type, cMsg.Content)
 		switch cMsg.Type {
 		case msg.IC_CARD:
+			pkg.Log.Printf("ic card=%s\n", cMsg.Content)
 			resp, err := icbc.CheckTicket(cMsg.Content, icbc.ProtoIC)
 			if err != nil {
 				pkg.APlay("sksb.wav")
@@ -51,11 +51,13 @@ func main() {
 			}
 			//pkg.Log.Println(resp)
 		case msg.QRCODE:
+			pkg.Log.Printf("qrocde=%s\n", cMsg.Content)
 			resp, err := icbc.CheckTicket(cMsg.Content, icbc.ProtoQr)
-			fmt.Println(resp.RetCode)
 			if err != nil {
+				pkg.Log.Error(err)
 				pkg.APlay("sksb.wav")
 			}
+			pkg.Log.Printf("resp retCode %s\n", cMsg.Content)
 			if resp.RetCode == "0" {
 				pkg.Log.Println("check ticket success")
 				pkg.APlay("skcg.wav")
@@ -65,7 +67,7 @@ func main() {
 			}
 			//pkg.Log.Println(resp)
 		default:
-			fmt.Println("undefined type")
+			pkg.Log.Println("undefined type")
 		}
 	}
 	pkg.Log.Print("End......")
