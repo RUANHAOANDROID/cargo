@@ -23,7 +23,7 @@ const (
 
 // CheckTicket 模拟发起HTTP请求 protocolNo 类型
 func CheckTicket(ticket string, protocolNo string) (CheckResponse, error) {
-	pkg.Log.Printf("check ticket: protocolNo=%v,ticket =%v", protocolNo, ticket)
+	pkg.Log.Printf("CheckTicket: protocolNo=%v,ticket =%v", protocolNo, ticket)
 	localData := time.Now().Local()
 	data := CheckData{
 		ClientType:   "006",
@@ -36,7 +36,7 @@ func CheckTicket(ticket string, protocolNo string) (CheckResponse, error) {
 		CorpId:       conf.Icbc.CorpId,
 		CorpId2:      conf.Icbc.CorpId2,
 		StrTESn:      Authenticator(conf.Uchi.EqpCode),
-		Version:      "1",
+		Version:      "01",
 		PrintControl: "0",
 		TimeStamp:    pkg.Fmt2HMS(localData),
 		ProtocolNo:   protocolNo,
@@ -49,7 +49,6 @@ func CheckTicket(ticket string, protocolNo string) (CheckResponse, error) {
 	}
 	clt := http.Client{}
 	resp, err := clt.Post(conf.Icbc.CheckUrl+pathCheckTicket, contentType, bytes.NewBuffer(requestBody))
-	pkg.Log.Error(resp)
 	if err != nil {
 		pkg.Log.Error(err)
 		pkg.Log.Error(resp)
