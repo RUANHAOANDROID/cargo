@@ -66,16 +66,16 @@ func CheckTicket(ticket string, protocolNo string) (CheckResponse, error) {
 	pkg.Log.Printf("resp code=%s,msg=%s,resortId=%s\n", checkResponse.RetCode, checkResponse.RetMsg, checkResponse.ResortId)
 	if checkResponse.RetCode == "0" {
 		pkg.Log.Println("check ticket success! verify ticket")
-		go func() {
-			verifyRequest := VerifyRequest{
-				CorpId:     conf.Icbc.CorpId,
-				CorpId2:    conf.Icbc.CorpId2,
-				ResortId:   checkResponse.ResortId,
-				ProtocolNo: protocolNo,
-				StrTESn:    Authenticator(conf.Uchi.EqpCode),
-			}
-			VerifyTicket(verifyRequest)
-		}()
+		//go func() {
+		verifyRequest := VerifyRequest{
+			CorpId:     conf.Icbc.CorpId,
+			CorpId2:    conf.Icbc.CorpId2,
+			ResortId:   checkResponse.ResortId,
+			ProtocolNo: protocolNo,
+			StrTESn:    Authenticator(conf.Uchi.EqpCode),
+		}
+		VerifyTicket(verifyRequest)
+		//}()
 	}
 	return checkResponse, err
 }
