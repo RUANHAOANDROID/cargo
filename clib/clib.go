@@ -153,6 +153,7 @@ void ic_read(void){
     PICC_Open(0);
 	uint8_t type = 0x01;
 	while(!stop_requested){
+		printf("read mifare card")
         if(ret) ret = Mifare_PowerOn(0,snr,&snr_len);
         //printf("\n==========Block[%2d]==========\n",i);
         if(!ret) ret = Mifare_AuthenBlock(i * 4,0,key);
@@ -160,7 +161,7 @@ void ic_read(void){
         //if(!ret) dump_data("Mifare Read0",data,data_len);
         if(!ret){
 			Sys_BeepMs(100);
-			dump_data("Mifare Read0",data,data_len);
+			//dump_data("Mifare Read0",data,data_len);
 			memset(buffer, 0, sizeof(buffer));
 			buffer[0]=type;
 			buffer[1]=data[0];
@@ -168,8 +169,8 @@ void ic_read(void){
 			buffer[3]=data[2];
 			buffer[4]=data[3];
 			send(client_socket, buffer, BUFFER_SIZE, 0);
-			usleep(2000000);
 			printf("ic read sensor sleep 2s\n");
+			usleep(2000000);
 		}
 	}
 }
