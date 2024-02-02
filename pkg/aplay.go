@@ -1,7 +1,6 @@
 package pkg
 
 import (
-	"fmt"
 	"os/exec"
 )
 
@@ -29,7 +28,7 @@ func APlay(wav string) {
 	cmd.Stderr = nil
 
 	if err := cmd.Start(); err != nil {
-		fmt.Println("cmd run error:", err)
+		Log.Println("cmd run error:", err)
 		return
 	}
 }
