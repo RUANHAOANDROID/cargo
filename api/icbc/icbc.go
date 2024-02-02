@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"math/rand"
 	"net/http"
+	"strings"
 	"time"
 )
 
@@ -25,6 +26,7 @@ const (
 func CheckTicket(ticket string, protocolNo string) (CheckResponse, error) {
 	pkg.Log.Printf("CheckTicket: protocolNo=%v,ticket =%v", protocolNo, ticket)
 	localData := time.Now().Local()
+	ticket = removeNullCharacters(ticket)
 	data := CheckData{
 		ClientType:   "006",
 		CientTransNo: protocolNo + localData.Format("20060102150405") + random3(),
@@ -104,6 +106,9 @@ func VerifyTicket(request VerifyRequest) (VerifyResponse, error) {
 func Authenticator(deviceId string) string {
 	//return ycCode + deviceId
 	return "BCSSHecsun0001" + deviceId
+}
+func removeNullCharacters(s string) string {
+	return strings.Replace(s, "\x00", "", -1)
 }
 
 /**
