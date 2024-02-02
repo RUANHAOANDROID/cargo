@@ -47,19 +47,21 @@ func CheckTicket(ticket string, protocolNo string) (CheckResponse, error) {
 	if err != nil {
 		pkg.Log.Error(err)
 	}
+	pkg.Log.Println(requestBody)
 	clt := http.Client{}
 	resp, err := clt.Post(conf.Icbc.CheckUrl+pathCheckTicket, contentType, bytes.NewBuffer(requestBody))
 	if err != nil {
 		pkg.Log.Error(err)
 		pkg.Log.Error(resp)
 	}
+	defer resp.Body.Close()
 	//var res map[string]interface{}
 	var checkResponse CheckResponse
 	err = json.NewDecoder(resp.Body).Decode(&checkResponse)
 	if err != nil {
 		pkg.Log.Error(err)
 	}
-	pkg.Log.Println(checkResponse)
+	pkg.Log.Printf("resp %v\n", checkResponse)
 	if checkResponse.RetCode == "0" {
 		pkg.Log.Println("check ticket success! verify ticket")
 		go func() {
@@ -87,6 +89,7 @@ func VerifyTicket(request VerifyRequest) (VerifyResponse, error) {
 	if err != nil {
 		pkg.Log.Error(err)
 	}
+	defer resp.Body.Close()
 	pkg.Log.Info(resp)
 	var verifyResp VerifyResponse
 	if resp.StatusCode != 200 {
