@@ -11,6 +11,11 @@ import (
 
 // CheckTicket 模拟发起HTTP请求 protocolNo 类型
 func CheckTicket(ticket string, protocolNo string) (*CheckResponse, error) {
+	defer func() {
+		if r := recover(); r != nil {
+			fmt.Println("CheckTicket panic:", r)
+		}
+	}()
 	pkg.Log.Printf("CheckTicket: protocolNo=%v,ticket =%v", protocolNo, ticket)
 	localData := time.Now().Local()
 	ticket = removeNullCharacters(ticket)
