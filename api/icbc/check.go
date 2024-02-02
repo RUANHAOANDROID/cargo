@@ -13,7 +13,7 @@ import (
 func CheckTicket(ticket string, protocolNo string) (CheckResponse, error) {
 	defer func() {
 		if r := recover(); r != nil {
-			fmt.Println("CheckTicket panic:", r)
+			pkg.Log.Println("CheckTicket panic:", r)
 		}
 	}()
 	pkg.Log.Printf("CheckTicket: protocolNo=%v,ticket =%v", protocolNo, ticket)
@@ -59,7 +59,7 @@ func CheckTicket(ticket string, protocolNo string) (CheckResponse, error) {
 	pkg.Log.Printf("resp code=%s,msg=%s,resortId=%s\n", checkResponse.RetCode, checkResponse.RetMsg, checkResponse.ResortId)
 	if checkResponse.RetCode == "0" {
 		pkg.Log.Println("check ticket success! verify ticket")
-		VerifyTicket(protocolNo, &checkResponse)
+		VerifyTicket(protocolNo, checkResponse)
 	}
 	return checkResponse, err
 }
