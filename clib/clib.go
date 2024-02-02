@@ -84,6 +84,7 @@ int send_message(int client_socket, const char *message) {
 }
 
 void close_connection(int client_socket) {
+	printf("c close_connection\n")
 	stop_requested=1;
 	client_socket=-1;
 	// 关闭套接字
@@ -102,19 +103,7 @@ int start_tcp(void) {
     }
     return 0;
 }
-int start_card(){
-		printf("C send1\n");
-	while(!stop_requested){
-  		sleep(1); // 等待1秒钟再发送下一条消息
-        const char *message = "Hello, Send1!";
-        if (send_message(client_socket, message) == -1) {
-            printf("send message==--1\n");
-            fprintf(stderr, "Failed to send message\n");
-            close_connection(client_socket);
-            return 1;
-        }
-	}
-}
+
 int start_qr(){
 	printf("c link --start_qr\n");
 	int qrfd1,qrfd2,ret;
@@ -153,7 +142,7 @@ void ic_read(void){
     PICC_Open(0);
 	uint8_t type = 0x01;
 	while(!stop_requested){
-		printf("read mifare card")
+		printf("c ->read mifare card\n")
         if(ret) ret = Mifare_PowerOn(0,snr,&snr_len);
         //printf("\n==========Block[%2d]==========\n",i);
         if(!ret) ret = Mifare_AuthenBlock(i * 4,0,key);
@@ -169,13 +158,11 @@ void ic_read(void){
 			buffer[3]=data[2];
 			buffer[4]=data[3];
 			send(client_socket, buffer, BUFFER_SIZE, 0);
-			printf("ic read sensor sleep 2s\n");
+			printf("c ->ic read sensor sleep 2s\n");
 			usleep(2000000);
 		}
 	}
 }
-
-//close_connection(client_socket);
 */
 import "C"
 import (
