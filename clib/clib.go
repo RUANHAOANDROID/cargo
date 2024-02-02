@@ -130,7 +130,7 @@ int start_qr(){
 			usleep(2000000);
 			printf("c ->QR scanner sleep 2s\n");
 		}
-		usleep(300000);
+		usleep(200000);
 	}
 }
 
