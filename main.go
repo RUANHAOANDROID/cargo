@@ -17,7 +17,7 @@ func main() {
 			pkg.Log.Error("main panic:", r)
 		}
 	}()
-	pkg.SetCurrentTime()
+	pkg.SetSysTime()
 	var wg sync.WaitGroup
 	conf, err := config.Load("config.yml")
 	if err != nil {

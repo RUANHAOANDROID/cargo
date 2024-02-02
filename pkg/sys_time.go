@@ -11,7 +11,7 @@ type SNTime struct {
 	SysTime2 string `json:"sysTime2"`
 }
 
-func SetCurrentTime() {
+func SetSysTime() {
 	clit := &http.Client{}
 	resp, err := clit.Get("https://quan.suning.com/getSysTime.do")
 	if err != nil {
