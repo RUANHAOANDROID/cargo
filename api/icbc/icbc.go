@@ -87,6 +87,7 @@ func VerifyTicket(request VerifyRequest) (VerifyResponse, error) {
 	if err != nil {
 		pkg.Log.Error(err)
 	}
+	pkg.Log.Printf("verify request =%q\n", jsonRequest)
 	resp, err := clt.Post(conf.Icbc.VerifyUrl+pathVerifyTicket, contentType, bytes.NewBuffer(jsonRequest))
 	if err != nil {
 		pkg.Log.Error(err)
