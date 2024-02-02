@@ -10,7 +10,7 @@ import (
 )
 
 // CheckTicket 模拟发起HTTP请求 protocolNo 类型
-func CheckTicket(ticket string, protocolNo string) (*CheckResponse, error) {
+func CheckTicket(ticket string, protocolNo string) (CheckResponse, error) {
 	defer func() {
 		if r := recover(); r != nil {
 			fmt.Println("CheckTicket panic:", r)
@@ -61,7 +61,7 @@ func CheckTicket(ticket string, protocolNo string) (*CheckResponse, error) {
 		pkg.Log.Println("check ticket success! verify ticket")
 		VerifyTicket(protocolNo, &checkResponse)
 	}
-	return &checkResponse, err
+	return checkResponse, err
 }
 
 type CheckRequest struct {
