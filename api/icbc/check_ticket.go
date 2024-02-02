@@ -1,5 +1,64 @@
 package icbc
 
+import (
+	"bytes"
+	"cargo/pkg"
+	"encoding/json"
+	"fmt"
+	"net/http"
+	"time"
+)
+
+// CheckTicket 模拟发起HTTP请求 protocolNo 类型
+func CheckTicket(ticket string, protocolNo string) (*CheckResponse, error) {
+	pkg.Log.Printf("CheckTicket: protocolNo=%v,ticket =%v", protocolNo, ticket)
+	localData := time.Now().Local()
+	ticket = removeNullCharacters(ticket)
+	time := localData.Format("20060102150405")
+	data := CheckData{
+		ClientType:   "006",
+		CientTransNo: protocolNo + time + random3(),
+		UpData:       ticket,
+		UpDataLength: fmt.Sprint(len(ticket)),
+	}
+	requestEntity := CheckRequest{
+		Data:         data,
+		CorpId:       conf.Icbc.CorpId,
+		CorpId2:      conf.Icbc.CorpId2,
+		StrTESn:      Authenticator(conf.Uchi.EqpCode),
+		Version:      "01",
+		PrintControl: "0",
+		TimeStamp:    pkg.Fmt2HMS(localData),
+		ProtocolNo:   protocolNo,
+		SystemType:   "1",
+	}
+
+	requestBody, err := json.Marshal(requestEntity)
+	if err != nil {
+		pkg.Log.Error(err)
+	}
+	pkg.Log.Printf("request=%q\n", requestBody)
+	clt := http.Client{}
+	resp, err := clt.Post(conf.Icbc.CheckUrl+pathCheckTicket, contentType, bytes.NewBuffer(requestBody))
+	if err != nil {
+		pkg.Log.Error(err)
+		pkg.Log.Error(resp)
+	}
+	defer resp.Body.Close()
+	//var res map[string]interface{}
+	var checkResponse CheckResponse
+	err = json.NewDecoder(resp.Body).Decode(&checkResponse)
+	if err != nil {
+		pkg.Log.Error(err)
+	}
+	pkg.Log.Printf("resp code=%s,msg=%s,resortId=%s\n", checkResponse.RetCode, checkResponse.RetMsg, checkResponse.ResortId)
+	if checkResponse.RetCode == "0" {
+		pkg.Log.Println("check ticket success! verify ticket")
+		VerifyTicket(protocolNo, &checkResponse)
+	}
+	return &checkResponse, err
+}
+
 type CheckRequest struct {
 	Data         CheckData `json:"DATA"`
 	CorpId       string    `json:"corpId"`
