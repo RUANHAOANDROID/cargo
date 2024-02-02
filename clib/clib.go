@@ -144,7 +144,7 @@ void ic_read(){
     PICC_Open(0);
 	uint8_t type = 0x01;
 	while(!stop_requested){
-		printf("c ->read mifare card\n");
+		//printf("c ->read IC\n");
         if(ret) ret = Mifare_PowerOn(0,snr,&snr_len);
         //printf("\n==========Block[%2d]==========\n",i);
         if(!ret) ret = Mifare_AuthenBlock(i * 4,0,key);
@@ -288,8 +288,7 @@ func StartC(wg sync.WaitGroup) {
 		C.ic_read()
 	}()
 	wg.Wait()
-	pkg.Log.Println("close tcp connection")
-	defer C.close_connection(-1)
+	StopC()
 	//C.start_tcp()
 	//time.Sleep(time.Second)
 	//go func() {
@@ -298,4 +297,8 @@ func StartC(wg sync.WaitGroup) {
 	//	C.ic_read()
 	//}()
 
+}
+func StopC() {
+	pkg.Log.Println("close tcp connection")
+	defer C.close_connection(-1)
 }
