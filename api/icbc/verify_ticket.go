@@ -4,11 +4,17 @@ import (
 	"bytes"
 	"cargo/pkg"
 	"encoding/json"
+	"fmt"
 	"net/http"
 )
 
 // VerifyTicket 核销票据
 func VerifyTicket(protocolNo string, ctr *CheckResponse) error {
+	defer func() {
+		if r := recover(); r != nil {
+			fmt.Println("VerifyTicket panic:", r)
+		}
+	}()
 	vrt := VerifyRequest{
 		CorpId:     conf.Icbc.CorpId,
 		CorpId2:    conf.Icbc.CorpId2,
