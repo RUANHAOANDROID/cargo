@@ -47,7 +47,7 @@ func CheckTicket(ticket string, protocolNo string) (CheckResponse, error) {
 	if err != nil {
 		pkg.Log.Error(err)
 	}
-	pkg.Log.Println(requestBody)
+	pkg.Log.Println(string(requestBody))
 	clt := http.Client{}
 	resp, err := clt.Post(conf.Icbc.CheckUrl+pathCheckTicket, contentType, bytes.NewBuffer(requestBody))
 	if err != nil {
@@ -61,7 +61,7 @@ func CheckTicket(ticket string, protocolNo string) (CheckResponse, error) {
 	if err != nil {
 		pkg.Log.Error(err)
 	}
-	pkg.Log.Printf("resp %v\n", checkResponse)
+	pkg.Log.Printf("resp code=%s,msg=%s\n", checkResponse.RetCode, checkResponse.RetMsg)
 	if checkResponse.RetCode == "0" {
 		pkg.Log.Println("check ticket success! verify ticket")
 		go func() {
