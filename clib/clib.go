@@ -130,7 +130,7 @@ int qr_read(){
 			usleep(3000000);
 			printf("c ->QR scanner sleep 2s\n");
 		}
-		usleep(500000);
+		usleep(200000);
 	}
 }
 
@@ -163,7 +163,7 @@ void ic_read(){
 			printf("c ->ic read sensor sleep 2s\n");
 			usleep(3000000);
 		}
-		usleep(500000);
+		usleep(200000);
 	}
 }
 */
