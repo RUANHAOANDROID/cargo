@@ -47,7 +47,7 @@ func CheckTicket(ticket string, protocolNo string) (CheckResponse, error) {
 	if err != nil {
 		pkg.Log.Error(err)
 	}
-	pkg.Log.Println(string(requestBody))
+	pkg.Log.Println(requestBody)
 	clt := http.Client{}
 	resp, err := clt.Post(conf.Icbc.CheckUrl+pathCheckTicket, contentType, bytes.NewBuffer(requestBody))
 	if err != nil {
@@ -80,7 +80,7 @@ func CheckTicket(ticket string, protocolNo string) (CheckResponse, error) {
 
 // VerifyTicket 核销票据
 func VerifyTicket(request VerifyRequest) (VerifyResponse, error) {
-	clt := http.Client{}
+	clt := &http.Client{}
 	jsonRequest, err := json.Marshal(request)
 	if err != nil {
 		pkg.Log.Error(err)
