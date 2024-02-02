@@ -47,7 +47,7 @@ func CheckTicket(ticket string, protocolNo string) (CheckResponse, error) {
 	if err != nil {
 		pkg.Log.Error(err)
 	}
-	pkg.Log.Println(requestBody)
+	pkg.Log.Printf("request=%q\n", requestBody)
 	clt := http.Client{}
 	resp, err := clt.Post(conf.Icbc.CheckUrl+pathCheckTicket, contentType, bytes.NewBuffer(requestBody))
 	if err != nil {
