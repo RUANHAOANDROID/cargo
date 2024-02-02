@@ -10,7 +10,7 @@ import (
 )
 
 // CheckTicket 模拟发起HTTP请求 protocolNo 类型
-func CheckTicket(ticket string, protocolNo string) (CheckResponse, error) {
+func CheckTicket(ticket string, protocolNo string) (*CheckResponse, error) {
 	defer func() {
 		if r := recover(); r != nil {
 			pkg.Log.Println("CheckTicket panic:", r)
@@ -47,7 +47,7 @@ func CheckTicket(ticket string, protocolNo string) (CheckResponse, error) {
 	resp, err := clt.Post(conf.Icbc.CheckUrl+pathCheckTicket, contentType, bytes.NewBuffer(requestBody))
 	if err != nil {
 		pkg.Log.Error(err)
-		pkg.Log.Error(resp)
+		return nil, err
 	}
 	defer resp.Body.Close()
 	//var res map[string]interface{}
@@ -55,13 +55,14 @@ func CheckTicket(ticket string, protocolNo string) (CheckResponse, error) {
 	err = json.NewDecoder(resp.Body).Decode(&checkResponse)
 	if err != nil {
 		pkg.Log.Error(err)
+		return nil, err
 	}
 	pkg.Log.Printf("resp code=%s,msg=%s,resortId=%s\n", checkResponse.RetCode, checkResponse.RetMsg, checkResponse.ResortId)
 	if checkResponse.RetCode == "0" {
 		pkg.Log.Println("check ticket success! verify ticket")
-		VerifyTicket(protocolNo, checkResponse)
+		VerifyTicket(protocolNo, &checkResponse)
 	}
-	return checkResponse, err
+	return &checkResponse, err
 }
 
 type CheckRequest struct {

@@ -12,6 +12,11 @@ import (
 
 // main  -lpos -lm -lpng -lfontconfig -lfreetype -liconv
 func main() {
+	defer func() {
+		if r := recover(); r != nil {
+			pkg.Log.Error("main panic:", r)
+		}
+	}()
 	var wg sync.WaitGroup
 	conf, err := config.Load("config.yml")
 	if err != nil {

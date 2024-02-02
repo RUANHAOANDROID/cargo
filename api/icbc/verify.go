@@ -8,7 +8,7 @@ import (
 )
 
 // VerifyTicket 核销票据
-func VerifyTicket(protocolNo string, ctr CheckResponse) error {
+func VerifyTicket(protocolNo string, ctr *CheckResponse) error {
 	defer func() {
 		if r := recover(); r != nil {
 			pkg.Log.Println("VerifyTicket panic:", r)
