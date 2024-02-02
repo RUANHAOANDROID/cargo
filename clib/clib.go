@@ -134,11 +134,11 @@ int start_qr(){
 			char str[1024];
 			snprintf(str, sizeof(str), "%s", TmpBuff);
   			memcpy(buffer + 1, TmpBuff, sizeof(TmpBuff));
-			printf("QRCODE length: [%d] CONTENT: [%s]\n",ret,str);
+			printf("c-> QR len=%d cod=%s\n",ret,str);
 			//printf("\nQRCODE-> : %s\n",str);
 			send(client_socket, buffer, BUFFER_SIZE, 0);
 			usleep(2000000);
-			printf("qr scanner sleep 2s\n");
+			printf("c ->QR scanner sleep 2s\n");
 		}
 	}
 }
@@ -159,6 +159,7 @@ void ic_read(void){
         if(!ret) ret = Mifare_ReadBlock(0 + i * 4,data);
         //if(!ret) dump_data("Mifare Read0",data,data_len);
         if(!ret){
+			Sys_BeepMs(100);
 			dump_data("Mifare Read0",data,data_len);
 			memset(buffer, 0, sizeof(buffer));
 			buffer[0]=type;
