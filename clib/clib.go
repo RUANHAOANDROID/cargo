@@ -112,6 +112,7 @@ int start_qr(){
     qrfd2 = QRCode_Open(1);
 	uint8_t type = 0x02;
 	while(!stop_requested){
+		printf("c ->read QR\n");
 		ret = QRCode_RxStr(qrfd1, TmpBuff, 1024, 100);
 		if(ret <= 0)
 			ret = QRCode_RxStr(qrfd2, TmpBuff, 1024, 100);
