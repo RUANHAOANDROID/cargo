@@ -57,7 +57,6 @@ func main() {
 				pkg.Log.Error(err)
 				pkg.APlay("sksb.wav")
 			}
-			pkg.Log.Printf("resp retCode %s\n", cMsg.Content)
 			if resp.RetCode == "0" {
 				pkg.Log.Println("check ticket success")
 				pkg.APlay("skcg.wav")
