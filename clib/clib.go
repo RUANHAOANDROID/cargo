@@ -162,6 +162,7 @@ void ic_read(void){
 			printf("c ->ic read sensor sleep 2s\n");
 			usleep(2000000);
 		}
+		usleep(200000);
 	}
 }
 */
