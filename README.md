@@ -1,1 +1,1 @@
-arm linux 
+arm linux  Slackware 
