@@ -6,7 +6,7 @@ steps:
     image: appleboy/drone-git-push
     settings:
       branch: master
-      remote: "git@github.com:RUANHAOANDROID/cargo.git"
+      remote: "git@github.com/RUANHAOANDROID/cargo.git"
       force: false
       commit: true
       ssh_key: #使用上面设置的key进行推送
