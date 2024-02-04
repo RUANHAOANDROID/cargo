@@ -2,6 +2,16 @@ kind: pipeline
 name: arm-cargo-build
 type: docker
 steps:
+  - name: sync-to-github
+    image: appleboy/drone-git-push
+    settings:
+      branch: master
+      remote: git@github.com:RUANHAOANDROID/cargo.git #远程仓库地址
+      remote_name: master   #需要推送到哪个分支
+      force: true    #是否强制推送
+      commit: true
+      ssh_key:   #使用上面设置的key进行推送
+        from_secret: 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
   - name: build
     image: ubuntu:16.04
     volumes: #挂载卷
