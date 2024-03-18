@@ -62,7 +62,7 @@ volumes:
       path: /mnt/user/appdata/drone/tools/cargo/opt/EmbedSky/gcc-linaro-5.3.1-2016.05-x86_64_arm-linux-gnueabihf
   - name: gosdk
     host:
-      path: /mnt/disk1/appdata/drone/tools/gosdk/go
+      path: /mnt/user/appdata/drone/tools/gosdk/go
   - name: gocache
     host:
-      path: /mnt/disk1/appdata/drone/tools/cargo/gocache
+      path: /mnt/user/appdata/drone/tools/cargo/gocache
