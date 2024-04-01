@@ -15,10 +15,10 @@ func VerifyTicket(protocolNo string, ctr *CheckResponse) error {
 		}
 	}()
 	vrt := VerifyRequest{
-		CorpId:     conf.Icbc.CorpId,
-		CorpId2:    conf.Icbc.CorpId2,
+		CorpId:     emcsConf.ManufacturerId1,
+		CorpId2:    emcsConf.ManufacturerId2,
 		ProtocolNo: protocolNo,
-		StrTESn:    Authenticator(conf.Uchi.EqpCode),
+		StrTESn:    Authenticator(emcsConf.Yccode, emcsConf.EquipmentNo),
 	}
 	vrt.Data.CientTransNo = ctr.CientTransNo
 	vrt.Data.SpotId = ctr.SpotId
@@ -33,7 +33,7 @@ func VerifyTicket(protocolNo string, ctr *CheckResponse) error {
 		return err
 	}
 	pkg.Log.Printf("verify request =%q\n", requestBody)
-	resp, err := clt.Post(conf.Icbc.VerifyUrl+pathVerifyTicket, contentType, bytes.NewBuffer(requestBody))
+	resp, err := clt.Post(emcsConf.CheckUrl+pathVerifyTicket, contentType, bytes.NewBuffer(requestBody))
 	if err != nil {
 		pkg.Log.Error(err)
 		return err
