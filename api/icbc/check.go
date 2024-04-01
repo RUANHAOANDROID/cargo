@@ -28,9 +28,9 @@ func CheckTicket(ticket string, protocolNo string) (*CheckResponse, error) {
 	}
 	requestEntity := CheckRequest{
 		Data:         data,
-		CorpId:       conf.Icbc.CorpId,
-		CorpId2:      conf.Icbc.CorpId2,
-		StrTESn:      Authenticator(conf.Uchi.EqpCode),
+		CorpId:       emcsConf.ManufacturerId1,
+		CorpId2:      emcsConf.ManufacturerId1,
+		StrTESn:      Authenticator(emcsConf.Yccode, emcsConf.EquipmentNo),
 		Version:      "01",
 		PrintControl: "0",
 		TimeStamp:    pkg.Fmt2HMS(localData),
@@ -44,7 +44,7 @@ func CheckTicket(ticket string, protocolNo string) (*CheckResponse, error) {
 	}
 	pkg.Log.Printf("request=%q\n", requestBody)
 	clt := http.Client{}
-	resp, err := clt.Post(conf.Icbc.CheckUrl+pathCheckTicket, contentType, bytes.NewBuffer(requestBody))
+	resp, err := clt.Post(emcsConf.CheckUrl+pathCheckTicket, contentType, bytes.NewBuffer(requestBody))
 	if err != nil {
 		pkg.Log.Error(err)
 		return nil, err

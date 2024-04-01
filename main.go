@@ -24,7 +24,7 @@ func main() {
 	if err != nil {
 		panic("not find config.yml")
 	}
-	icbc.SetConfig(conf)
+
 	pkg.Log.Print("Start......1")
 	msgChan := make(chan msg.Message)
 	display := clib.Display{}
@@ -39,6 +39,7 @@ func main() {
 		pkg.Log.Error(err)
 		panic("获取配置错误！")
 	}
+	icbc.SetConfig(conf, emcsConf)
 	display.LCDRow(emcsConf.EquipmentNo, 80, 60, clib.DISP_FONT12)
 	//display.LCDRow("-hao88.cloud", 80, 60, clib.DISP_FONT12)
 	wg.Add(1)

@@ -2,6 +2,7 @@ package icbc
 
 import (
 	"cargo/config"
+	"cargo/emcs"
 	"fmt"
 	"math/rand"
 	"strings"
@@ -12,9 +13,11 @@ var contentType = "application/json; charset=utf-8"
 var pathCheckTicket = "/ticket/checkTicket"
 var pathVerifyTicket = "/ticket/verifyTicket"
 var conf *config.Config
+var emcsConf *emcs.Config
 
-func SetConfig(config *config.Config) {
+func SetConfig(config *config.Config, emcsConfig *emcs.Config) {
 	conf = config
+	emcsConf = emcsConfig
 }
 
 const (
@@ -24,9 +27,9 @@ const (
 	ProtoICAll = "009" //雪场雪卡+IC
 )
 
-func Authenticator(deviceId string) string {
+func Authenticator(uchiCode, deviceId string) string {
 	//return ycCode + deviceId
-	return "BCSSHecsun0001" + deviceId
+	return uchiCode + deviceId
 }
 
 func removeNullCharacters(s string) string {
