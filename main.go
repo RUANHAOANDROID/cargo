@@ -5,6 +5,7 @@ import (
 	"cargo/api/icbc"
 	"cargo/clib"
 	"cargo/config"
+	"cargo/emcs"
 	"cargo/msg"
 	"cargo/pkg"
 	"sync"
@@ -32,7 +33,14 @@ func main() {
 
 	display.LCDRow("C Test D", 8, 8, clib.DISP_FONT24)
 	display.LCDRow(pkg.NowTimeStr(), 8, 40, clib.DISP_FONT12)
-	display.LCDRow("-hao88.cloud", 80, 60, clib.DISP_FONT12)
+	emcsConf, err := emcs.GetConfig(conf.ServerUrl)
+	if err != nil {
+		display.LCDRow(err.Error(), 80, 60, clib.DISP_FONT12)
+		pkg.Log.Error(err)
+		panic("获取配置错误！")
+	}
+	display.LCDRow(emcsConf.EquipmentNo, 80, 60, clib.DISP_FONT12)
+	//display.LCDRow("-hao88.cloud", 80, 60, clib.DISP_FONT12)
 	wg.Add(1)
 
 	go func() {

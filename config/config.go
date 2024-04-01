@@ -10,20 +10,8 @@ import (
 
 // Config 系统整体配置
 type Config struct {
-	App struct {
-		AppName  string `yaml:"appName,omitempty"`
-		Version  string `yaml:"version"`
-		Platform string `yaml:"platform"`
-	}
-	Icbc struct {
-		CheckUrl  string
-		VerifyUrl string
-		CorpId    string
-		CorpId2   string
-	}
-	Uchi struct {
-		EqpCode string
-	}
+	Version   string `yaml:"version"`
+	ServerUrl string `yaml:"serverUrl"`
 }
 
 var path string
