@@ -9,6 +9,7 @@ import (
 	"cargo/msg"
 	"cargo/pkg"
 	"sync"
+	"time"
 )
 
 // main  -lpos -lm -lpng -lfontconfig -lfreetype -liconv
@@ -48,6 +49,7 @@ func main() {
 		wg.Done()
 		clib.StartTcpServer(msgChan)
 	}()
+	time.Sleep(1000)
 	go clib.StartC(wg)
 	for cMsg := range msgChan {
 		pkg.Log.Printf("msg chan-> type=%v,content=%v \n", cMsg.Type, cMsg.Content)
