@@ -274,6 +274,7 @@ func (d Display) LCDRow(text string, x int16, y int16, mode C.uint) {
 
 // StartC 启动C方法
 func StartC(wg sync.WaitGroup) {
+	pkg.Log.Println("Start C TCP Client")
 	C.start_tcp()
 	time.Sleep(time.Second)
 	wg.Add(1)

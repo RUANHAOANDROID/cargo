@@ -26,7 +26,7 @@ steps:
       username: root
       password: root
       port: 22
-      target: /hao88/app/cargo
+      target: /cargo
       source: config.yml
   - name: scp-runner
     image: appleboy/drone-scp:1.6
@@ -35,7 +35,7 @@ steps:
       username: root
       password: root
       port: 22
-      target: /hao88/app/cargo
+      target: /cargo
       source: runner
 #  - name: remote-runner
 #    image: appleboy/drone-ssh:1.7
