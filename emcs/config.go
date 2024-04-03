@@ -60,7 +60,7 @@ func GetConfig(url string) (*Config, error) {
 		pkg.Log.Println("获取SN失败:", err)
 		return nil, err
 	}
-	pkg.Log.Println(url)
+	pkg.Log.Println(sn)
 	// 构建请求体
 	requestBody, err := json.Marshal(map[string]interface{}{
 		"data": map[string]string{

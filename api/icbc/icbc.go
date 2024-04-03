@@ -19,6 +19,7 @@ var emcsConf *emcs.Config
 func SetConfig(config *config.Config, emcsConfig *emcs.Config) {
 	conf = config
 	emcsConf = emcsConfig
+	pkg.Log.Println(config)
 	pkg.Log.Println(emcsConf)
 }
 
