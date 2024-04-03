@@ -88,7 +88,6 @@ func GetConfig(url string) (*Config, error) {
 		fmt.Println("Error decoding response:", err)
 		return nil, err
 	}
-	pkg.Log.Println(response)
 	if response.Code == 0 {
 		var conf Config
 		err = json.Unmarshal(response.Data, &conf)

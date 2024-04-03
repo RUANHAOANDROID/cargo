@@ -3,6 +3,7 @@ package icbc
 import (
 	"cargo/config"
 	"cargo/emcs"
+	"cargo/pkg"
 	"fmt"
 	"math/rand"
 	"strings"
@@ -18,6 +19,7 @@ var emcsConf *emcs.Config
 func SetConfig(config *config.Config, emcsConfig *emcs.Config) {
 	conf = config
 	emcsConf = emcsConfig
+	pkg.Log.Println(emcsConf)
 }
 
 const (
