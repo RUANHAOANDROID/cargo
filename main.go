@@ -80,11 +80,11 @@ func parseResp(err error, resp *icbc.CheckResponse) {
 		return
 	}
 	if resp.RetCode == "0" {
-		pkg.Log.Println("check ticket success")
+		pkg.Log.Println("Check ticket SUCCESS!")
 		go speaker.Speaker(resp.RetMsg, true)
 		screen.Show(resp.RetMsg, true)
 	} else {
-		pkg.Log.Println("check ticket fail")
+		pkg.Log.Println("Check ticket Fail!")
 		go speaker.Speaker(resp.RetMsg, false)
 		screen.Show(resp.RetMsg, false)
 	}

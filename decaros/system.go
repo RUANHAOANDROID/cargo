@@ -26,7 +26,9 @@ func SetNTP() {
 	cmd.Stdout = &out
 	// 执行命令
 	err := cmd.Run()
-	pkg.Log.Println(err)
+	if err != nil {
+		pkg.Log.Println(err)
+	}
 	// 输出 SN 码
 	outText := out.String()
 	pkg.Log.Println(outText)
