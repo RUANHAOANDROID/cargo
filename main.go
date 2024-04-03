@@ -5,7 +5,6 @@ import (
 	"cargo/api/icbc"
 	"cargo/clib"
 	"cargo/config"
-	"cargo/decaros"
 	"cargo/emcs"
 	"cargo/msg"
 	"cargo/pkg"
@@ -34,8 +33,7 @@ func main() {
 	display.Init()
 	display.ClearScreen()
 	screen.Set(&display)
-	display.LCDRow("C Test D", 8, 8, clib.DISP_FONT24)
-	display.LCDRow(pkg.NowTimeStr(), 8, 40, clib.DISP_FONT12)
+	display.Show("轻刷卡", "")
 	emcsConf, err := emcs.GetConfig(conf.ServerUrl)
 	if err != nil {
 		display.LCDRow(err.Error(), 60, 80, clib.DISP_FONT12)
@@ -43,9 +41,7 @@ func main() {
 		panic("获取配置错误！")
 	}
 	icbc.SetConfig(conf, emcsConf)
-	display.LCDRow(pkg.IPV4(), 0, 68, clib.DISP_FONT12)
-	sn, err := decaros.GetSN()
-	display.LCDRow(sn, 94, 68, clib.DISP_FONT12)
+
 	wg.Add(1)
 
 	go func() {

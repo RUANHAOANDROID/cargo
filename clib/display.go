@@ -14,6 +14,7 @@ package clib
 */
 import "C"
 import (
+	"cargo/decaros"
 	"cargo/pkg"
 	"unsafe"
 )
@@ -65,4 +66,19 @@ func (d Display) ShowTitleArea(title string) {
 }
 func (d Display) ShowContentArea(content string) {
 	d.LCDRow(pkg.NowTimeStr(), 2, 30, DISP_FONT12)
+}
+func (d Display) ShowBottomArea() {
+	d.LCDRow(pkg.IPV4(), 0, 68, DISP_FONT12)
+	sn, err := decaros.GetSN()
+	if err != nil {
+		d.LCDRow("sn err", 94, 68, DISP_FONT12)
+		return
+	}
+	d.LCDRow(sn, 94, 68, DISP_FONT12)
+}
+func (d Display) Show(title string, content string) {
+	d.ClearScreen()
+	d.ShowTitleArea(title)
+	d.ShowContentArea(content)
+	d.ShowBottomArea()
 }

@@ -11,6 +11,7 @@ func Set(dp *clib.Display) {
 	display = dp
 }
 func Show(msg string, success bool) {
+	display.ClearScreen()
 	if success {
 		display.ShowTitleArea("验票成功")
 		display.ShowContentArea(msg)
