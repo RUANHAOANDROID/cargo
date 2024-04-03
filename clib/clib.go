@@ -274,21 +274,20 @@ func (d Display) LCDRow(text string, x int16, y int16, mode C.uint) {
 
 // StartC 启动C方法
 func StartC(wg sync.WaitGroup) {
-	pkg.Log.Println("Start C TCP Client")
-	C.start_tcp()
+	pkg.Log.Println("Start C TCP Client wait 1 Second---")
 	time.Sleep(time.Second)
+	defer StopC()
+	C.start_tcp()
 	wg.Add(1)
 	go func() {
-		wg.Done()
+		defer wg.Done()
 		C.qr_read()
 	}()
 	wg.Add(1)
 	go func() {
-		wg.Done()
+		defer wg.Done()
 		C.ic_read()
 	}()
-	defer wg.Wait()
-	StopC()
 	//C.start_tcp()
 	//time.Sleep(time.Second)
 	//go func() {
