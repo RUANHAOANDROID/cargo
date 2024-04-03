@@ -13,8 +13,8 @@ steps:
         path: /root/go/pkg/mod/
     commands:
       - |
-        echo " "
-        echo "sha: ${DRONE_COMMIT_SHA}" >> config.yml
+        echo ""
+        echo 'sha: "${DRONE_COMMIT_SHA}"' >> config.yml
       - export PATH=$PATH:/go/bin/
       - export PATH=$PATH:/gcc/bin/
       - chmod +x build.sh
