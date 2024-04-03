@@ -61,13 +61,13 @@ func (d Display) LCDRow(text string, x int16, y int16, mode C.uint) {
 	cY := C.uint16_t(y)
 	C.LCD_Display_Row(cTitle, cY, cX, mode)
 }
-func (d Display) ShowTitleArea(title string) {
+func (d Display) showTitleArea(title string) {
 	d.LCDRow(title, 2, 2, DISP_FONT24)
 }
-func (d Display) ShowContentArea(content string) {
-	d.LCDRow(pkg.NowTimeStr(), 2, 30, DISP_FONT12)
+func (d Display) showContentArea(content string) {
+	d.LCDRow(content, 2, 30, DISP_FONT12)
 }
-func (d Display) ShowBottomArea() {
+func (d Display) showBottomArea() {
 	d.LCDRow(pkg.IPV4(), 0, 68, DISP_FONT12)
 	sn, err := decaros.GetSN()
 	if err != nil {
@@ -78,7 +78,7 @@ func (d Display) ShowBottomArea() {
 }
 func (d Display) Show(title string, content string) {
 	d.ClearScreen()
-	d.ShowTitleArea(title)
-	d.ShowContentArea(content)
-	d.ShowBottomArea()
+	d.showTitleArea(title)
+	d.showContentArea(content)
+	d.showBottomArea()
 }
