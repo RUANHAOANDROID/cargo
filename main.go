@@ -43,8 +43,8 @@ func main() {
 	}
 	icbc.SetConfig(conf, emcsConf)
 	sn, err := decaros.GetSN()
-	display.LCDRow(sn, 0, 68, clib.DISP_FONT12)
-	display.LCDRow(pkg.IPV4(), 80, 68, clib.DISP_FONT12)
+	display.LCDRow(sn, 0, 90, clib.DISP_FONT12)
+	//display.LCDRow(pkg.IPV4(), 80, 68, clib.DISP_FONT12)
 	//display.LCDRow("-hao88.cloud", 80, 60, clib.DISP_FONT12)
 	wg.Add(1)
 
