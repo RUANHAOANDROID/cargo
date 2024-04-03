@@ -19,8 +19,8 @@ var emcsConf *emcs.Config
 func SetConfig(config *config.Config, emcsConfig *emcs.Config) {
 	conf = config
 	emcsConf = emcsConfig
-	pkg.Log.Println(config)
-	pkg.Log.Println(emcsConf)
+	pkg.Log.Printf("version=%s,url=%s,sha=%s", config.Version, config.ServerUrl, config.Sha)
+	pkg.Log.Printf("url=%s,eqp=%s,ycode=%s", emcsConf.CheckUrl, emcsConf.EquipmentNo, emcsConf.Yccode)
 }
 
 const (

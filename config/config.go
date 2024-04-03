@@ -12,6 +12,7 @@ import (
 type Config struct {
 	Version   string `yaml:"version"`
 	ServerUrl string `yaml:"serverUrl"`
+	Sha       string `yaml:"sha"`
 }
 
 var path string

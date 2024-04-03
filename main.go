@@ -26,7 +26,6 @@ func main() {
 	if err != nil {
 		panic("not find config.yml")
 	}
-	pkg.Log.Println(conf)
 	msgChan := make(chan msg.Message)
 	display := clib.Display{}
 	display.Init()
