@@ -54,11 +54,13 @@ type Response struct {
 }
 
 func GetConfig(url string) (*Config, error) {
+	pkg.Log.Println(url)
 	sn, err := decaros.GetSN()
 	if err != nil {
 		pkg.Log.Println("获取SN失败:", err)
 		return nil, err
 	}
+	pkg.Log.Println(url)
 	// 构建请求体
 	requestBody, err := json.Marshal(map[string]interface{}{
 		"data": map[string]string{
