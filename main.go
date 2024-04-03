@@ -33,17 +33,17 @@ func main() {
 	display.Init()
 	display.ClearScreen()
 	screen.Set(&display)
-	display.Show("轻刷卡", "")
+	display.Show("启动中..", "正在获取配置..")
 	emcsConf, err := emcs.GetConfig(conf.ServerUrl)
 	if err != nil {
 		display.LCDRow(err.Error(), 60, 80, clib.DISP_FONT12)
 		pkg.Log.Error(err)
+		display.Show("错误..", "获取配置错误！！")
 		panic("获取配置错误！")
 	}
 	icbc.SetConfig(conf, emcsConf)
-
+	display.Show("请刷票", "支持二维码，IC卡验票")
 	wg.Add(1)
-
 	go func() {
 		defer wg.Done()
 		clib.StartTcpServer(msgChan)
