@@ -42,7 +42,8 @@ func main() {
 		panic("获取配置错误！")
 	}
 	icbc.SetConfig(conf, emcsConf)
-	display.LCDRow(emcsConf.EquipmentNo, 60, 68, clib.DISP_FONT12)
+	sn, err := decaros.GetSN()
+	display.LCDRow(sn, 60, 68, clib.DISP_FONT12)
 	//display.LCDRow("-hao88.cloud", 80, 60, clib.DISP_FONT12)
 	wg.Add(1)
 
