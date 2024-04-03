@@ -1,5 +1,17 @@
 package clib
 
+/*
+#cgo LDFLAGS: -L../sdk/lib -lpos -lpng -lfreetype -liconv -lm -lz -lrt
+#cgo CFLAGS: -I../sdk/inc
+#include "../sdk/inc/Felica.h"
+#include "../sdk/inc/mc_led.h"
+#include "../sdk/inc/oslib.h"
+#include "../sdk/inc/toolslib.h"
+#include "stdlib.h"
+#include "stdio.h"
+#include "string.h"
+#include "unistd.h"
+*/
 import "C"
 import (
 	"cargo/pkg"
