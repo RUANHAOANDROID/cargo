@@ -29,11 +29,11 @@ void dump_data(char *str,unsigned char *text,int len)
 }
 
 int connect_to_server(const char *server_ip, int server_port) {
-  	printf("c -- connect_to_server \n");
+  	printf("[c] -> connect_to_server \n");
     // 创建套接字
     int client_socket = socket(AF_INET, SOCK_STREAM, 0);
     if (client_socket == -1) {
-        perror("Error creating socket");
+        perror("[c] ->Error creating socket");
         return -1;
     }
 
@@ -43,14 +43,14 @@ int connect_to_server(const char *server_ip, int server_port) {
     server_addr.sin_family = AF_INET;
     server_addr.sin_port = htons(server_port);
     if (inet_pton(AF_INET, server_ip, &server_addr.sin_addr) <= 0) {
-        perror("Error converting server IP address");
+        perror("[c] ->Error converting server IP address");
         close(client_socket);
         return -1;
     }
 
     // 连接到服务器
     if (connect(client_socket, (struct sockaddr *)&server_addr, sizeof(server_addr)) == -1) {
-        perror("Error connecting to server");
+        perror("[c] ->Error connecting to server");
         close(client_socket);
         return -1;
     }
@@ -59,32 +59,32 @@ int connect_to_server(const char *server_ip, int server_port) {
 }
 
 int send_message(int client_socket, const char *message) {
-    printf("c --send message\n");
+    printf("[c] ->send message\n");
     // 发送消息给服务器
     int message_length = strlen(message);
     ssize_t bytes_sent = send(client_socket, message, message_length, 0);
     if (bytes_sent == -1) {
-        printf("send message==-1\n");
-        perror("Error sending message to server");
+        printf("[c] ->send message==-1\n");
+        perror("[c] ->Error sending message to server");
         close(client_socket);
         return -1;
     } else if (bytes_sent < message_length) {
-        printf("send message==-2\n");
-        fprintf(stderr, "Not all bytes sent to server\n");
+        printf("[c] ->send message==-2\n");
+        fprintf(stderr, "[c] ->Not all bytes sent to server\n");
         close(client_socket);
         return -1;
     } else if (bytes_sent == 0) {
-        printf("send message==-3\n");
-        fprintf(stderr, "Connection closed by server\n");
+        printf("[c] ->send message==-3\n");
+        fprintf(stderr, "[c] ->Connection closed by server\n");
         close(client_socket);
         return -1;
     }
-    printf("send ok\n");
+    printf("[c] ->send ok\n");
     return 0;  // 成功发送消息
 }
 
 void close_connection(int client_socket) {
-	printf("c close_connection\n");
+	printf("[c] -> close_connection\n");
 	stop_requested=1;
 	client_socket=-1;
 	// 关闭套接字
@@ -92,7 +92,7 @@ void close_connection(int client_socket) {
 }
 
 int start_tcp(void) {
-    printf("c link --start_tcp\n");
+    printf("[c] ->link --start_tcp\n");
     const char *server_ip = "127.0.0.1";  // 修改为你的服务器IP地址
     const int server_port = 9999;         // 修改为服务器监听的端口号
 
@@ -105,7 +105,7 @@ int start_tcp(void) {
 }
 
 int qr_read(){
-	printf("c link --qr_read\n");
+	printf("[c] ->link --qr_read\n");
 	int qrfd1,qrfd2,ret;
 	unsigned char TmpBuff[1024];
     qrfd1 = QRCode_Open(0);
@@ -135,7 +135,7 @@ int qr_read(){
 }
 
 void ic_read(){
-	printf("c link --ic_read\n");
+	printf("[c] -> link --ic_read\n");
     int ret = -1;
     uint8_t key[] = "\xFF\xFF\xFF\xFF\xFF\xFF";
     uint8_t data[16],data_len = 16;
@@ -160,7 +160,7 @@ void ic_read(){
 			buffer[3]=data[2];
 			buffer[4]=data[3];
 			send(client_socket, buffer, BUFFER_SIZE, 0);
-			printf("c ->ic read sensor sleep 2s\n");
+			printf("[c] ->ic read sensor sleep 2s\n");
 			usleep(3000000);
 		}
 		usleep(300000);
