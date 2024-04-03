@@ -43,7 +43,7 @@ func main() {
 	icbc.SetConfig(conf, emcsConf)
 	display.LCDRow(pkg.IPV4(), 0, 68, clib.DISP_FONT12)
 	sn, err := decaros.GetSN()
-	display.LCDRow(sn, 120, 68, clib.DISP_FONT12)
+	display.LCDRow(sn, 84, 68, clib.DISP_FONT12)
 	wg.Add(1)
 
 	go func() {
