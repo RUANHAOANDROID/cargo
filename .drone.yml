@@ -12,6 +12,7 @@ steps:
       - name: gocache
         path: /root/go/pkg/mod/
     commands:
+      - echo "git sha = ${DRONE_COMMIT_SHA}"
       - export PATH=$PATH:/go/bin/
       - export PATH=$PATH:/gcc/bin/
       - chmod +x build.sh
