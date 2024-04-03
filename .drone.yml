@@ -27,16 +27,18 @@ steps:
       password: root
       port: 22
       target: /cargo
-      source: config.yml
-  - name: scp-runner
-    image: appleboy/drone-scp:1.6
-    settings:
-      host: 192.168.8.39
-      username: root
-      password: root
-      port: 22
-      target: /cargo
-      source: runner
+      source:
+       - config.yml
+       - runner
+#  - name: scp-runner
+#    image: appleboy/drone-scp:1.6
+#    settings:
+#      host: 192.168.8.39
+#      username: root
+#      password: root
+#      port: 22
+#      target: /cargo
+#      source: runner
 #  - name: remote-runner
 #    image: appleboy/drone-ssh:1.7
 #    settings:
