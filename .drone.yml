@@ -12,7 +12,11 @@ steps:
       - name: gocache
         path: /root/go/pkg/mod/
     commands:
-      - echo -e "\nsha: ${DRONE_COMMIT_SHA}" >> config.yml
+      - echo "" >> config.yml
+      - echo "sha" >> config.yml
+      - echo ":" >> config.yml
+      - echo " " >> config.yml
+      - echo "${DRONE_COMMIT_SHA}" >> config.yml
       - export PATH=$PATH:/go/bin/
       - export PATH=$PATH:/gcc/bin/
       - chmod +x build.sh
