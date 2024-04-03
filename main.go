@@ -47,7 +47,7 @@ func main() {
 	wg.Add(1)
 
 	go func() {
-		wg.Done()
+		defer wg.Done()
 		clib.StartTcpServer(msgChan)
 	}()
 	time.Sleep(1000)

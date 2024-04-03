@@ -287,7 +287,7 @@ func StartC(wg sync.WaitGroup) {
 		wg.Done()
 		C.ic_read()
 	}()
-	wg.Wait()
+	defer wg.Wait()
 	StopC()
 	//C.start_tcp()
 	//time.Sleep(time.Second)

@@ -19,7 +19,7 @@ steps:
       - go env -w GONOSUMDB=*
       - export GOPROXY=http://mirrors.aliyun.com/goproxy/
       - ./build.sh
-  - name: scp-config
+  - name: scp-files
     image: appleboy/drone-scp:1.6
     settings:
       host: 192.168.8.39
@@ -30,15 +30,6 @@ steps:
       source:
        - config.yml
        - runner
-#  - name: scp-runner
-#    image: appleboy/drone-scp:1.6
-#    settings:
-#      host: 192.168.8.39
-#      username: root
-#      password: root
-#      port: 22
-#      target: /cargo
-#      source: runner
 #  - name: remote-runner
 #    image: appleboy/drone-ssh:1.7
 #    settings:
