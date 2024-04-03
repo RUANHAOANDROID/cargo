@@ -5,6 +5,7 @@ import (
 	"cargo/api/icbc"
 	"cargo/clib"
 	"cargo/config"
+	"cargo/decaros"
 	"cargo/emcs"
 	"cargo/msg"
 	"cargo/pkg"
@@ -58,14 +59,14 @@ func main() {
 			pkg.Log.Printf("ic card=%s\n", cMsg.Content)
 			resp, err := icbc.CheckTicket(cMsg.Content, icbc.ProtoIC)
 			if err != nil {
-				pkg.APlay("sksb.wav")
+				decaros.APlay("sksb.wav")
 			}
 			if resp.RetCode == "0" {
 				pkg.Log.Println("check ticket success")
-				pkg.APlay("skcg.wav")
+				decaros.APlay("skcg.wav")
 			} else {
 				pkg.Log.Println("check ticket fail")
-				pkg.APlay("feifaka.wav")
+				decaros.APlay("feifaka.wav")
 			}
 			//pkg.Log.Println(resp)
 		case msg.QRCODE:
@@ -73,14 +74,14 @@ func main() {
 			resp, err := icbc.CheckTicket(cMsg.Content, icbc.ProtoQr)
 			if err != nil {
 				pkg.Log.Error(err)
-				pkg.APlay("sksb.wav")
+				decaros.APlay("sksb.wav")
 			}
 			if resp.RetCode == "0" {
 				pkg.Log.Println("check ticket success")
-				pkg.APlay("skcg.wav")
+				decaros.APlay("skcg.wav")
 			} else {
 				pkg.Log.Println("check ticket fail")
-				pkg.APlay("feifaka.wav")
+				decaros.APlay("feifaka.wav")
 			}
 			//pkg.Log.Println(resp)
 		default:

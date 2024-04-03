@@ -1,6 +1,7 @@
-package pkg
+package decaros
 
 import (
+	"cargo/pkg"
 	"os/exec"
 )
 
@@ -28,7 +29,7 @@ func APlay(wav string) {
 	cmd.Stderr = nil
 
 	if err := cmd.Start(); err != nil {
-		Log.Println("cmd run error:", err)
+		pkg.Log.Println("cmd run error:", err)
 		return
 	}
 }
