@@ -112,7 +112,7 @@ int qr_read(){
     qrfd2 = QRCode_Open(1);
 	uint8_t type = 0x02;
 	while(!stop_requested){
-		printf("c ->read QR\n");
+		//printf("c ->read QR\n");
 		ret = QRCode_RxStr(qrfd1, TmpBuff, 1024, 100);
 		if(ret <= 0)
 			ret = QRCode_RxStr(qrfd2, TmpBuff, 1024, 100);
@@ -144,7 +144,7 @@ void ic_read(){
     PICC_Open(0);
 	uint8_t type = 0x01;
 	while(!stop_requested){
-		printf("c ->read IC\n");
+		//printf("c ->read IC\n");
         if(ret) ret = Mifare_PowerOn(0,snr,&snr_len);
         //printf("\n==========Block[%2d]==========\n",i);
         if(!ret) ret = Mifare_AuthenBlock(i * 4,0,key);
