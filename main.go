@@ -76,16 +76,17 @@ func parseResp(err error, resp *icbc.CheckResponse) {
 	if err != nil {
 		pkg.Log.Error(err)
 		pkg.Log.Error(resp)
-		speaker.Speaker("验票失败", false)
+		go speaker.Speaker("验票失败", false)
 		screen.Show(err.Error(), false)
+		return
 	}
 	if resp.RetCode == "0" {
 		pkg.Log.Println("check ticket success")
-		speaker.Speaker(resp.RetMsg, true)
+		go speaker.Speaker(resp.RetMsg, true)
 		screen.Show(resp.RetMsg, true)
 	} else {
 		pkg.Log.Println("check ticket fail")
-		speaker.Speaker(resp.RetMsg, false)
+		go speaker.Speaker(resp.RetMsg, false)
 		screen.Show(resp.RetMsg, false)
 	}
 }
