@@ -37,25 +37,25 @@ steps:
       port: 22
       target: /hao88/app/cargo
       source: runner
-  - name: remote-runner
-    image: appleboy/drone-ssh:1.7
-    settings:
-      host:
-        - 192.168.8.39
-      username: root
-      password: root
-      port: 22
-      command_timeout: 5m
-      script:
-        - cd /hao88/app/cargo
-        - chmod +x runner
-        - touch runner
-#        - ldconfig
-        - ldd ./runner
-#        - sleep 2
-#        - nohup ./runner &
-#        - ./runner
-        - ls
+#  - name: remote-runner
+#    image: appleboy/drone-ssh:1.7
+#    settings:
+#      host:
+#        - 192.168.8.39
+#      username: root
+#      password: root
+#      port: 22
+#      command_timeout: 5m
+#      script:
+#        - cd /hao88/app/cargo
+#        - chmod +x runner
+#        - touch runner
+##        - ldconfig
+#        - ldd ./runner
+##        - sleep 2
+##        - nohup ./runner &
+##        - ./runner
+#        - ls
 volumes:
   - name: gcc
     host:
