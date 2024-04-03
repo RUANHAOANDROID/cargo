@@ -84,7 +84,7 @@ int send_message(int client_socket, const char *message) {
 }
 
 void close_connection(int client_socket) {
-	printf("[c] -> close_connection\n");
+	printf("[c] ->close_connection\n");
 	stop_requested=1;
 	client_socket=-1;
 	// 关闭套接字
@@ -135,7 +135,7 @@ int qr_read(){
 }
 
 void ic_read(){
-	printf("[c] -> link --ic_read\n");
+	printf("[c] ->link --ic_read\n");
     int ret = -1;
     uint8_t key[] = "\xFF\xFF\xFF\xFF\xFF\xFF";
     uint8_t data[16],data_len = 16;
