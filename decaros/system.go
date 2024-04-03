@@ -31,5 +31,5 @@ func SetNTP() {
 	}
 	// 输出 SN 码
 	outText := out.String()
-	pkg.Log.Println(outText)
+	pkg.Log.Print(outText)
 }

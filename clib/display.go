@@ -48,7 +48,7 @@ func (d Display) Init() {
 // ClearScreen 清理屏幕
 func (d Display) ClearScreen() {
 	cScreen := C.uint32_t(1)
-	pkg.Log.Println("display ClearScreen")
+	pkg.Log.Println("ClearScreen")
 	C.LCD_ClearScreen(cScreen)
 }
 
