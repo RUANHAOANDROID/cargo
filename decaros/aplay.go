@@ -3,6 +3,7 @@ package decaros
 import (
 	"cargo/pkg"
 	"os/exec"
+	"strings"
 )
 
 var (
@@ -23,7 +24,11 @@ var (
 )
 
 func APlay(wav string) {
-
+	// 判断字符串是否包含 .wav 后缀
+	if !strings.HasSuffix(wav, ".wav") {
+		// 如果不包含，添加上 .wav 后缀
+		wav += ".wav"
+	}
 	cmd := exec.Command("aplay", "/opt/sound/"+wav)
 
 	cmd.Stderr = nil

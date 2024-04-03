@@ -9,6 +9,7 @@ import (
 	"cargo/emcs"
 	"cargo/msg"
 	"cargo/pkg"
+	"cargo/speaker"
 	"sync"
 )
 
@@ -57,35 +58,30 @@ func main() {
 		case msg.IC_CARD:
 			pkg.Log.Printf("ic card=%s\n", cMsg.Content)
 			resp, err := icbc.CheckTicket(cMsg.Content, icbc.ProtoIC)
-			if err != nil {
-				decaros.APlay("sksb.wav")
-			}
-			if resp.RetCode == "0" {
-				pkg.Log.Println("check ticket success")
-				decaros.APlay("skcg.wav")
-			} else {
-				pkg.Log.Println("check ticket fail")
-				decaros.APlay("feifaka.wav")
-			}
+			parseResp(err, resp)
 			//pkg.Log.Println(resp)
 		case msg.QRCODE:
 			pkg.Log.Printf("qrocde=%s\n", cMsg.Content)
 			resp, err := icbc.CheckTicket(cMsg.Content, icbc.ProtoQr)
-			if err != nil {
-				pkg.Log.Error(err)
-				decaros.APlay("sksb.wav")
-			}
-			if resp.RetCode == "0" {
-				pkg.Log.Println("check ticket success")
-				decaros.APlay("skcg.wav")
-			} else {
-				pkg.Log.Println("check ticket fail")
-				decaros.APlay("feifaka.wav")
-			}
-			//pkg.Log.Println(resp)
+			parseResp(err, resp)
 		default:
 			pkg.Log.Println("undefined type")
 		}
 	}
 	pkg.Log.Print("End......")
+}
+
+func parseResp(err error, resp *icbc.CheckResponse) {
+	if err != nil {
+		pkg.Log.Error(err)
+		pkg.Log.Error(resp)
+		speaker.Speaker("验票失败", false)
+	}
+	if resp.RetCode == "0" {
+		pkg.Log.Println("check ticket success")
+		speaker.Speaker(resp.RetMsg, true)
+	} else {
+		pkg.Log.Println("check ticket fail")
+		speaker.Speaker(resp.RetMsg, false)
+	}
 }
