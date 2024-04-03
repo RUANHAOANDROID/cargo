@@ -41,7 +41,7 @@ func (d Display) Init() {
 	C.LCD_Init()
 	cLedHeight := C.LCD_GetHeight()
 	cLedWidth := C.LCD_GetWidth()
-	pkg.Log.Printf("display Height=%s,Width=%s\n", string(cLedHeight), string(cLedWidth))
+	pkg.Log.Printf("display Height=%v,Width=%v\n", cLedHeight, cLedWidth)
 }
 
 // ClearScreen 清理屏幕
