@@ -13,7 +13,7 @@ func loadConfig(t *testing.T) error {
 	if err != nil {
 		t.Error(err)
 	}
-	SetConfig(conf)
+	SetConfig(conf, nil)
 	return err
 }
 func TestIDTicket(t *testing.T) {
