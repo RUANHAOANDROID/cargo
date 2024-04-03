@@ -6,7 +6,7 @@ import (
 )
 
 func GetSN() (string, error) {
-	// 执行 Linux 命令
+	// 执行 Linux 命令 02211101501
 	cmd := exec.Command("cat", "/opt/config/sn")
 	// 捕获命令输出
 	var out bytes.Buffer
