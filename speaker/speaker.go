@@ -6,6 +6,7 @@ import (
 )
 
 func Speaker(msg string, success bool) {
+
 	if success {
 		decaros.APlay("A")
 	} else {

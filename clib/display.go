@@ -60,6 +60,9 @@ func (d Display) LCDRow(text string, x int16, y int16, mode C.uint) {
 	cY := C.uint16_t(y)
 	C.LCD_Display_Row(cTitle, cY, cX, mode)
 }
-func (d Display) ShowArea(title string, content string) {
-
+func (d Display) ShowTitleArea(title string) {
+	d.LCDRow(title, 2, 2, DISP_FONT24)
+}
+func (d Display) ShowContentArea(content string) {
+	d.LCDRow(pkg.NowTimeStr(), 2, 30, DISP_FONT12)
 }

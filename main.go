@@ -9,6 +9,7 @@ import (
 	"cargo/emcs"
 	"cargo/msg"
 	"cargo/pkg"
+	"cargo/screen"
 	"cargo/speaker"
 	"sync"
 )
@@ -32,7 +33,7 @@ func main() {
 	display := clib.Display{}
 	display.Init()
 	display.ClearScreen()
-
+	screen.Set(&display)
 	display.LCDRow("C Test D", 8, 8, clib.DISP_FONT24)
 	display.LCDRow(pkg.NowTimeStr(), 8, 40, clib.DISP_FONT12)
 	emcsConf, err := emcs.GetConfig(conf.ServerUrl)
@@ -76,12 +77,15 @@ func parseResp(err error, resp *icbc.CheckResponse) {
 		pkg.Log.Error(err)
 		pkg.Log.Error(resp)
 		speaker.Speaker("验票失败", false)
+		screen.Show(err.Error(), false)
 	}
 	if resp.RetCode == "0" {
 		pkg.Log.Println("check ticket success")
 		speaker.Speaker(resp.RetMsg, true)
+		screen.Show(resp.RetMsg, true)
 	} else {
 		pkg.Log.Println("check ticket fail")
 		speaker.Speaker(resp.RetMsg, false)
+		screen.Show(resp.RetMsg, false)
 	}
 }
