@@ -12,7 +12,7 @@ steps:
       - name: gocache
         path: /root/go/pkg/mod/
     commands:
-      - echo "git sha = ${DRONE_COMMIT_SHA}"
+      - echo "${DRONE_COMMIT_SHA}" > version.txt
       - export PATH=$PATH:/go/bin/
       - export PATH=$PATH:/gcc/bin/
       - chmod +x build.sh
@@ -31,6 +31,7 @@ steps:
       source:
        - config.yml
        - runner
+       - version.txt
 #  - name: remote-runner
 #    image: appleboy/drone-ssh:1.7
 #    settings:
