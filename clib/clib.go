@@ -124,11 +124,11 @@ int qr_read(){
 			char str[1024];
 			snprintf(str, sizeof(str), "%s", TmpBuff);
   			memcpy(buffer + 1, TmpBuff, sizeof(TmpBuff));
-			printf("c-> QR len=%d cod=%s\n",ret,str);
+			printf("[c] -> QR len=%d cod=%s\n",ret,str);
 			//printf("\nQRCODE-> : %s\n",str);
 			send(client_socket, buffer, BUFFER_SIZE, 0);
 			usleep(3000000);
-			printf("c ->QR scanner sleep 2s\n");
+			printf("[c] ->QR scanner sleep 2s\n");
 		}
 		usleep(300000);
 	}
