@@ -29,7 +29,7 @@ void dump_data(char *str,unsigned char *text,int len)
 }
 
 int connect_to_server(const char *server_ip, int server_port) {
-  	printf("[c] -> connect_to_server \n");
+  	printf("[c] ->connect_to_server \n");
     // 创建套接字
     int client_socket = socket(AF_INET, SOCK_STREAM, 0);
     if (client_socket == -1) {
@@ -92,7 +92,7 @@ void close_connection(int client_socket) {
 }
 
 int start_tcp(void) {
-    printf("[c] ->link start_tcp\n");
+    printf("[c] ->start_tcp\n");
     const char *server_ip = "127.0.0.1";  // 修改为你的服务器IP地址
     const int server_port = 9999;         // 修改为服务器监听的端口号
 
@@ -105,7 +105,7 @@ int start_tcp(void) {
 }
 
 int qr_read(){
-	printf("[c] ->link qr_read\n");
+	printf("[c] ->start qr read\n");
 	int qrfd1,qrfd2,ret;
 	unsigned char TmpBuff[1024];
     qrfd1 = QRCode_Open(0);
@@ -135,7 +135,7 @@ int qr_read(){
 }
 
 void ic_read(){
-	printf("[c] ->link ic_read\n");
+	printf("[c] ->start ic read\n");
     int ret = -1;
     uint8_t key[] = "\xFF\xFF\xFF\xFF\xFF\xFF";
     uint8_t data[16],data_len = 16;
