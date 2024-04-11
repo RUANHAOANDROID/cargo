@@ -36,7 +36,6 @@ steps:
       - mc config host add mio $ADDRESS $ACCESS_KEY $SECRET_KEY
       - mc cp config.yml mio/uchi/公交车
       - mc cp runner mio/uchi/公交车
-      - mc cp CHANGES.md mio/uchi/闸机票务/icbc
   - name: scp-files
     image: appleboy/drone-scp:1.6
     settings:
