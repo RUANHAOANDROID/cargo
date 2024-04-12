@@ -100,7 +100,8 @@ func CheckUpdate(conf *config.Config, eqp string) {
 			if err != nil {
 				pkg.Log.Println(err)
 			}
-			err = extractTar("", tarPath)
+			//err = extractTar("", tarPath)
+			tarxvf(tarPath)
 			if err != nil {
 				pkg.Log.Println(err)
 			}
@@ -150,6 +151,19 @@ func extractTar(targetDir string, tarFile string) error {
 	pkg.Log.Println("Extract End!")
 	return nil
 }
+func tarxvf(tarFile string) {
+	// 调用Linux系统的重启命令
+	cmd := exec.Command("tar -xvf " + tarFile)
+
+	// 执行命令
+	err := cmd.Run()
+	if err != nil {
+		fmt.Println("Error rebooting system:", err)
+		return
+	}
+	fmt.Println("System is rebooting...")
+}
+
 func reboot() {
 	// 调用Linux系统的重启命令
 	cmd := exec.Command("reboot")

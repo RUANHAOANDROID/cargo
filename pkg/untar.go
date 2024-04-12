@@ -13,7 +13,7 @@ func UnTar(dst, src string, enableGzip bool) (err error) {
 	// 打开准备解压的 tar 包
 	fr, err := os.Open(src)
 	if err != nil {
-		return
+		return err
 	}
 	defer fr.Close()
 	var gr io.Reader = fr // 默认为不使用 gzip
