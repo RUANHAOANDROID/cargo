@@ -47,7 +47,7 @@ steps:
       source:
        - config.yml
        - runner
-       - version
+       - upgrade.sh
 #  - name: remote-runner
 #    image: appleboy/drone-ssh:1.7
 #    settings:
