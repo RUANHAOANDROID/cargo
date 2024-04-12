@@ -1,9 +1,15 @@
 package emcs
 
 import (
+	"cargo/config"
+	"fmt"
 	"testing"
 )
 
 func TestCheckUpdate(t *testing.T) {
-	CheckUpdate("1.0.1", "1467360836350640149", "EQP20240401000001")
+	conf, err := config.Load("./config.yml")
+	if err != nil {
+		fmt.Println(err)
+	}
+	CheckUpdate(conf, "EQP20240401000001")
 }
