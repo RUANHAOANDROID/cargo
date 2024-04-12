@@ -76,22 +76,22 @@ func CheckUpdate(dType string, version string, eqp string) {
 		// 去除版本号中的"v"和点号
 		targetVersionStr = strings.TrimPrefix(targetVersionStr, "v")
 		targetVersionStr = strings.ReplaceAll(targetVersionStr, ".", "")
-		targetVersion, err := strconv.ParseInt(targetVersionStr, 10, 64)
+		targetVersionInt, err := strconv.ParseInt(targetVersionStr, 10, 64)
 		if err != nil {
 			fmt.Println("Error:", err)
 			return
 		}
 		currentVersion := strings.TrimPrefix(version, "v")
 		currentVersion = strings.ReplaceAll(currentVersion, ".", "")
-		version, err := strconv.ParseInt(currentVersion, 10, 64)
+		versionInt, err := strconv.ParseInt(currentVersion, 10, 64)
 		if err != nil {
 			fmt.Println("Error:", err)
 			return
 		}
-		pkg.Log.Println("Target version:", targetVersion)
-		pkg.Log.Println("Current version:", version)
+		pkg.Log.Println("Target version:", targetVersionInt)
+		pkg.Log.Println("Current version:", versionInt)
 		currentVersion = strings.ReplaceAll(currentVersion, ".", "")
-		if currentVersion > vr.Data.VersionCode {
+		if versionInt < targetVersionInt {
 			pkg.Log.Println("A new version is available")
 			pkg.Log.Println(vr.Data.DownloadUrl)
 			pkg.Log.Println("Start Download")

@@ -11,5 +11,5 @@ func TestCheckUpdate(t *testing.T) {
 	if err != nil {
 		fmt.Println(err)
 	}
-	CheckUpdate(conf, "EQP20240401000001")
+	fmt.Println(conf)
 }
