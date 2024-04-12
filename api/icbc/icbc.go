@@ -13,13 +13,11 @@ import (
 var contentType = "application/json; charset=utf-8"
 var pathCheckTicket = "/ticket/checkTicket"
 var pathVerifyTicket = "/ticket/verifyTicket"
-var conf *config.Config
 var emcsConf *emcs.Config
 
-func SetConfig(config *config.Config, emcsConfig *emcs.Config) {
-	conf = config
+func SetConfig(serverUrl, sha string, emcsConfig *emcs.Config) {
 	emcsConf = emcsConfig
-	pkg.Log.Printf("basic version=%s,url=%s,sha=%s", config.Version, config.ServerUrl, config.Sha)
+	pkg.Log.Printf("basic version=%s,url=%s,sha=%s", config.Version, serverUrl, sha)
 	pkg.Log.Printf("emcs url=%s,eqp=%s,ycode=%s", emcsConf.CheckUrl, emcsConf.EquipmentNo, emcsConf.Yccode)
 }
 

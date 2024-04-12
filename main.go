@@ -42,7 +42,7 @@ func main() {
 	//---------设置NTP
 	display.Show("启动中..", "正在配置NTP..")
 	decaros.SetNTP()
-	icbc.SetConfig(conf, emcsConf)
+	icbc.SetConfig(conf.ServerUrl, conf.Sha, emcsConf)
 	display.Show("请刷票", "支持二维码，IC卡验票")
 	emcs.CheckUpdate(conf.DeviceType, config.Version, emcsConf.EquipmentNo)
 	wg.Add(1)
