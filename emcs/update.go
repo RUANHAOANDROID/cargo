@@ -2,7 +2,6 @@ package emcs
 
 import (
 	"bytes"
-	"cargo/config"
 	"cargo/pkg"
 	"encoding/json"
 	"fmt"
@@ -28,15 +27,15 @@ type VersionResponse struct {
 	} `json:"data"`
 }
 
-func CheckUpdate(conf *config.Config, version, eqp string) {
+func CheckUpdate(dType, version, eqp string) {
 	pkg.Log.Printf("current version%s", version)
 	pkg.Log.Printf("Device No%s", eqp)
-	pkg.Log.Printf("DeviceType No%s", conf.DeviceType)
+	pkg.Log.Printf("DeviceType No%s", dType)
 	// 定义请求体结构
 	requestBody := map[string]interface{}{
 		"data": map[string]string{
 			"deviceId":   eqp,
-			"deviceType": conf.DeviceType,
+			"deviceType": dType,
 		},
 		"sign":      "770BA7AC5DB7E20B652B2540B18BE001",
 		"timestamp": 0,
