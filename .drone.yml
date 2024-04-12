@@ -36,6 +36,7 @@ steps:
       - mc config host add mio $ADDRESS $ACCESS_KEY $SECRET_KEY
       - version=$(head -n 3 config/version.go | tail -n 1 | cut -d '"' -f 2)
       - echo $version
+      - mc ls mio/uchi/公交车
       - mc ls mio/uchi/公交车/$version
       - mc ls mio/uchi/公交车/$version || mc mb mio/uchi/公交车/$version
       - mc cp cargo.tar mio/uchi/公交车/$version
