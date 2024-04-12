@@ -28,6 +28,9 @@ type VersionResponse struct {
 }
 
 func CheckUpdate(currentVersion, dType, eqp string) {
+	pkg.Log.Printf("current version%s", currentVersion)
+	pkg.Log.Printf("Device No%s", eqp)
+	pkg.Log.Printf("DeviceType No%s", dType)
 	// 定义请求体结构
 	requestBody := map[string]interface{}{
 		"data": map[string]string{
