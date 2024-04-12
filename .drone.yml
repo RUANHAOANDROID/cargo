@@ -22,7 +22,7 @@ steps:
       - go env -w GONOSUMDB=*
       - export GOPROXY=http://mirrors.aliyun.com/goproxy/
       - ./build.sh
-
+      - tar -cvf cargo.tar runner upgrade.sh config.yml
   - name: upload-s3
     image: minio/mc:RELEASE.2024-01-16T16-06-34Z
     environment:
@@ -36,6 +36,7 @@ steps:
       - mc config host add mio $ADDRESS $ACCESS_KEY $SECRET_KEY
       - mc cp config.yml mio/uchi/公交车
       - mc cp runner mio/uchi/公交车
+      - mc cp cargo.tar mio/uchi/公交车
   - name: scp-files
     image: appleboy/drone-scp:1.6
     settings:
@@ -48,6 +49,7 @@ steps:
        - config.yml
        - runner
        - upgrade.sh
+       - cargo.tar.gz
 #  - name: remote-runner
 #    image: appleboy/drone-ssh:1.7
 #    settings:
