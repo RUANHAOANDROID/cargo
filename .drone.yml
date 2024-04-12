@@ -38,6 +38,7 @@ steps:
       - echo $version
       - mc ls mio/uchi/公交车
       - mc ls mio/uchi/公交车/$version
+      - mc cat mio/uchi/公交车/$version
       - mc ls mio/uchi/公交车/$version || mc mb mio/uchi/公交车/$version
       - mc cp cargo.tar mio/uchi/公交车/$version
   - name: scp-files
