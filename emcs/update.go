@@ -28,8 +28,8 @@ type VersionResponse struct {
 	} `json:"data"`
 }
 
-func CheckUpdate(conf *config.Config, eqp string) {
-	pkg.Log.Printf("current version%s", conf.Version)
+func CheckUpdate(conf *config.Config, version, eqp string) {
+	pkg.Log.Printf("current version%s", version)
 	pkg.Log.Printf("Device No%s", eqp)
 	pkg.Log.Printf("DeviceType No%s", conf.DeviceType)
 	// 定义请求体结构
@@ -82,7 +82,7 @@ func CheckUpdate(conf *config.Config, eqp string) {
 			fmt.Println("Error:", err)
 			return
 		}
-		currentVersion := strings.TrimPrefix(conf.Version, "v")
+		currentVersion := strings.TrimPrefix(version, "v")
 		currentVersion = strings.ReplaceAll(currentVersion, ".", "")
 		version, err := strconv.ParseInt(currentVersion, 10, 64)
 		if err != nil {

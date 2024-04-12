@@ -8,9 +8,10 @@ import (
 	"gopkg.in/yaml.v3"
 )
 
+const Version = "1.0.0"
+
 // Config 系统整体配置
 type Config struct {
-	Version    string `yaml:"version"`
 	ServerUrl  string `yaml:"serverUrl"`
 	DeviceType string `yaml:"deviceType"`
 	Sha        string `yaml:"sha"`
