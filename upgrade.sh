@@ -10,7 +10,7 @@ backup_dir="backup/$current_date_time"
 mkdir -p "$backup_dir"
 
 # 复制当前文件夹下的所有文件到备份目录
-cp -r ./* "$backup_dir/"
+cp -r ./config.yml ./runner "$backup_dir/"
 # 解压 cargo.tar 文件到当前目录
 tar -xvf cargo.tar
 
