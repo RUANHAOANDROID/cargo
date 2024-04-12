@@ -8,8 +8,6 @@ import (
 	"gopkg.in/yaml.v3"
 )
 
-const Version = "9.9.9"
-
 // Config 系统整体配置
 type Config struct {
 	ServerUrl  string `yaml:"serverUrl"`

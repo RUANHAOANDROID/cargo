@@ -34,9 +34,10 @@ steps:
         from_secret: MINIO_SECRET_KEY
     commands:
       - mc config host add mio $ADDRESS $ACCESS_KEY $SECRET_KEY
-      - mc cp config.yml mio/uchi/公交车
-      - mc cp runner mio/uchi/公交车
-      - mc cp cargo.tar mio/uchi/公交车
+      - ls
+      - version=$(cat /source/config/version.go | grep -Po 'Version\s*=\s*"\K[^"]*')
+      - mc ls mio/uchi/公交车/version || mc mb mio/uchi/公交车/version
+      - mc cp cargo.tar mio/uchi/公交车/version
   - name: scp-files
     image: appleboy/drone-scp:1.6
     settings:
@@ -49,7 +50,6 @@ steps:
        - config.yml
        - runner
        - upgrade.sh
-       - cargo.tar.gz
 #  - name: remote-runner
 #    image: appleboy/drone-ssh:1.7
 #    settings:
