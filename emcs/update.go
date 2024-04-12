@@ -180,13 +180,25 @@ func reboot() {
 }
 func runUpgradeShell() {
 	// 创建一个cmd对象
-	cmd := exec.Command("./upgrade.sh") // 脚本文件名为 script.sh
+	cmd := exec.Command("chmod", "+x", "upgrade.sh")
+
+	// 执行命令
+	err := cmd.Run()
+	if err != nil {
+		pkg.Log.Println("Error changing file permission:", err)
+		return
+	}
+
+	pkg.Log.Println("File permission changed successfully!")
+
+	// 创建一个cmd对象
+	cmd = exec.Command("./upgrade.sh") // 脚本文件名为 script.sh
 
 	// 设置工作目录，如果脚本中使用了相对路径，可以设置工作目录
 	// cmd.Dir = "/path/to/directory"
 
 	// 执行命令
-	err := cmd.Run()
+	err = cmd.Run()
 	if err != nil {
 		pkg.Log.Println("Error executing script:", err)
 		return
