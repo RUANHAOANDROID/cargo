@@ -2,6 +2,7 @@ package emcs
 
 import (
 	"bytes"
+	"cargo/config"
 	"cargo/pkg"
 	"encoding/json"
 	"fmt"
@@ -27,15 +28,15 @@ type VersionResponse struct {
 	} `json:"data"`
 }
 
-func CheckUpdate(currentVersion, dType, eqp string) {
-	pkg.Log.Printf("current version%s", currentVersion)
+func CheckUpdate(conf *config.Config, eqp string) {
+	pkg.Log.Printf("current version%s", conf.Version)
 	pkg.Log.Printf("Device No%s", eqp)
-	pkg.Log.Printf("DeviceType No%s", dType)
+	pkg.Log.Printf("DeviceType No%s", conf.DeviceType)
 	// 定义请求体结构
 	requestBody := map[string]interface{}{
 		"data": map[string]string{
 			"deviceId":   eqp,
-			"deviceType": dType,
+			"deviceType": conf.DeviceType,
 		},
 		"sign":      "770BA7AC5DB7E20B652B2540B18BE001",
 		"timestamp": 0,
@@ -81,41 +82,47 @@ func CheckUpdate(currentVersion, dType, eqp string) {
 			fmt.Println("Error:", err)
 			return
 		}
-		currentVersion = strings.TrimPrefix(currentVersion, "v")
+		currentVersion := strings.TrimPrefix(conf.Version, "v")
 		currentVersion = strings.ReplaceAll(currentVersion, ".", "")
 		version, err := strconv.ParseInt(currentVersion, 10, 64)
 		if err != nil {
 			fmt.Println("Error:", err)
 			return
 		}
-		fmt.Println("Integer:", targetVersion)
-		fmt.Println("Integer:", version)
+		pkg.Log.Println("Integer:", targetVersion)
+		pkg.Log.Println("Integer:", version)
 		currentVersion = strings.ReplaceAll(currentVersion, ".", "")
 		if currentVersion > vr.Data.VersionCode {
-			fmt.Println("发现新版本")
-			fmt.Println(vr.Data.DownloadUrl)
-			fmt.Println("开始下载")
-			downLoad(vr.Data.DownloadUrl)
-
+			pkg.Log.Println("A new version is available")
+			pkg.Log.Println(vr.Data.DownloadUrl)
+			pkg.Log.Println("Start Download")
+			tarPath, err := downLoad(vr.Data.DownloadUrl)
+			if err != nil {
+				pkg.Log.Println(err)
+			}
+			err = extractTar("", tarPath)
+			if err != nil {
+				pkg.Log.Println(err)
+			}
+			reboot()
 		}
 	}
 }
-func downLoad(url string) {
+func downLoad(url string) (string, error) {
 	// 目标文件路径
 	filePath := "car.tar"
 	// 发起HTTP GET请求
 	response, err := http.Get(url)
 	if err != nil {
 		fmt.Println("Error:", err)
-		return
+		return "", err
 	}
 	defer response.Body.Close()
-
 	// 创建文件
 	file, err := os.Create(filePath)
 	if err != nil {
 		fmt.Println("Error:", err)
-		return
+		return "", err
 	}
 	defer file.Close()
 
@@ -123,11 +130,10 @@ func downLoad(url string) {
 	_, err = io.Copy(file, response.Body)
 	if err != nil {
 		fmt.Println("Error:", err)
-		return
+		return "", err
 	}
 	fmt.Println("File downloaded successfully!")
-	extractTar("", filePath)
-	reboot()
+	return filePath, nil
 }
 func extractTar(targetDir string, tarFile string) error {
 	source, err := os.Open(tarFile)
@@ -137,10 +143,11 @@ func extractTar(targetDir string, tarFile string) error {
 	defer source.Close()
 	err = pkg.UnTar(targetDir, tarFile, false)
 	if err != nil {
-		pkg.Log.Println("解压缩失败" + err.Error())
+		pkg.Log.Println("Extract Error! ")
+		pkg.Log.Println(err)
 		return err
 	}
-	pkg.Log.Println("解压缩完成")
+	pkg.Log.Println("Extract End!")
 	return nil
 }
 func reboot() {
@@ -153,6 +160,5 @@ func reboot() {
 		fmt.Println("Error rebooting system:", err)
 		return
 	}
-
 	fmt.Println("System is rebooting...")
 }
