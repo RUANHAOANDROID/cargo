@@ -4,7 +4,7 @@
 current_date_time=$(date +"%Y-%m-%d-%H-%M")
 
 # 备份目录
-backup_dir="备份/$current_date_time"
+backup_dir="backup/$current_date_time"
 
 # 创建备份目录
 mkdir -p "$backup_dir"
