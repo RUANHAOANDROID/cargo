@@ -44,6 +44,7 @@ func main() {
 	decaros.SetNTP()
 	icbc.SetConfig(conf, emcsConf)
 	display.Show("请刷票", "支持二维码，IC卡验票")
+	emcs.CheckUpdate(conf.Version, conf.DeviceType, emcsConf.EquipmentNo)
 	wg.Add(1)
 	go func() {
 		defer wg.Done()

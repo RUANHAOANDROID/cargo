@@ -1,10 +1,10 @@
 #!/bin/bash
 
-REMOTE_URL="https://your-server.com/latest_version.txt"  # 存放新版本号的文本文件
+REMOTE_URL="http://emcs-api.youchiyun.com//gateMachine/getVersion"  # 存放新版本号的文本文件
 INSTALL_DIR="/path/to/install"                            # 安装目录
 BACKUP_DIR="/path/to/backup"                              # 备份目录
-CHECK_INTERVAL=1800                                        # 30分钟的秒数
-
+CHECK_INTERVAL=60                                        # 30分钟的秒数
+DEVICE_TYPE="1467360836350640149"
 while true; do
     # 下载远程文本文件，里面存放着新版本号
     REMOTE_VERSION=$(curl -s $REMOTE_URL)
