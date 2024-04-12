@@ -153,7 +153,7 @@ func extractTar(targetDir string, tarFile string) error {
 }
 func tarxvf(tarFile string) {
 	// 调用Linux系统的重启命令
-	cmd := exec.Command("tar -xvf " + tarFile)
+	cmd := exec.Command("tar", "-xvf", tarFile)
 
 	// 执行命令
 	err := cmd.Run()
