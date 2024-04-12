@@ -34,7 +34,7 @@ steps:
         from_secret: MINIO_SECRET_KEY
     commands:
       - mc config host add mio $ADDRESS $ACCESS_KEY $SECRET_KEY
-      - ls
+      - cat /config/version.go
       - version=$(cat /config/version.go | grep -Po 'Version\s*=\s*"\K[^"]*')
       - mc ls mio/uchi/公交车/version || mc mb mio/uchi/公交车/version
       - mc cp cargo.tar mio/uchi/公交车/version
