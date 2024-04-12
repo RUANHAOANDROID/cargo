@@ -27,7 +27,7 @@ type VersionResponse struct {
 	} `json:"data"`
 }
 
-func CheckUpdate(dType, version, eqp string) {
+func CheckUpdate(dType string, version string, eqp string) {
 	pkg.Log.Printf("current version%s", version)
 	pkg.Log.Printf("Device No%s", eqp)
 	pkg.Log.Printf("DeviceType No%s", dType)
