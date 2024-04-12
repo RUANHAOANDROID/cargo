@@ -89,8 +89,8 @@ func CheckUpdate(conf *config.Config, eqp string) {
 			fmt.Println("Error:", err)
 			return
 		}
-		pkg.Log.Println("Integer:", targetVersion)
-		pkg.Log.Println("Integer:", version)
+		pkg.Log.Println("Target version:", targetVersion)
+		pkg.Log.Println("Current version:", version)
 		currentVersion = strings.ReplaceAll(currentVersion, ".", "")
 		if currentVersion > vr.Data.VersionCode {
 			pkg.Log.Println("A new version is available")
@@ -100,18 +100,20 @@ func CheckUpdate(conf *config.Config, eqp string) {
 			if err != nil {
 				pkg.Log.Println(err)
 			}
-			//err = extractTar("", tarPath)
-			tarxvf(tarPath)
-			if err != nil {
-				pkg.Log.Println(err)
-			}
-			reboot()
+			pkg.Log.Println(tarPath)
+			runUpgradeShell()
+			////err = extractTar("", tarPath)
+			//tarxvf(tarPath)
+			//if err != nil {
+			//	pkg.Log.Println(err)
+			//}
+			//reboot()
 		}
 	}
 }
 func downLoad(url string) (string, error) {
 	// 目标文件路径
-	filePath := "car.tar"
+	filePath := "cargo.tar"
 	// 发起HTTP GET请求
 	response, err := http.Get(url)
 	if err != nil {
@@ -175,4 +177,20 @@ func reboot() {
 		return
 	}
 	fmt.Println("System is rebooting...")
+}
+func runUpgradeShell() {
+	// 创建一个cmd对象
+	cmd := exec.Command("./upgrade.sh") // 脚本文件名为 script.sh
+
+	// 设置工作目录，如果脚本中使用了相对路径，可以设置工作目录
+	// cmd.Dir = "/path/to/directory"
+
+	// 执行命令
+	err := cmd.Run()
+	if err != nil {
+		fmt.Println("Error executing script:", err)
+		return
+	}
+
+	fmt.Println("Script executed successfully!")
 }
