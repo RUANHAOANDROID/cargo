@@ -188,9 +188,9 @@ func runUpgradeShell() {
 	// 执行命令
 	err := cmd.Run()
 	if err != nil {
-		fmt.Println("Error executing script:", err)
+		pkg.Log.Println("Error executing script:", err)
 		return
 	}
 
-	fmt.Println("Script executed successfully!")
+	pkg.Log.Println("Script executed successfully!")
 }
