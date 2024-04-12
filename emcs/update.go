@@ -35,7 +35,7 @@ func CheckUpdate(currentVersion, dType, eqp string) {
 			"deviceType": dType,
 		},
 		"sign":      "770BA7AC5DB7E20B652B2540B18BE001",
-		"timestamp": 1700797613017,
+		"timestamp": 0,
 	}
 
 	// 将请求体转换为JSON格式
