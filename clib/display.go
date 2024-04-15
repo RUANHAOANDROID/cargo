@@ -44,7 +44,7 @@ func NewDisplay() *Display {
 	C.LCD_Init()
 	cLedHeight := C.LCD_GetHeight()
 	cLedWidth := C.LCD_GetWidth()
-	pkg.Log.Printf("display Height=%v,Width=%v\n", cLedHeight, cLedWidth)
+	pkg.Log.Printf("Display Height=%v,Width=%v\n", cLedHeight, cLedWidth)
 	return &Display{Height: uint16(cLedHeight), Width: uint16(cLedWidth)}
 }
 
@@ -70,11 +70,11 @@ func (d Display) showTitleArea(title string) {
 }
 func (d Display) ShowCount(count string) {
 	n := utf8.RuneCountInString(count)
-	textWidth := n * 24
+	textWidth := n * 12
 	fmt.Printf("内容%s,字符个数%d,宽度%d\n", count, n, textWidth)
 	left := 160 - textWidth
 	fmt.Println(left)
-	d.LCDRow(count, int16(left), 80-12, DISP_FONT24)
+	d.LCDRow(count, int16(left), int16(d.Height-12), DISP_FONT12)
 }
 func (d Display) showContentArea(content string) {
 	d.LCDRow(content, 2, 30, DISP_FONT12)
