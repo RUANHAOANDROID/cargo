@@ -93,13 +93,13 @@ func (d Display) ShowTime() {
 	weekdayInt := int(weekday) + 1
 	chineseWeekday := weekdayMap[weekdayInt]
 	fmt.Println("今天是星期", chineseWeekday)
-	formattedTime := currentTime.Format("06/1/2 15:04")
+	formattedTime := currentTime.Format("15:04")
 
 	// 打印格式化后的时间
 	fmt.Println("当前时间:", formattedTime)
 	fmt.Println("当前周:", chineseWeekday)
 	d.LCDRow(chineseWeekday, int16(d.Width-24), 0, DISP_FONT12)
-	d.LCDRow(formattedTime, int16(d.Width-120), 12, DISP_FONT12)
+	d.LCDRow(formattedTime, int16(d.Width-32), 12, DISP_FONT12)
 }
 func (d Display) showContentArea(content string) {
 	d.LCDRow(content, 2, 30, DISP_FONT12)
