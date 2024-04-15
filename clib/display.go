@@ -69,6 +69,15 @@ func (d Display) showTitleArea(title string) {
 	d.LCDRow(title, 0, 0, DISP_FONT24)
 }
 func (d Display) ShowCount(count string) {
+	t := utf8.RuneCountInString("今通过")
+	n := utf8.RuneCountInString(count)
+	textWidth := t*12 + n*6
+	fmt.Printf("内容%s,字符个数%d,宽度%d\n", count, n, textWidth)
+	left := 160 - textWidth
+	fmt.Println(left)
+	d.LCDRow("今通过"+count, int16(left), int16(d.Height-12), DISP_FONT12)
+}
+func (d Display) ShowTime(count string) {
 	t := utf8.RuneCountInString("今通过：")
 	n := utf8.RuneCountInString(count)
 	textWidth := t*12 + n*6 - 1
