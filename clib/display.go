@@ -66,7 +66,9 @@ func (d Display) showTitleArea(title string) {
 	d.LCDRow(title, 0, 0, DISP_FONT24)
 }
 func (d Display) ShowCount(count string) {
-	left := 160 - (len(count) * 24)
+	textWidth := len(count) * 24
+	fmt.Println(textWidth)
+	left := 160 - textWidth
 	fmt.Println(left)
 	d.LCDRow(count, int16(left), 0, DISP_FONT24)
 }
