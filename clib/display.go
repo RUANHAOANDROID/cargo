@@ -60,12 +60,14 @@ func (d Display) LCDRow(text string, x int16, y int16, mode C.uint) {
 	cY := C.uint16_t(y)
 	C.LCD_Display_Row(cTitle, cY, cX, mode)
 }
-func (d Display) showTitleArea(title, count string) {
+
+func (d Display) showTitleArea(title string) {
 	d.LCDRow(title, 0, 0, DISP_FONT24)
+}
+func (d Display) ShowCount(count string) {
 	left := 160 - len(count)*24
 	d.LCDRow(count, int16(left), 0, DISP_FONT24)
 }
-
 func (d Display) showContentArea(content string) {
 	d.LCDRow(content, 2, 30, DISP_FONT12)
 }
@@ -78,9 +80,9 @@ func (d Display) showBottomArea() {
 	//}
 	//d.LCDRow(sn, 94, 68, DISP_FONT12)
 }
-func (d Display) Show(title string, count string, content string) {
+func (d Display) Show(title string, content string) {
 	d.ClearScreen()
-	d.showTitleArea(title, count)
+	d.showTitleArea(title)
 	d.showContentArea(content)
 	d.showBottomArea()
 }

@@ -15,6 +15,8 @@ import (
 	"sync"
 )
 
+var display *clib.Display
+
 // main  -lpos -lm -lpng -lfontconfig -lfreetype -liconv
 func main() {
 	defer func() {
@@ -28,10 +30,10 @@ func main() {
 		panic("not find config.yml")
 	}
 	msgChan := make(chan msg.Message)
-	display := clib.Display{}
+	display = &clib.Display{}
 	display.Init()
 	display.ClearScreen()
-	screen.Set(&display)
+	screen.Set(display)
 	display.Show("启动中..", "正在获取配置..")
 	emcsConf, err := emcs.GetConfig(conf.ServerUrl)
 	if err != nil {
@@ -83,6 +85,7 @@ func parseResp(err error, resp *icbc.CheckResponse) {
 		pkg.Log.Println("Check ticket SUCCESS!")
 		go speaker.Speaker(resp.RetMsg, true)
 		count := internal.ReadCount()
+		display.ShowCount(string(count + 1))
 		screen.Show(resp.RetMsg, true)
 		internal.SaveCount()
 	} else {
