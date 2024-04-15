@@ -86,7 +86,9 @@ func (d *Display) ShowTime() {
 	formattedTime := currentTime.Format("2006-01-02 15:04")
 	// 打印格式化后的时间
 	fmt.Println("当前时间:", formattedTime)
-	d.LCDRow(formattedTime, 160-15*6/2, 1, DISP_FONT6X8)
+	timeLen := len(formattedTime) * 6
+	left := 160 - timeLen
+	d.LCDRow(formattedTime, int16(left), 1, DISP_FONT6X8)
 }
 func (d *Display) showContentArea(content string) {
 	d.LCDRow(content, 1, 8+1+24+2, DISP_FONT12)
