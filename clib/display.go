@@ -67,9 +67,9 @@ func (d Display) LCDRow(text string, x int16, y int16, mode C.uint) {
 }
 
 func (d Display) showTitleArea(title string) {
-	l := int16(len(title) * 24)
-	x := 160 - l/2
-	d.LCDRow(title, x, 8+2, DISP_FONT24)
+	//l := int16(len(title) * 24)
+	//x := 160 - l/2
+	d.LCDRow(title, 1, 8+2, DISP_FONT24)
 }
 func (d Display) ShowCount(count string) {
 	t := utf8.RuneCountInString("今通过")
@@ -82,10 +82,10 @@ func (d Display) ShowCount(count string) {
 }
 func (d Display) ShowTime() {
 	currentTime := time.Now()
-	formattedTime := currentTime.Format("06-01-02 15:04")
+	formattedTime := currentTime.Format("2006-01-02 15:04")
 	// 打印格式化后的时间
 	fmt.Println("当前时间:", formattedTime)
-	d.LCDRow(formattedTime, 1, 1, DISP_FONT6X8)
+	d.LCDRow(formattedTime, 1+160-16*6/2, 1, DISP_FONT6X8)
 }
 func (d Display) showContentArea(content string) {
 	d.LCDRow(content, 1, 8+1+24+2, DISP_FONT12)
