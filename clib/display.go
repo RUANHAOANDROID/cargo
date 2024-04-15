@@ -36,7 +36,7 @@ const (
 )
 
 type Display struct {
-	Width, Height int
+	Width, Height int16
 }
 
 func NewDisplay() *Display {
