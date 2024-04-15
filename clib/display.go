@@ -95,7 +95,7 @@ func (d *Display) showContentArea(content string) {
 }
 func (d *Display) showBottomArea() {
 	d.LCDRow(pkg.IPV4(), 0, 68, DISP_FONT12)
-	d.LCDRow(config.Version, int16(d.Width-36), 68, DISP_FONT12)
+	d.LCDRow(config.Version, int16(d.Width-30), 68, DISP_FONT12)
 }
 func (d *Display) Show(title string, content string) {
 	d.ClearScreen()
