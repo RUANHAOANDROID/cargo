@@ -45,5 +45,5 @@ func convertMsg(msg string) string {
 }
 func showCount(num string) {
 	//count := internal.ReadCount()
-	display.ShowCount("今日通行:" + num)
+	display.ShowCount(num)
 }
