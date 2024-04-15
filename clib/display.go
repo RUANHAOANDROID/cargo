@@ -80,26 +80,10 @@ func (d Display) ShowCount(count string) {
 }
 func (d Display) ShowTime() {
 	currentTime := time.Now()
-	weekday := currentTime.Weekday()
-	weekdayMap := map[int]string{
-		1: "周一",
-		2: "周二",
-		3: "周三",
-		4: "周四",
-		5: "周五",
-		6: "周六",
-		7: "周日",
-	}
-	weekdayInt := int(weekday) + 1
-	chineseWeekday := weekdayMap[weekdayInt]
-	fmt.Println("今天是星期", chineseWeekday)
-	formattedTime := currentTime.Format("15:04")
-
+	formattedTime := currentTime.Format("2006/1/2 15:04")
 	// 打印格式化后的时间
 	fmt.Println("当前时间:", formattedTime)
-	fmt.Println("当前周:", chineseWeekday)
-	d.LCDRow(chineseWeekday, int16(d.Width-24), 0, DISP_FONT12)
-	d.LCDRow(formattedTime, int16(d.Width-32), 12, DISP_FONT12)
+	d.LCDRow(formattedTime, int16(d.Width-14*6), 0, DISP_FONT6X8)
 }
 func (d Display) showContentArea(content string) {
 	d.LCDRow(content, 2, 30, DISP_FONT12)
