@@ -15,6 +15,7 @@ package clib
 import "C"
 import (
 	"cargo/pkg"
+	"fmt"
 	"unsafe"
 )
 
@@ -66,6 +67,7 @@ func (d Display) showTitleArea(title string) {
 }
 func (d Display) ShowCount(count string) {
 	left := 160 - (len(count) * 24)
+	fmt.Println(left)
 	d.LCDRow(count, int16(left), 0, DISP_FONT24)
 }
 func (d Display) showContentArea(content string) {
