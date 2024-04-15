@@ -69,7 +69,7 @@ func (d Display) showTitleArea(title string) {
 func (d Display) ShowCount(count string) {
 	n := utf8.RuneCountInString(count)
 	textWidth := n * 24
-	fmt.Printf("字符个数%d,宽度%d\n", n, textWidth)
+	fmt.Printf("内容%s,字符个数%d,宽度%d\n", count, n, textWidth)
 	left := 160 - textWidth
 	fmt.Println(left)
 	d.LCDRow(count, int16(left), 0, DISP_FONT24)
