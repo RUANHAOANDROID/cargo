@@ -36,7 +36,7 @@ const (
 )
 
 type Display struct {
-	Width, Height int16
+	Width, Height int
 }
 
 func NewDisplay() *Display {
@@ -45,7 +45,7 @@ func NewDisplay() *Display {
 	cLedHeight := C.LCD_GetHeight()
 	cLedWidth := C.LCD_GetWidth()
 	pkg.Log.Printf("display Height=%v,Width=%v\n", cLedHeight, cLedWidth)
-	return &Display{Height: cLedHeight, Width: cLedWidth}
+	return &Display{Height: int(cLedHeight), Width: int(cLedWidth)}
 }
 
 // ClearScreen 清理屏幕
