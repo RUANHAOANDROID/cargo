@@ -29,8 +29,7 @@ func main() {
 		panic("not find config.yml")
 	}
 	msgChan := make(chan msg.Message)
-	display = &clib.Display{}
-	display.Init()
+	display = clib.NewDisplay()
 	display.ClearScreen()
 	screen.Set(display)
 	display.Show("启动中..", "正在获取配置..")
