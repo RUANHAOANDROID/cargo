@@ -1,23 +1,11 @@
 package icbc
 
 import (
-	"cargo/config"
 	"fmt"
-	"path/filepath"
 	"testing"
 )
 
-func loadConfig(t *testing.T) error {
-	configFile := filepath.Join("..", "..", "config.yml")
-	conf, err := config.Load(configFile)
-	if err != nil {
-		t.Error(err)
-	}
-	SetConfig(conf, nil)
-	return err
-}
 func TestIDTicket(t *testing.T) {
-	err := loadConfig(t)
 	resp, err := CheckTicket("420325199211114511", ProtoID)
 	if err != nil {
 		fmt.Println(err.Error())
@@ -27,7 +15,6 @@ func TestIDTicket(t *testing.T) {
 }
 
 func TestQRTicket(t *testing.T) {
-	err := loadConfig(t)
 	resp, err := CheckTicket("86465099669896<MjAwMDAwMTkyNDIwMjQtMDItMDIyMDI0LTAzLTAy>", ProtoQr)
 	if err != nil {
 		fmt.Println(err.Error())
@@ -36,7 +23,6 @@ func TestQRTicket(t *testing.T) {
 	fmt.Println(resp)
 }
 func TestICTicket(t *testing.T) {
-	err := loadConfig(t)
 	resp, err := CheckTicket("0123456789", ProtoQr)
 	if err != nil {
 		fmt.Println(err.Error())

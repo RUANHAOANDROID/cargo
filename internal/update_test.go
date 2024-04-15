@@ -1,4 +1,4 @@
-package emcs
+package internal
 
 import (
 	"cargo/config"

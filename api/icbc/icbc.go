@@ -2,7 +2,7 @@ package icbc
 
 import (
 	"cargo/config"
-	"cargo/emcs"
+	"cargo/internal"
 	"cargo/pkg"
 	"fmt"
 	"math/rand"
@@ -13,9 +13,9 @@ import (
 var contentType = "application/json; charset=utf-8"
 var pathCheckTicket = "/ticket/checkTicket"
 var pathVerifyTicket = "/ticket/verifyTicket"
-var emcsConf *emcs.Config
+var emcsConf *internal.Config
 
-func SetConfig(serverUrl, sha string, emcsConfig *emcs.Config) {
+func SetConfig(serverUrl, sha string, emcsConfig *internal.Config) {
 	emcsConf = emcsConfig
 	pkg.Log.Printf("basic version=%s,url=%s,sha=%s", config.Version, serverUrl, sha)
 	pkg.Log.Printf("emcs url=%s,eqp=%s,ycode=%s", emcsConf.CheckUrl, emcsConf.EquipmentNo, emcsConf.Yccode)

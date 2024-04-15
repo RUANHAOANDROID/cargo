@@ -6,7 +6,6 @@ import (
 	"cargo/clib"
 	"cargo/config"
 	"cargo/decaros"
-	"cargo/emcs"
 	"cargo/internal"
 	"cargo/msg"
 	"cargo/pkg"
@@ -35,7 +34,7 @@ func main() {
 	display.ClearScreen()
 	screen.Set(display)
 	display.Show("启动中..", "正在获取配置..")
-	emcsConf, err := emcs.GetConfig(conf.ServerUrl)
+	emcsConf, err := internal.GetConfig(conf.ServerUrl)
 	if err != nil {
 		display.LCDRow(err.Error(), 60, 80, clib.DISP_FONT12)
 		pkg.Log.Error(err)
@@ -47,7 +46,7 @@ func main() {
 	decaros.SetNTP()
 	icbc.SetConfig(conf.ServerUrl, conf.Sha, emcsConf)
 	display.Show("请刷票", "支持二维码，IC卡验票")
-	emcs.CheckUpdate(conf.DeviceType, config.Version, emcsConf.EquipmentNo)
+	internal.CheckUpdate(conf.DeviceType, config.Version, emcsConf.EquipmentNo)
 	wg.Add(1)
 	go func() {
 		defer wg.Done()
