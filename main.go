@@ -5,7 +5,6 @@ import (
 	"cargo/api/icbc"
 	"cargo/clib"
 	"cargo/config"
-	"cargo/decaros"
 	"cargo/internal"
 	"cargo/msg"
 	"cargo/pkg"
@@ -42,7 +41,7 @@ func main() {
 	}
 	//---------设置NTP
 	display.Show("启动中..", "正在配置NTP..")
-	decaros.SetNTP()
+	//decaros.SetNTP()
 	icbc.SetConfig(conf.ServerUrl, conf.Sha, emcsConf)
 	display.Show("请刷票", "支持二维码，IC卡验票")
 	display.ShowTime()

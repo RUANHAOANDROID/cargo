@@ -14,6 +14,7 @@ package clib
 */
 import "C"
 import (
+	"cargo/config"
 	"cargo/pkg"
 	"fmt"
 	"time"
@@ -50,14 +51,14 @@ func NewDisplay() *Display {
 }
 
 // ClearScreen 清理屏幕
-func (d Display) ClearScreen() {
+func (d *Display) ClearScreen() {
 	cScreen := C.uint32_t(1)
 	pkg.Log.Println("ClearScreen")
 	C.LCD_ClearScreen(cScreen)
 }
 
 // LCDRow 显示文字
-func (d Display) LCDRow(text string, x int16, y int16, mode C.uint) {
+func (d *Display) LCDRow(text string, x int16, y int16, mode C.uint) {
 	pkg.Log.Println(text, x, y, mode)
 	cTitle := C.CString(text)
 	defer C.free(unsafe.Pointer(cTitle))
@@ -66,12 +67,12 @@ func (d Display) LCDRow(text string, x int16, y int16, mode C.uint) {
 	C.LCD_Display_Row(cTitle, cY, cX, mode)
 }
 
-func (d Display) showTitleArea(title string) {
+func (d *Display) showTitleArea(title string) {
 	//l := int16(len(title) * 24)
 	//x := 160 - l/2
 	d.LCDRow(title, 1, 8+2, DISP_FONT24)
 }
-func (d Display) ShowCount(count string) {
+func (d *Display) ShowCount(count string) {
 	t := utf8.RuneCountInString("今通过")
 	n := utf8.RuneCountInString(count)
 	textWidth := t*12 + n*6
@@ -80,26 +81,21 @@ func (d Display) ShowCount(count string) {
 	fmt.Println(left)
 	d.LCDRow("今通过"+count, int16(left), int16(d.Height-12), DISP_FONT12)
 }
-func (d Display) ShowTime() {
+func (d *Display) ShowTime() {
 	currentTime := time.Now()
 	formattedTime := currentTime.Format("2006-01-02 15:04")
 	// 打印格式化后的时间
 	fmt.Println("当前时间:", formattedTime)
 	d.LCDRow(formattedTime, 160-15*6/2, 1, DISP_FONT6X8)
 }
-func (d Display) showContentArea(content string) {
+func (d *Display) showContentArea(content string) {
 	d.LCDRow(content, 1, 8+1+24+2, DISP_FONT12)
 }
-func (d Display) showBottomArea() {
+func (d *Display) showBottomArea() {
 	d.LCDRow(pkg.IPV4(), 0, 68, DISP_FONT12)
-	//sn, err := decaros.GetSN()
-	//if err != nil {
-	//	d.LCDRow("sn err", 94, 68, DISP_FONT12)
-	//	return
-	//}
-	//d.LCDRow(sn, 94, 68, DISP_FONT12)
+	d.LCDRow(config.Version, int16(d.Width-36), 68, DISP_FONT12)
 }
-func (d Display) Show(title string, content string) {
+func (d *Display) Show(title string, content string) {
 	d.ClearScreen()
 	d.showTitleArea(title)
 	d.showContentArea(content)
