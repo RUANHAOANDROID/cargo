@@ -80,7 +80,7 @@ func (d Display) ShowCount(count string) {
 }
 func (d Display) ShowTime() {
 	currentTime := time.Now()
-	formattedTime := currentTime.Format("2006/1/2 15:04")
+	formattedTime := currentTime.Format("06-01-02 15:04")
 	// 打印格式化后的时间
 	fmt.Println("当前时间:", formattedTime)
 	d.LCDRow(formattedTime, int16(d.Width-14*6), 0, DISP_FONT6X8)
