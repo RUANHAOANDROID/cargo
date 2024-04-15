@@ -37,6 +37,7 @@ func convertMsg(msg string) string {
 	match := re.FindStringSubmatch(msg)
 	if match != nil {
 		fmt.Println("门票名:", match[1])
+		return match[1]
 	} else {
 		fmt.Println("未找到匹配项")
 	}
