@@ -16,6 +16,7 @@ import "C"
 import (
 	"cargo/pkg"
 	"fmt"
+	"time"
 	"unicode/utf8"
 	"unsafe"
 )
@@ -77,14 +78,28 @@ func (d Display) ShowCount(count string) {
 	fmt.Println(left)
 	d.LCDRow("今通过"+count, int16(left), int16(d.Height-12), DISP_FONT12)
 }
-func (d Display) ShowTime(count string) {
-	t := utf8.RuneCountInString("今通过：")
-	n := utf8.RuneCountInString(count)
-	textWidth := t*12 + n*6 - 1
-	fmt.Printf("内容%s,字符个数%d,宽度%d\n", count, n, textWidth)
-	left := 160 - textWidth
-	fmt.Println(left)
-	d.LCDRow("今通过："+count, int16(left), int16(d.Height-12), DISP_FONT12)
+func (d Display) ShowTime() {
+	currentTime := time.Now()
+	weekday := currentTime.Weekday()
+	weekdayMap := map[int]string{
+		1: "一",
+		2: "二",
+		3: "三",
+		4: "四",
+		5: "五",
+		6: "六",
+		7: "日",
+	}
+	weekdayInt := int(weekday) + 1
+	chineseWeekday := weekdayMap[weekdayInt]
+	fmt.Println("今天是星期", chineseWeekday)
+	formattedTime := currentTime.Format("06/1/2 15:04")
+
+	// 打印格式化后的时间
+	fmt.Println("当前时间:", formattedTime)
+	fmt.Println("当前周:", chineseWeekday)
+	d.LCDRow(chineseWeekday, int16(d.Width-24), 0, DISP_FONT12)
+	d.LCDRow(formattedTime, int16(d.Width-120), int16(d.Height-12), DISP_FONT12)
 }
 func (d Display) showContentArea(content string) {
 	d.LCDRow(content, 2, 30, DISP_FONT12)
