@@ -17,6 +17,7 @@ import (
 	"cargo/config"
 	"cargo/pkg"
 	"fmt"
+	"strings"
 	"time"
 	"unicode/utf8"
 	"unsafe"
@@ -84,11 +85,13 @@ func (d *Display) ShowCount(count string) {
 func (d *Display) ShowTime() {
 	currentTime := time.Now()
 	formattedTime := currentTime.Format("2006-01-02 15:04")
+	parts := strings.Split(formattedTime, " ")
 	// 打印格式化后的时间
 	fmt.Println("当前时间:", formattedTime)
-	timeLen := len(formattedTime) * 6
-	left := 160 - timeLen
-	d.LCDRow(formattedTime, int16(left), 1, DISP_FONT6X8)
+	dataLen := len(parts[0]) * 6
+	d.LCDRow(parts[1], 1, 1, DISP_FONT6X8)
+	d.LCDRow(parts[0], int16(160-dataLen), 1, DISP_FONT6X8)
+
 }
 func (d *Display) showContentArea(content string) {
 	d.LCDRow(content, 1, 8+1+24+2, DISP_FONT12)
