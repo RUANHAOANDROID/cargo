@@ -45,5 +45,5 @@ func convertMsg(msg string) string {
 }
 func showCount() {
 	//count := internal.ReadCount()
-	display.ShowCount("999")
+	display.ShowCount("数字")
 }
