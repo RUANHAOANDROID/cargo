@@ -85,10 +85,10 @@ func (d Display) ShowTime() {
 	formattedTime := currentTime.Format("06-01-02 15:04")
 	// 打印格式化后的时间
 	fmt.Println("当前时间:", formattedTime)
-	d.LCDRow(formattedTime, 2, 2, DISP_FONT6X8)
+	d.LCDRow(formattedTime, 1, 1, DISP_FONT6X8)
 }
 func (d Display) showContentArea(content string) {
-	d.LCDRow(content, 2, 30, DISP_FONT12)
+	d.LCDRow(content, 1, 8+1+24+2, DISP_FONT12)
 }
 func (d Display) showBottomArea() {
 	d.LCDRow(pkg.IPV4(), 0, 68, DISP_FONT12)
