@@ -25,4 +25,9 @@ func Show(msg string, success bool) {
 		}
 		display.Show("验票失败", msg)
 	}
+	showCount()
+}
+func showCount() {
+	//count := internal.ReadCount()
+	display.ShowCount("999")
 }

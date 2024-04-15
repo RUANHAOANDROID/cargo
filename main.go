@@ -84,8 +84,6 @@ func parseResp(err error, resp *icbc.CheckResponse) {
 	if resp.RetCode == "0" {
 		pkg.Log.Println("Check ticket SUCCESS!")
 		go speaker.Speaker(resp.RetMsg, true)
-		count := internal.ReadCount()
-		display.ShowCount(string(count + 1))
 		screen.Show(resp.RetMsg, true)
 		internal.SaveCount()
 	} else {
