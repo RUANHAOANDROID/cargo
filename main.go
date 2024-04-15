@@ -7,6 +7,7 @@ import (
 	"cargo/config"
 	"cargo/decaros"
 	"cargo/emcs"
+	"cargo/internal"
 	"cargo/msg"
 	"cargo/pkg"
 	"cargo/screen"
@@ -81,7 +82,9 @@ func parseResp(err error, resp *icbc.CheckResponse) {
 	if resp.RetCode == "0" {
 		pkg.Log.Println("Check ticket SUCCESS!")
 		go speaker.Speaker(resp.RetMsg, true)
+		count := internal.ReadCount()
 		screen.Show(resp.RetMsg, true)
+		internal.SaveCount()
 	} else {
 		pkg.Log.Println("Check ticket Fail!")
 		go speaker.Speaker(resp.RetMsg, false)
