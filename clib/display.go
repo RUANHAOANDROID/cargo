@@ -92,7 +92,7 @@ func (d *Display) ShowTime() {
 }
 func (d *Display) showContentArea(content string) {
 	C.LCD_Clear_rows(C.uint16_t(160), C.uint16_t(34))
-	y := 8 + 1 + 24 + 2
+	y := 8 + 1 + 24 + 2 + 4
 	d.LCDRow(content, 1, int16(y), DISP_FONT12)
 }
 func (d *Display) showBottomArea() {
