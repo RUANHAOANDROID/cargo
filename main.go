@@ -34,11 +34,12 @@ func main() {
 	display = clib.NewDisplay()
 	display.ClearScreen()
 	screen.Set(display)
-	display.Show("启动中..", "正在获取配置..")
+	display.Show("启动中..", "正在等待系统组件加载..")
 	time.Sleep(5 * time.Second)
 	//---------设置NTP
 	display.Show("启动中..", "正在配置NTP..")
 	decaros.SetNTP()
+	display.Show("启动中..", "正在获取配置..")
 	emcsConf, err := internal.GetConfig(conf.ServerUrl)
 	if err != nil {
 		display.LCDRow(err.Error(), 60, 80, clib.DISP_FONT12)
