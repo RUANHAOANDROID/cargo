@@ -95,7 +95,8 @@ func (d *Display) ShowTime() {
 }
 func (d *Display) showContentArea(content string) {
 	C.LCD_Clear_rows(C.uint16_t(160), C.uint16_t(34))
-	d.LCDRow(content, 1, 8+1+24+2, DISP_FONT12)
+	y := 8 + 1 + 24 + 2
+	d.LCDRow(content, 1, int16(y), DISP_FONT12)
 }
 func (d *Display) showBottomArea() {
 	d.LCDRow(pkg.IPV4(), 0, 68, DISP_FONT12)
@@ -103,14 +104,16 @@ func (d *Display) showBottomArea() {
 }
 func (d *Display) Show(title string, content string) {
 	d.ClearScreen()
+	d.ShowTime()
 	d.showTitleArea(title)
 	d.showContentArea(content)
 	d.showBottomArea()
 }
-func (d *Display) ShowNormal() {
+func (d *Display) ShowNormal(passedCount string) {
 	d.ClearScreen()
 	d.ShowTime()
 	d.showTitleArea("请刷票")
 	d.showContentArea("扫描二维码或刷IC卡")
+	d.ShowPassedCount(passedCount)
 	d.showBottomArea()
 }

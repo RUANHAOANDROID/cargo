@@ -27,7 +27,6 @@ func Show(msg string, success bool) {
 		}
 		display.Show("验票失败", msg)
 	}
-	showCount("99")
 }
 func convertMsg(msg string) string {
 	// 编译正则表达式
@@ -42,11 +41,4 @@ func convertMsg(msg string) string {
 		fmt.Println("未找到匹配项")
 	}
 	return msg
-}
-func showCount(num string) {
-	//count := internal.ReadCount()
-	display.ShowCount(num)
-}
-func ShowNormal() {
-
 }
