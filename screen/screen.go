@@ -15,17 +15,17 @@ func Set(dp *clib.Display) {
 func Show(msg string, success bool) {
 	display.ClearScreen()
 	if success {
-		display.Show("验票成功", convertMsg(msg))
+		display.ShowSuccess(convertMsg(msg))
 	} else {
 		if strings.Contains(msg, "已验票") {
-			display.Show("验票失败", "已验票")
+			display.ShowError("-已验票！")
 			return
 		}
 		if strings.Contains(msg, "权限") {
-			display.Show("验票失败", "无权限访问")
+			display.ShowError("-无权限访问！")
 			return
 		}
-		display.Show("验票失败", msg)
+		display.ShowError(msg)
 	}
 }
 func convertMsg(msg string) string {
