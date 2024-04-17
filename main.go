@@ -11,6 +11,7 @@ import (
 	"cargo/screen"
 	"cargo/speaker"
 	"sync"
+	"time"
 )
 
 var display *clib.Display
@@ -90,4 +91,6 @@ func parseResp(err error, resp *icbc.CheckResponse) {
 		go speaker.Speaker(resp.RetMsg, false)
 		screen.Show(resp.RetMsg, false)
 	}
+	time.Sleep(3 * time.Second)
+	display.ShowNormal()
 }
