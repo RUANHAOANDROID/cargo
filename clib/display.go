@@ -73,14 +73,14 @@ func (d *Display) showTitleArea(title string) {
 	//x := 160 - l/2
 	d.LCDRow(title, 1, 8+2, DISP_FONT24)
 }
-func (d *Display) ShowCount(count string) {
-	t := utf8.RuneCountInString("今通过")
-	n := utf8.RuneCountInString(count)
-	textWidth := t*12 + n*6
-	fmt.Printf("内容%s,字符个数%d,宽度%d\n", count, n, textWidth)
+func (d *Display) ShowPassedCount(count string) {
+	showContext := "P:" + count
+	t := utf8.RuneCountInString(showContext)
+	textWidth := t*6 + 2
+	fmt.Printf("内容%s,字符个数%d,宽度%d\n", count, showContext, textWidth)
 	left := 160 - textWidth
 	fmt.Println(left)
-	d.LCDRow("今通过"+count, int16(left), int16(d.Height-12), DISP_FONT12)
+	d.LCDRow(showContext, int16(left), int16(d.Height-12), DISP_FONT12)
 }
 func (d *Display) ShowTime() {
 	currentTime := time.Now()
