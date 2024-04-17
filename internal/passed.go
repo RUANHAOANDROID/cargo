@@ -21,6 +21,7 @@ func createNewFile(filePath string) error {
 	// 创建新文件
 	file, err := os.Create(filePath)
 	if err != nil {
+		fmt.Println(err)
 		return err
 	}
 	defer file.Close()
@@ -28,6 +29,7 @@ func createNewFile(filePath string) error {
 	// 写入内容到文件
 	_, err = file.WriteString("Hello, World!\n")
 	if err != nil {
+		fmt.Println(err)
 		return err
 	}
 
@@ -57,13 +59,15 @@ func ReadPassedCount() (int, error) {
 	// 读取文件内容
 	content, err := os.ReadFile(todayFileName())
 	if err != nil {
+		fmt.Println(err)
 		os.WriteFile(todayFileName(), []byte("0"), 0644)
 		return 0, err
 	}
-
+	fmt.Println(content)
 	// 将文件内容转换为整数
 	number, err := strconv.Atoi(string(content))
 	if err != nil {
+		fmt.Println(err)
 		return 0, err
 	}
 
