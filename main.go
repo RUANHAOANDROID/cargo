@@ -51,6 +51,7 @@ func main() {
 		defer wg.Done()
 		clib.StartTcpServer(msgChan)
 	}()
+	go internal.StartTimer(conf, display)
 	go clib.StartC(wg)
 	for cMsg := range msgChan {
 		pkg.Log.Printf("msg chan-> type=%v,content=%v \n", cMsg.Type, cMsg.Content)
@@ -63,7 +64,7 @@ func main() {
 		case msg.QRCODE:
 			pkg.Log.Printf("qrocde=%s\n", cMsg.Content)
 			resp, err := icbc.CheckTicket(cMsg.Content, icbc.ProtoQr)
-			parseResp(err, resp)
+			go parseResp(err, resp)
 		default:
 			pkg.Log.Println("undefined type")
 		}

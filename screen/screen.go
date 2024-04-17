@@ -47,3 +47,6 @@ func showCount(num string) {
 	//count := internal.ReadCount()
 	display.ShowCount(num)
 }
+func ShowNormal() {
+
+}

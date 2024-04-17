@@ -1,13 +1,14 @@
 package internal
 
 import (
+	"cargo/clib"
 	"cargo/config"
 	"cargo/pkg"
 	"time"
 )
 
-func Start(conf *config.Config) {
-
+func StartTimer(conf *config.Config, display *clib.Display) {
+	display.ShowTime()
 	timer := time.NewTimer(time.Minute)
 	defer timer.Stop()
 	for {
