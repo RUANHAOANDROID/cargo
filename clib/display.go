@@ -74,12 +74,11 @@ func (d *Display) showTitleArea(title string) {
 }
 func (d *Display) ShowPassedCount(count string) {
 	showContext := "P:" + count
-	t := utf8.RuneCountInString(showContext)
-	textWidth := t*6 + 2
-	pkg.Log.Printf("内容%s,字符个数%s,宽度%d\n", count, showContext, textWidth)
+	textWidth := utf8.RuneCountInString(showContext) * 12
+	pkg.Log.Printf("内容%s,宽度%d\n", showContext, textWidth)
 	x := 160 - textWidth
 	pkg.Log.Println(x)
-	d.LCDRow(showContext, int16(x), int16(d.Height-12), DISP_FONT12)
+	d.LCDRow(showContext, int16(x), int16(80-12), DISP_FONT12)
 }
 func (d *Display) ShowTime() {
 	currentTime := time.Now()
