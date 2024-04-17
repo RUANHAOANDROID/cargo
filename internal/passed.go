@@ -2,6 +2,8 @@ package internal
 
 import (
 	"cargo/pkg"
+	"fmt"
+	"io/ioutil"
 	"os"
 	"strconv"
 	"time"
@@ -14,16 +16,43 @@ func todayFileName() string {
 	return today() + ".txt"
 }
 
+// 创建新文件并写入内容
+func createNewFile(filePath string) error {
+	// 创建新文件
+	file, err := os.Create(filePath)
+	if err != nil {
+		return err
+	}
+	defer file.Close()
+
+	// 写入内容到文件
+	_, err = file.WriteString("Hello, World!\n")
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
 // ReadPassedCount 获取当前日期文件的数值
 func ReadPassedCount() (int, error) {
 	pkg.Log.Println("ReadPassedCount")
 	// 如果文件不存在，则创建文件
+	// 判断文件是否存在
 	if _, err := os.Stat(todayFileName()); os.IsNotExist(err) {
-		f, err := os.Create(todayFileName())
+		// 如果文件不存在，创建一个新文件并写入内容
+		err := createNewFile(todayFileName())
 		if err != nil {
-			return 0, err
+			fmt.Println("创建文件失败:", err)
+			return 0, nil
 		}
-		f.Close()
+		fmt.Println("新文件已创建")
+	} else if err != nil {
+		// 如果发生其他错误，输出错误信息
+		fmt.Println("获取文件信息失败:", err)
+		return 0, nil
+	} else {
+		fmt.Println("文件已存在")
 	}
 	// 读取文件内容
 	content, err := os.ReadFile(todayFileName())
@@ -42,7 +71,6 @@ func ReadPassedCount() (int, error) {
 
 // WritePassedCount 写入当前日期文件的数值
 func WritePassedCount() (int, error) {
-	pkg.Log.Println("WritePassedCount")
 	number, err := ReadPassedCount()
 	if err != nil {
 		return 0, err
@@ -52,7 +80,8 @@ func WritePassedCount() (int, error) {
 	pkg.Log.Printf("After number: %d\n", number)
 	// 将整数转换为字符串
 	content := strconv.Itoa(number)
+	pkg.Log.Println("WritePassedCount")
 	// 写入文件内容
-	err = os.WriteFile(todayFileName(), []byte(content), 0644)
+	err = ioutil.WriteFile(todayFileName(), []byte(content), 0644)
 	return number, err
 }
