@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"os"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -65,7 +66,7 @@ func ReadPassedCount() (int, error) {
 	}
 	fmt.Println(content)
 	// 将文件内容转换为整数
-	number, err := strconv.Atoi(string(content))
+	number, err := strconv.Atoi(strings.TrimSpace(string(content)))
 	if err != nil {
 		fmt.Println(err)
 		return 0, err
