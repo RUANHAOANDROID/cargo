@@ -35,7 +35,7 @@ func main() {
 	display.ClearScreen()
 	screen.Set(display)
 	display.Show("启动中..", "正在等待系统组件加载..")
-	time.Sleep(5 * time.Second)
+	time.Sleep(10 * time.Second)
 	//---------设置NTP
 	display.Show("启动中..", "正在配置NTP..")
 	decaros.SetNTP()
