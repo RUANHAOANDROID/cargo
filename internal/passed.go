@@ -57,6 +57,7 @@ func ReadPassedCount() (int, error) {
 	// 读取文件内容
 	content, err := os.ReadFile(todayFileName())
 	if err != nil {
+		os.WriteFile(todayFileName(), []byte("0"), 0644)
 		return 0, err
 	}
 
