@@ -52,8 +52,6 @@ type Response struct {
 	Data json.RawMessage `json:"data"`
 }
 
-var tryCount = 3
-
 func GetConfig(url string) (*Config, error) {
 	pkg.Log.Printf("url=%s", url)
 	sn, err := decaros.GetSN()
@@ -79,11 +77,6 @@ func GetConfig(url string) (*Config, error) {
 	resp, err := http.Post(url+"/gateMachine/getConfig", "application/json", bytes.NewBuffer(requestBody))
 	if err != nil {
 		pkg.Log.Println("Error sending request:", err)
-		if tryCount >= 0 {
-			tryCount--
-			pkg.Log.Println("Trying again...")
-			GetConfig(url)
-		}
 		return nil, err
 	}
 	defer resp.Body.Close()

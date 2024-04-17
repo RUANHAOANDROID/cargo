@@ -45,7 +45,16 @@ func main() {
 		display.LCDRow(err.Error(), 60, 80, clib.DISP_FONT12)
 		pkg.Log.Error(err)
 		display.Show("错误..", "获取配置错误！！")
-		panic("获取配置错误！")
+		time.Sleep(3 * time.Second)
+		display.Show("正在重试..", "获取配置中..")
+		time.Sleep(3 * time.Second)
+		emcsConf, err = internal.GetConfig(conf.ServerUrl)
+		if err != nil {
+			display.LCDRow(err.Error(), 60, 80, clib.DISP_FONT12)
+			pkg.Log.Error(err)
+			display.Show("错误..", "获取配置错误！！")
+			panic("获取配置错误！")
+		}
 	}
 	icbc.SetConfig(conf.ServerUrl, conf.Sha, emcsConf)
 	showNormal(0)
