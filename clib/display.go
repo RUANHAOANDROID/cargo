@@ -109,6 +109,7 @@ func (d *Display) Show(title string, content string) {
 }
 func (d *Display) ShowNormal() {
 	d.ClearScreen()
+	d.ShowTime()
 	d.showTitleArea("请刷票")
 	d.showContentArea("扫描二维码或刷IC卡")
 	d.showBottomArea()
