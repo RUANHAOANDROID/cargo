@@ -47,7 +47,6 @@ func main() {
 		display.Show("错误..", "获取配置错误！！")
 		panic("获取配置错误！")
 	}
-
 	icbc.SetConfig(conf.ServerUrl, conf.Sha, emcsConf)
 	showNormal(0)
 	internal.CheckUpdate(conf.DeviceType, config.Version, emcsConf.EquipmentNo)

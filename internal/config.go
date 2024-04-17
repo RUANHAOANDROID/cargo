@@ -6,7 +6,6 @@ import (
 	"cargo/pkg"
 	"encoding/json"
 	"errors"
-	"fmt"
 	"net/http"
 	"time"
 )
@@ -70,14 +69,14 @@ func GetConfig(url string) (*Config, error) {
 		"timestamp": time.Now().Unix(),
 	})
 	if err != nil {
-		fmt.Println("Error marshalling request body:", err)
+		pkg.Log.Println("Error marshalling request body:", err)
 		return nil, err
 	}
 
 	// 发起 POST 请求
 	resp, err := http.Post(url+"/gateMachine/getConfig", "application/json", bytes.NewBuffer(requestBody))
 	if err != nil {
-		fmt.Println("Error sending request:", err)
+		pkg.Log.Println("Error sending request:", err)
 		return nil, err
 	}
 	defer resp.Body.Close()
@@ -85,7 +84,7 @@ func GetConfig(url string) (*Config, error) {
 	// 读取响应
 	var response Response
 	if err := json.NewDecoder(resp.Body).Decode(&response); err != nil {
-		fmt.Println("Error decoding response:", err)
+		pkg.Log.Println("Error decoding response:", err)
 		return nil, err
 	}
 	if response.Code == 0 {
