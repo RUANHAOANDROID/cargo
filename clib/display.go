@@ -16,7 +16,6 @@ import "C"
 import (
 	"cargo/config"
 	"cargo/pkg"
-	"fmt"
 	"strings"
 	"time"
 	"unicode/utf8"
@@ -87,7 +86,7 @@ func (d *Display) ShowTime() {
 	formattedTime := currentTime.Format("2006-01-02 15:04")
 	parts := strings.Split(formattedTime, " ")
 	// 打印格式化后的时间
-	fmt.Println("当前时间:", formattedTime)
+	pkg.Log.Println("当前时间:", formattedTime)
 	dataLen := len(parts[0]) * 6
 	C.LCD_Clear_rows(C.uint16_t(160), C.uint16_t(8))
 	d.LCDRow(parts[1], 1, 1, DISP_FONT6X8)
