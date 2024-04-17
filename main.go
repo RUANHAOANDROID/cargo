@@ -36,6 +36,9 @@ func main() {
 	screen.Set(display)
 	display.Show("启动中..", "正在获取配置..")
 	time.Sleep(5 * time.Second)
+	//---------设置NTP
+	display.Show("启动中..", "正在配置NTP..")
+	decaros.SetNTP()
 	emcsConf, err := internal.GetConfig(conf.ServerUrl)
 	if err != nil {
 		display.LCDRow(err.Error(), 60, 80, clib.DISP_FONT12)
@@ -43,9 +46,7 @@ func main() {
 		display.Show("错误..", "获取配置错误！！")
 		panic("获取配置错误！")
 	}
-	//---------设置NTP
-	display.Show("启动中..", "正在配置NTP..")
-	decaros.SetNTP()
+
 	icbc.SetConfig(conf.ServerUrl, conf.Sha, emcsConf)
 	showNormal(0)
 	internal.CheckUpdate(conf.DeviceType, config.Version, emcsConf.EquipmentNo)
