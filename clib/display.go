@@ -73,7 +73,7 @@ func (d *Display) showTitleArea(title string) {
 }
 func (d *Display) ShowPassedCount(count string) {
 	showContext := "P:" + count
-	textWidth := len([]rune(showContext)) * 12
+	textWidth := (len([]rune(showContext)) + 2) * 12
 	pkg.Log.Printf("内容%s,宽度%d\n", showContext, textWidth)
 	x := 160 - textWidth
 	pkg.Log.Println(x)
