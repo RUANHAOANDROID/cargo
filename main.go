@@ -5,6 +5,7 @@ import (
 	"cargo/api/icbc"
 	"cargo/clib"
 	"cargo/config"
+	"cargo/decaros"
 	"cargo/internal"
 	"cargo/msg"
 	"cargo/pkg"
@@ -43,10 +44,9 @@ func main() {
 	}
 	//---------设置NTP
 	display.Show("启动中..", "正在配置NTP..")
-	//decaros.SetNTP()
+	decaros.SetNTP()
 	icbc.SetConfig(conf.ServerUrl, conf.Sha, emcsConf)
-	display.Show("请刷票", "支持二维码，IC卡验票")
-	display.ShowTime()
+	showNormal(0)
 	internal.CheckUpdate(conf.DeviceType, config.Version, emcsConf.EquipmentNo)
 	wg.Add(1)
 	go func() {
@@ -87,17 +87,26 @@ func parseResp(err error, resp *icbc.CheckResponse) {
 		pkg.Log.Println("Check ticket SUCCESS!")
 		go speaker.Speaker(resp.RetMsg, true)
 		screen.Show(resp.RetMsg, true)
-		pCount, err := internal.WritePassedCount()
+		passedCount, err = internal.WritePassedCount()
 		if err != nil {
 			pkg.Log.Println(err)
 		}
-		passedCount = pCount
 	} else {
 		pkg.Log.Println("Check ticket Fail!")
 		go speaker.Speaker(resp.RetMsg, false)
 		screen.Show(resp.RetMsg, false)
 	}
 	time.Sleep(3 * time.Second)
-	str := strconv.Itoa(passedCount)
+	showNormal(passedCount)
+}
+func showNormal(pCount int) {
+	if pCount == 0 {
+		passedCount, err := internal.ReadPassedCount()
+		if err != nil {
+			pkg.Log.Println(err)
+		}
+		pCount = passedCount
+	}
+	str := strconv.Itoa(pCount)
 	display.ShowNormal(str)
 }
