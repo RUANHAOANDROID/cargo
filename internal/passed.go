@@ -1,6 +1,7 @@
 package internal
 
 import (
+	"cargo/pkg"
 	"os"
 	"strconv"
 	"time"
@@ -10,11 +11,12 @@ func today() string {
 	return time.Now().Format("20060102")
 }
 func todayFileName() string {
-	return "data/" + today() + ".txt"
+	return today() + ".txt"
 }
 
 // ReadPassedCount 获取当前日期文件的数值
 func ReadPassedCount() (int, error) {
+	pkg.Log.Println("ReadPassedCount")
 	// 如果文件不存在，则创建文件
 	if _, err := os.Stat(todayFileName()); os.IsNotExist(err) {
 		f, err := os.Create(todayFileName())
@@ -40,11 +42,14 @@ func ReadPassedCount() (int, error) {
 
 // WritePassedCount 写入当前日期文件的数值
 func WritePassedCount() (int, error) {
+	pkg.Log.Println("WritePassedCount")
 	number, err := ReadPassedCount()
 	if err != nil {
 		return 0, err
 	}
+	pkg.Log.Printf("Before number: %d\n", number)
 	number += 1
+	pkg.Log.Printf("After number: %d\n", number)
 	// 将整数转换为字符串
 	content := strconv.Itoa(number)
 	// 写入文件内容
