@@ -28,7 +28,7 @@ func createNewFile(filePath string) error {
 	defer file.Close()
 
 	// 写入内容到文件
-	_, err = file.WriteString("Hello, World!\n")
+	_, err = file.WriteString("0")
 	if err != nil {
 		fmt.Println(err)
 		return err

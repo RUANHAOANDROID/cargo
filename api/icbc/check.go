@@ -42,6 +42,7 @@ func CheckTicket(ticket string, protocolNo string) (*CheckResponse, error) {
 	if err != nil {
 		pkg.Log.Error(err)
 	}
+	pkg.Log.Println(emcsConf.ManufacturerId1)
 	pkg.Log.Printf("request=%q\n", requestBody)
 	clt := http.Client{}
 	resp, err := clt.Post(emcsConf.CheckUrl+pathCheckTicket, contentType, bytes.NewBuffer(requestBody))
