@@ -27,6 +27,11 @@ type VersionResponse struct {
 }
 
 func CheckUpdate(dType string, version string, eqp string) {
+	defer func() {
+		if r := recover(); r != nil {
+			pkg.Log.Error("Update panic:", r)
+		}
+	}()
 	pkg.Log.Printf("current version%s", version)
 	pkg.Log.Printf("Device No %s", eqp)
 	pkg.Log.Printf("DeviceType No %s", dType)
