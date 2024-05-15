@@ -25,7 +25,8 @@ steps:
       - ./build.sh
       - tar -cvf cargo.tar runner upgrade.sh config.yml
       - version=$(head -n 3 config/version.go | tail -n 1 | cut -d '"' -f 2)
-      - ./updav -u http://192.168.8.6:8081 -a dev -p Az*29!#^1Nan -f cargo.tar -r /uchi/公交车/$version
+      - echo $version
+#      - ./updav -u http://192.168.8.6:8081 -a dev -p Az*29!#^1Nan -f cargo.tar -r /uchi/公交车/$version
   - name: scp-files
     image: appleboy/drone-scp:1.6
     settings:
