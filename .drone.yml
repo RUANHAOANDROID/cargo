@@ -18,28 +18,14 @@ steps:
       - export PATH=$PATH:/go/bin/
       - export PATH=$PATH:/gcc/bin/
       - chmod +x build.sh
+      - chmod +x updav
       - arm-linux-gnueabihf-gcc --version
       - go env -w GONOSUMDB=*
       - export GOPROXY=http://mirrors.aliyun.com/goproxy/
       - ./build.sh
       - tar -cvf cargo.tar runner upgrade.sh config.yml
-  - name: upload-s3
-    image: minio/mc:RELEASE.2024-01-16T16-06-34Z
-    environment:
-      ADDRESS:
-        from_secret: MINIO_ADDRESS
-      ACCESS_KEY:
-        from_secret: MINIO_ACCESS_KEY
-      SECRET_KEY:
-        from_secret: MINIO_SECRET_KEY
-    commands:
-      - mc config host add mio $ADDRESS $ACCESS_KEY $SECRET_KEY
       - version=$(head -n 3 config/version.go | tail -n 1 | cut -d '"' -f 2)
-      - echo $version
-      - mc ls mio/uchi/公交车
-      - mc stat mio/uchi/公交车/$version > /dev/null 2>&1 || mc mb mio/uchi/公交车/$version
-      - mc ls mio/uchi/公交车/$version || mc mb mio/uchi/公交车/$version
-      - mc cp cargo.tar mio/uchi/公交车/$version
+      - ./updav -u http://192.168.8.6:8081 -a dev -p Az*29!#^1Nan -f cargo.tar -r /uchi/公交车/$version
   - name: scp-files
     image: appleboy/drone-scp:1.6
     settings:
