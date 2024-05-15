@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"cargo/pkg"
 	"encoding/json"
-	"fmt"
 	"io"
 	"net/http"
 	"os"
@@ -29,8 +28,8 @@ type VersionResponse struct {
 
 func CheckUpdate(dType string, version string, eqp string) {
 	pkg.Log.Printf("current version%s", version)
-	pkg.Log.Printf("Device No%s", eqp)
-	pkg.Log.Printf("DeviceType No%s", dType)
+	pkg.Log.Printf("Device No %s", eqp)
+	pkg.Log.Printf("DeviceType No %s", dType)
 	// 定义请求体结构
 	requestBody := map[string]interface{}{
 		"data": map[string]string{
@@ -44,14 +43,14 @@ func CheckUpdate(dType string, version string, eqp string) {
 	// 将请求体转换为JSON格式
 	requestBodyBytes, err := json.Marshal(requestBody)
 	if err != nil {
-		fmt.Println("Error marshalling request body:", err)
+		pkg.Log.Println("Error marshalling request body:", err)
 		return
 	}
 
 	// 发起POST请求
 	resp, err := http.Post("http://emcs-api.youchiyun.com/gateMachine/getVersion", "application/json", bytes.NewBuffer(requestBodyBytes))
 	if err != nil {
-		fmt.Println("Error sending POST request:", err)
+		pkg.Log.Println("Error sending POST request:", err)
 		return
 	}
 	defer resp.Body.Close()
@@ -59,16 +58,16 @@ func CheckUpdate(dType string, version string, eqp string) {
 	// 读取响应体
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
-		fmt.Println("Error reading response body:", err)
+		pkg.Log.Println("Error reading response body:", err)
 		return
 	}
 	// 打印响应体
-	fmt.Println(string(body))
+	pkg.Log.Println(string(body))
 	// 解析JSON数据到结构体中
 	var vr VersionResponse
 	err = json.Unmarshal(body, &vr)
 	if err != nil {
-		fmt.Println("Error parsing JSON:", err)
+		pkg.Log.Println("Error parsing JSON:", err)
 		return
 	}
 	if vr.Code == 0 {
@@ -78,14 +77,14 @@ func CheckUpdate(dType string, version string, eqp string) {
 		targetVersionStr = strings.ReplaceAll(targetVersionStr, ".", "")
 		targetVersionInt, err := strconv.ParseInt(targetVersionStr, 10, 64)
 		if err != nil {
-			fmt.Println("Error:", err)
+			pkg.Log.Println("Error:", err)
 			return
 		}
 		currentVersion := strings.TrimPrefix(version, "v")
 		currentVersion = strings.ReplaceAll(currentVersion, ".", "")
 		versionInt, err := strconv.ParseInt(currentVersion, 10, 64)
 		if err != nil {
-			fmt.Println("Error:", err)
+			pkg.Log.Println("Error:", err)
 			return
 		}
 		pkg.Log.Println("Target version:", targetVersionInt)
@@ -116,14 +115,14 @@ func downLoad(url string) (string, error) {
 	// 发起HTTP GET请求
 	response, err := http.Get(url)
 	if err != nil {
-		fmt.Println("Error:", err)
+		pkg.Log.Println("Error:", err)
 		return "", err
 	}
 	defer response.Body.Close()
 	// 创建文件
 	file, err := os.Create(filePath)
 	if err != nil {
-		fmt.Println("Error:", err)
+		pkg.Log.Println("Error:", err)
 		return "", err
 	}
 	defer file.Close()
@@ -131,10 +130,10 @@ func downLoad(url string) (string, error) {
 	// 将响应体写入文件
 	_, err = io.Copy(file, response.Body)
 	if err != nil {
-		fmt.Println("Error:", err)
+		pkg.Log.Println("Error:", err)
 		return "", err
 	}
-	fmt.Println("File downloaded successfully!")
+	pkg.Log.Println("File downloaded successfully!")
 	return filePath, nil
 }
 func extractTar(targetDir string, tarFile string) error {
@@ -159,10 +158,10 @@ func tarxvf(tarFile string) {
 	// 执行命令
 	err := cmd.Run()
 	if err != nil {
-		fmt.Println("Error rebooting system:", err)
+		pkg.Log.Println("Error rebooting system:", err)
 		return
 	}
-	fmt.Println("System is rebooting...")
+	pkg.Log.Println("System is rebooting...")
 }
 
 func reboot() {
@@ -172,10 +171,10 @@ func reboot() {
 	// 执行命令
 	err := cmd.Run()
 	if err != nil {
-		fmt.Println("Error rebooting system:", err)
+		pkg.Log.Println("Error rebooting system:", err)
 		return
 	}
-	fmt.Println("System is rebooting...")
+	pkg.Log.Println("System is rebooting...")
 }
 func runUpgradeShell() {
 	// 创建一个cmd对象
