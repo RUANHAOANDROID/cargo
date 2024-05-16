@@ -155,6 +155,7 @@ void ic_read(){
         if(!ret) ret = Mifare_ReadBlock(0 + i * 4,data);
         //if(!ret) dump_data("Mifare Read0",data,data_len);
         if(!ret){
+			printf("[c] ->ic read len=%d\n",ret);
 			Sys_BeepMs(100);
 			//dump_data("Mifare Read0",data,data_len);
 			memset(buffer, 0, sizeof(buffer));
@@ -163,7 +164,7 @@ void ic_read(){
 			buffer[2]=data[1];
 			buffer[3]=data[2];
 			buffer[4]=data[3];
-			send(client_socket, buffer, BUFFER_SIZE, 0);
+			//send(client_socket, buffer, BUFFER_SIZE, 0);
 			printf("[c] ->ic read sensor sleep 2s\n");
 			usleep(3000000);
 		}
