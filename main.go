@@ -12,7 +12,6 @@ import (
 	"cargo/screen"
 	"cargo/speaker"
 	"fmt"
-	"log"
 	"net/http"
 	"runtime"
 	"strconv"
@@ -26,7 +25,9 @@ func monitorResources() {
 	for {
 		var memStats runtime.MemStats
 		runtime.ReadMemStats(&memStats)
-		fmt.Printf("Goroutines: %d, Memory: %d MB\n", runtime.NumGoroutine(), memStats.Alloc/1024/1024)
+		M := memStats.Alloc / 1024 / 1024
+		KB := memStats.Alloc / 1024
+		fmt.Printf("Goroutines: %d, Memory: %d MB , %d KB", runtime.NumGoroutine(), M, KB)
 		time.Sleep(1 * time.Second)
 	}
 }
@@ -39,7 +40,25 @@ func main() {
 		}
 	}()
 	go func() {
-		log.Println(http.ListenAndServe(":6060", nil))
+		http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+			// 设置HTTP头部，指示这是一个SSE连接
+			w.Header().Set("Content-Type", "text/event-stream")
+			w.Header().Set("Cache-Control", "no-cache")
+			w.Header().Set("Connection", "keep-alive")
+
+			// 向客户端发送数据
+			for {
+				// 在每次循环中发送一个消息
+				fmt.Fprintf(w, "data: %s\n\n", time.Now().Format(time.RFC3339))
+				w.(http.Flusher).Flush() // 强制发送到客户端
+
+				time.Sleep(1 * time.Second)
+			}
+		})
+
+		// 启动HTTP服务器
+		fmt.Println("Server started at http://localhost:8080")
+		http.ListenAndServe(":6060", nil)
 	}()
 	go monitorResources()
 	var wg sync.WaitGroup
