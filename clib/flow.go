@@ -48,7 +48,6 @@ func StartTcpServer(cm chan msg.Message) {
 	}
 }
 func process(conn net.Conn) {
-	display := Display{}
 	defer conn.Close() // 关闭连接
 	buffer := make([]byte, bufferSize)
 	for {
@@ -59,7 +58,6 @@ func process(conn net.Conn) {
 			return
 		}
 		if bytesRead > 0 && buffer[1] != 0 {
-			pkg.Log.Printf("buffer len=%v buffer=%v\n", bytesRead, buffer)
 			trimmedBuffer := trimTrailingZeros(buffer[:bytesRead])
 			pkg.Log.Printf("trimmed buffer len=%v buffer=%v\n", len(trimmedBuffer), trimmedBuffer)
 			types := int(trimmedBuffer[0])
@@ -67,7 +65,6 @@ func process(conn net.Conn) {
 			switch types {
 			case msg.IC_CARD:
 				content := bytesToHexString(trimmedBuffer[1:])
-				pkg.Log.Println(content)
 				content, err = swapHexOrder(content)
 				if err != nil {
 					fmt.Println("Error swapping hex order:", err)
@@ -78,21 +75,13 @@ func process(conn net.Conn) {
 					fmt.Println("Error converting hex to decimal:", err)
 					return
 				}
-				pkg.Log.Println(content)
 				chanMsg <- msg.Message{Type: msg.IC_CARD, Content: content}
-				//pkg.APlay(pkg.SoundFiles[8])
-				display.LCDRow(content, 8, 40, DISP_FONT12)
 			case msg.QRCODE:
 				content := string(trimmedBuffer[1:])
 				chanMsg <- msg.Message{Type: msg.QRCODE, Content: content}
-				fmt.Println(content)
-				//pkg.APlay(pkg.SoundFiles[9])
 			default:
 				fmt.Println("undefined type")
 			}
-
-			//chanMsg <- msg.Message{Type: int(packet.Type), Content: packetContent}
-			//conn.Write([]byte(recvStr)) // 发送数据
 		} else {
 			pkg.Log.Println("bytesRead <=0 or buffer is null")
 		}

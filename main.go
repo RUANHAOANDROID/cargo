@@ -59,9 +59,6 @@ func main() {
 				time.Sleep(1 * time.Second)
 			}
 		})
-
-		// 启动HTTP服务器
-		fmt.Println("Server started at http://localhost:8080")
 		http.ListenAndServe(":6060", nil)
 	}()
 	go monitorResources()
@@ -113,11 +110,10 @@ func main() {
 			pkg.Log.Printf("ic card=%s\n", cMsg.Content)
 			resp, err := icbc.CheckTicket(cMsg.Content, icbc.ProtoIC)
 			parseResp(err, resp)
-			//pkg.Log.Println(resp)
 		case msg.QRCODE:
 			pkg.Log.Printf("qrocde=%s\n", cMsg.Content)
 			resp, err := icbc.CheckTicket(cMsg.Content, icbc.ProtoQr)
-			go parseResp(err, resp)
+			parseResp(err, resp)
 		default:
 			pkg.Log.Println("undefined type")
 		}
