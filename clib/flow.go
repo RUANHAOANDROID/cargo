@@ -63,7 +63,7 @@ func process(conn net.Conn) {
 			trimmedBuffer := trimTrailingZeros(buffer[:bytesRead])
 			pkg.Log.Printf("trimmed buffer len=%v buffer=%v\n", len(trimmedBuffer), trimmedBuffer)
 			types := int(trimmedBuffer[0])
-			pkg.Log.Println(types)
+			pkg.Log.Println("ticket type", types)
 			switch types {
 			case msg.IC_CARD:
 				content := bytesToHexString(trimmedBuffer[1:])
