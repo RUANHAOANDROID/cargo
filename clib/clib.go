@@ -147,7 +147,6 @@ void ic_read(){
     int i;
     PICC_Open(0);
 	uint8_t type = 0x01;
-	unsigned char TmpBuff[512];
 	while(!stop_requested){
 		//printf("c ->read IC\n");
         if(ret) ret = Mifare_PowerOn(0,snr,&snr_len);
@@ -159,17 +158,14 @@ void ic_read(){
 			printf("[c] ->ic read len=%d\n",ret);
 			Sys_BeepMs(100);
 			//dump_data("Mifare Read0",data,data_len);
-			memset(buffer, 0, sizeof(buffer));
-			buffer[0]=type;
-			buffer[1]=data[0];
-			buffer[2]=data[1];
-			buffer[3]=data[2];
-			buffer[4]=data[3];
-			char onlyLenBuffer[data_len+1];
-			onlyLenBuffer[0]=type;
-			memcpy(onlyLenBuffer+1,TmpBuff,data_len);
-	        printf("[c]->buffer %s \n",onlyLenBuffer);
-			send(client_socket, buffer, BUFFER_SIZE, 0);
+  	        unsigned char tmpBuffer[data_len+1];
+			tmpBuffer[0]=type;
+			tmpBuffer[1]=data[0];
+			tmpBuffer[2]=data[1];
+			tmpBuffer[3]=data[2];
+			tmpBuffer[4]=data[3];
+	        printf("[c]->tmpBuffer %s \n",tmpBuffer);
+			send(client_socket, tmpBuffer, BUFFER_SIZE, 0);
 			printf("[c] ->ic read sensor sleep 2s\n");
 			usleep(3000000);
 		}
