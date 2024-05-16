@@ -54,7 +54,6 @@ func main() {
 				KB := memStats.Alloc / 1024
 				fmt.Fprintf(w, "Goroutines: %d, Memory: %d MB , %d KB\n", runtime.NumGoroutine(), M, KB)
 				w.(http.Flusher).Flush() // 强制发送到客户端
-
 				time.Sleep(1 * time.Second)
 			}
 		})
