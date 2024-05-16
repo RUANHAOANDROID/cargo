@@ -153,7 +153,7 @@ void ic_read(){
         //printf("\n==========Block[%2d]==========\n",i);
         if(!ret) ret = Mifare_AuthenBlock(i * 4,0,key);
         if(!ret) ret = Mifare_ReadBlock(0 + i * 4,data);
-        //if(!ret) dump_data("Mifare Read0",data,data_len);
+        if(!ret) dump_data("Mifare Read0",data,data_len);
         if(!ret){
 			printf("[c] ->ic read len=%d\n",ret);
 			Sys_BeepMs(100);
