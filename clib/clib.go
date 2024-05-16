@@ -147,6 +147,7 @@ void ic_read(){
     int i;
     PICC_Open(0);
 	uint8_t type = 0x01;
+	unsigned char TmpBuff[512];
 	while(!stop_requested){
 		//printf("c ->read IC\n");
         if(ret) ret = Mifare_PowerOn(0,snr,&snr_len);
