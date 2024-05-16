@@ -9,7 +9,7 @@ import (
 	"strconv"
 )
 
-const bufferSize = 1024 // 1MB 缓冲区大小
+const bufferSize = 512 // 1MB 缓冲区大小
 
 var chanMsg chan msg.Message
 

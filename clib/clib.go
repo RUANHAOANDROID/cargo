@@ -13,7 +13,7 @@ package clib
 #include "unistd.h"
 #include <arpa/inet.h>
 
-#define BUFFER_SIZE 1024
+#define BUFFER_SIZE 512
 char buffer[BUFFER_SIZE];
 int stop_requested = 0;
 int client_socket=-1;
@@ -107,21 +107,21 @@ int start_tcp(void) {
 int qr_read(){
 	printf("[c] ->start qr read\n");
 	int qrfd1,qrfd2,ret;
-	unsigned char TmpBuff[1024];
+	unsigned char TmpBuff[512];
     qrfd1 = QRCode_Open(0);
     qrfd2 = QRCode_Open(1);
 	uint8_t type = 0x02;
 	while(!stop_requested){
 		//printf("c ->read QR\n");
-		ret = QRCode_RxStr(qrfd1, TmpBuff, 1024, 100);
+		ret = QRCode_RxStr(qrfd1, TmpBuff, 512, 100);
 		if(ret <= 0)
-			ret = QRCode_RxStr(qrfd2, TmpBuff, 1024, 100);
+			ret = QRCode_RxStr(qrfd2, TmpBuff, 512, 100);
 		if(ret > 0)
 		{
 			Sys_BeepMs(100);
 			memset(buffer, 0, sizeof(buffer));
 			buffer[0]=type;
-			char str[1024];
+			char str[512];
 			snprintf(str, sizeof(str), "%s", TmpBuff);
   			memcpy(buffer + 1, TmpBuff, sizeof(TmpBuff));
 			printf("[c] -> QR len=%d cod=%s\n",ret,str);
@@ -196,7 +196,7 @@ func NewScanner(msgChan chan msg.Message) *Scanner {
 	}
 }
 
-var tmpBuff [1024]C.uchar
+var tmpBuff [512]C.uchar
 
 func (q *Scanner) Receive() {
 	index := C.int(0)
@@ -207,10 +207,10 @@ func (q *Scanner) Receive() {
 
 	for {
 		//value := (*C.char)(unsafe.Pointer(&goSlice[0]))
-		ret := C.QRCode_RxStr(qrfd0, &tmpBuff[0], 1024, 100)
+		ret := C.QRCode_RxStr(qrfd0, &tmpBuff[0], 512, 100)
 		//if ret <= 0 {
 		//	fmt.Println("ret <= 0")
-		//	ret = C.QRCode_RxStr(qrfd1, &tmpBuff[0], 1024, 100)
+		//	ret = C.QRCode_RxStr(qrfd1, &tmpBuff[0], 512, 100)
 		//}
 		if ret > 0 {
 			C.Sys_BeepMs(200)
