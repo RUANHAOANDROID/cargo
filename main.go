@@ -32,6 +32,8 @@ func monitorResources() {
 	}
 }
 
+var sleepTime = 0 * time.Second
+
 // main  -lpos -lm -lpng -lfontconfig -lfreetype -liconv
 func main() {
 	defer func() {
@@ -73,16 +75,16 @@ func main() {
 	display.ClearScreen()
 	screen.Set(display)
 	display.Show("启动中..", "正在等待系统组件加载..")
-	time.Sleep(15 * time.Second)
+	time.Sleep(sleepTime)
 	display.Show("启动中..", "正在获取配置..")
 	emcsConf, err := internal.GetConfig(conf.ServerUrl)
 	if err != nil {
 		display.LCDRow(err.Error(), 60, 80, clib.DISP_FONT12)
 		pkg.Log.Error(err)
 		display.Show("错误..", "获取配置错误！！")
-		time.Sleep(10 * time.Second)
+		time.Sleep(sleepTime)
 		display.Show("正在重试..", "获取配置中..")
-		time.Sleep(10 * time.Second)
+		time.Sleep(sleepTime)
 		emcsConf, err = internal.GetConfig(conf.ServerUrl)
 		if err != nil {
 			display.LCDRow(err.Error(), 60, 80, clib.DISP_FONT12)
