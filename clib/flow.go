@@ -21,6 +21,24 @@ func byteArrayToDecimal(bytes []byte) int {
 	}
 	return result
 }
+
+func StartTcpServer(cm chan msg.Message) {
+	chanMsg = cm
+	listen, err := net.Listen("tcp", "0.0.0.0:9999")
+	defer listen.Close()
+	if err != nil {
+		fmt.Println("Listen() failed, err: ", err)
+		return
+	}
+	for {
+		conn, err := listen.Accept() // 监听客户端的连接请求
+		if err != nil {
+			fmt.Println("Accept() failed, err: ", err)
+			continue
+		}
+		go process(conn) // 启动一个goroutine来处理客户端的连接请求
+	}
+}
 func process(conn net.Conn) {
 	display := Display{}
 	defer conn.Close() // 关闭连接
@@ -34,6 +52,8 @@ func process(conn net.Conn) {
 		}
 		if bytesRead > 0 && buffer[1] != 0 {
 			pkg.Log.Printf("buffer len=%v buffer=%v\n", bytesRead, buffer)
+			trimmedBuffer := trimTrailingZeros(buffer[:bytesRead])
+			pkg.Log.Printf("trimmed buffer len=%v buffer=%v\n", len(trimmedBuffer), trimmedBuffer)
 			types := int(buffer[0])
 			pkg.Log.Println(types)
 			switch types {
@@ -61,20 +81,12 @@ func process(conn net.Conn) {
 	}
 }
 
-func StartTcpServer(cm chan msg.Message) {
-	chanMsg = cm
-	listen, err := net.Listen("tcp", "0.0.0.0:9999")
-	defer listen.Close()
-	if err != nil {
-		fmt.Println("Listen() failed, err: ", err)
-		return
-	}
-	for {
-		conn, err := listen.Accept() // 监听客户端的连接请求
-		if err != nil {
-			fmt.Println("Accept() failed, err: ", err)
-			continue
+// trimTrailingZeros 去除字节切片后面的0
+func trimTrailingZeros(data []byte) []byte {
+	for i := len(data) - 1; i >= 0; i-- {
+		if data[i] != 0 {
+			return data[:i+1]
 		}
-		go process(conn) // 启动一个goroutine来处理客户端的连接请求
 	}
+	return []byte{}
 }
