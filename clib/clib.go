@@ -85,10 +85,10 @@ int send_message(int client_socket, const char *message) {
 
 void close_connection(int client_socket) {
 	printf("[c] ->close_connection\n");
-	stop_requested=1;
-	client_socket=-1;
 	// 关闭套接字
     close(client_socket);
+	stop_requested=1;
+	client_socket=-1;
 }
 
 int start_tcp(void) {
