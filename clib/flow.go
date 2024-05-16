@@ -54,18 +54,18 @@ func process(conn net.Conn) {
 			pkg.Log.Printf("buffer len=%v buffer=%v\n", bytesRead, buffer)
 			trimmedBuffer := trimTrailingZeros(buffer[:bytesRead])
 			pkg.Log.Printf("trimmed buffer len=%v buffer=%v\n", len(trimmedBuffer), trimmedBuffer)
-			types := int(buffer[0])
+			types := int(trimmedBuffer[0])
 			pkg.Log.Println(types)
 			switch types {
 			case msg.IC_CARD:
-				content := byteArrayToDecimal(buffer[1:])
+				content := byteArrayToDecimal(trimmedBuffer[1:])
 				cInt := strconv.Itoa(content)
 				fmt.Println(cInt)
 				chanMsg <- msg.Message{Type: msg.IC_CARD, Content: cInt}
 				//pkg.APlay(pkg.SoundFiles[8])
 				display.LCDRow(cInt, 8, 40, DISP_FONT12)
 			case msg.QRCODE:
-				content := string(buffer[1:])
+				content := string(trimmedBuffer[1:])
 				chanMsg <- msg.Message{Type: msg.QRCODE, Content: content}
 				fmt.Println(content)
 				//pkg.APlay(pkg.SoundFiles[9])
