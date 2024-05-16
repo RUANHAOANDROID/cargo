@@ -59,8 +59,9 @@ func process(conn net.Conn) {
 			switch types {
 			case msg.IC_CARD:
 				content := byteArrayToDecimal(trimmedBuffer[1:])
+				pkg.Log.Println(content)
 				cInt := strconv.Itoa(content)
-				fmt.Println(cInt)
+				pkg.Log.Println(cInt)
 				chanMsg <- msg.Message{Type: msg.IC_CARD, Content: cInt}
 				//pkg.APlay(pkg.SoundFiles[8])
 				display.LCDRow(cInt, 8, 40, DISP_FONT12)
