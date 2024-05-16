@@ -32,7 +32,7 @@ func monitorResources() {
 	}
 }
 
-var sleepTime = 0 * time.Second
+var sleepTime = 10 * time.Second
 
 // main  -lpos -lm -lpng -lfontconfig -lfreetype -liconv
 func main() {
