@@ -126,7 +126,11 @@ int qr_read(){
   			memcpy(buffer + 1, TmpBuff, sizeof(TmpBuff));
 			printf("[c] -> QR len=%d cod=%s\n",ret,str);
 			//printf("\nQRCODE-> : %s\n",str);
-			send(client_socket, buffer, BUFFER_SIZE, 0);
+			char onlyLenBuffer[ret+1];
+			onlyLenBuffer[0]=type;
+			memcpy(onlyLenBuffer+1,TmpBuff,ret);
+			send(client_socket, onlyLenBuffer, ret+1, 0);
+			//send(client_socket, buffer, BUFFER_SIZE, 0);
 			usleep(3000000);
 			printf("[c] ->QR scanner sleep 2s\n");
 		}
