@@ -48,8 +48,11 @@ func main() {
 
 			// 向客户端发送数据
 			for {
-				// 在每次循环中发送一个消息
-				fmt.Fprintf(w, "data: %s\n\n", time.Now().Format(time.RFC3339))
+				var memStats runtime.MemStats
+				runtime.ReadMemStats(&memStats)
+				M := memStats.Alloc / 1024 / 1024
+				KB := memStats.Alloc / 1024
+				fmt.Fprintf(w, "Goroutines: %d, Memory: %d MB , %d KB\n", runtime.NumGoroutine(), M, KB)
 				w.(http.Flusher).Flush() // 强制发送到客户端
 
 				time.Sleep(1 * time.Second)
