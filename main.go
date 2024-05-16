@@ -11,12 +11,25 @@ import (
 	"cargo/pkg"
 	"cargo/screen"
 	"cargo/speaker"
+	"fmt"
+	"log"
+	"net/http"
+	"runtime"
 	"strconv"
 	"sync"
 	"time"
 )
 
 var display *clib.Display
+
+func monitorResources() {
+	for {
+		var memStats runtime.MemStats
+		runtime.ReadMemStats(&memStats)
+		fmt.Printf("Goroutines: %d, Memory: %d MB\n", runtime.NumGoroutine(), memStats.Alloc/1024/1024)
+		time.Sleep(1 * time.Second)
+	}
+}
 
 // main  -lpos -lm -lpng -lfontconfig -lfreetype -liconv
 func main() {
@@ -25,6 +38,10 @@ func main() {
 			pkg.Log.Error("main panic:", r)
 		}
 	}()
+	go func() {
+		log.Println(http.ListenAndServe("localhost:6060", nil))
+	}()
+	go monitorResources()
 	var wg sync.WaitGroup
 	conf, err := config.Load("config.yml")
 	if err != nil {
