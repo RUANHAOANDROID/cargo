@@ -5,8 +5,9 @@ import (
 	"cargo/msg"
 	"cargo/pkg"
 	"fmt"
+	"math/big"
 	"net"
-	"strconv"
+	"strings"
 )
 
 const bufferSize = 512 // 1MB 缓冲区大小
@@ -20,6 +21,13 @@ func byteArrayToDecimal(bytes []byte) int {
 		result = result*256 + int(bytes[i])
 	}
 	return result
+}
+func bytesToHexString(bytes []byte) string {
+	var hexString string
+	for _, b := range bytes {
+		hexString += fmt.Sprintf("%02X", b)
+	}
+	return hexString
 }
 
 func StartTcpServer(cm chan msg.Message) {
@@ -58,13 +66,22 @@ func process(conn net.Conn) {
 			pkg.Log.Println(types)
 			switch types {
 			case msg.IC_CARD:
-				content := byteArrayToDecimal(trimmedBuffer[1:])
+				content := bytesToHexString(trimmedBuffer[1:])
 				pkg.Log.Println(content)
-				cInt := strconv.Itoa(content)
-				pkg.Log.Println(cInt)
-				chanMsg <- msg.Message{Type: msg.IC_CARD, Content: cInt}
+				content, err = swapHexOrder(content)
+				if err != nil {
+					fmt.Println("Error swapping hex order:", err)
+					return
+				}
+				content, err = hexToDecimal(content)
+				if err != nil {
+					fmt.Println("Error converting hex to decimal:", err)
+					return
+				}
+				pkg.Log.Println(content)
+				chanMsg <- msg.Message{Type: msg.IC_CARD, Content: content}
 				//pkg.APlay(pkg.SoundFiles[8])
-				display.LCDRow(cInt, 8, 40, DISP_FONT12)
+				display.LCDRow(content, 8, 40, DISP_FONT12)
 			case msg.QRCODE:
 				content := string(trimmedBuffer[1:])
 				chanMsg <- msg.Message{Type: msg.QRCODE, Content: content}
@@ -80,6 +97,23 @@ func process(conn net.Conn) {
 			pkg.Log.Println("bytesRead <=0 or buffer is null")
 		}
 	}
+}
+func swapHexOrder(hexString string) (string, error) {
+	swappedHex := strings.Builder{}
+	for i := 6; i >= 0; i -= 2 {
+		swappedHex.WriteString(hexString[i : i+2])
+	}
+	return swappedHex.String(), nil
+}
+func hexToDecimal(hexString string) (string, error) {
+	hexInt, success := new(big.Int).SetString(hexString, 16)
+	if !success {
+		return "", fmt.Errorf("无法将十六进制字符串 %s 转换为大整数", hexString)
+	}
+	// 将大整数转换为十进制字符串
+	decimalStr := hexInt.String()
+
+	return decimalStr, nil
 }
 
 // trimTrailingZeros 去除字节切片后面的0
