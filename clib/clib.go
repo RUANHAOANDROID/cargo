@@ -165,7 +165,7 @@ void ic_read(){
 			tmpBuffer[3]=data[2];
 			tmpBuffer[4]=data[3];
 	        dump_data("[c] ->Send IC Data:\n",tmpBuffer,sizeof(tmpBuffer));
-			send(client_socket, tmpBuffer, BUFFER_SIZE, 0);
+			send(client_socket, tmpBuffer, data_len+1, 0);
 			printf("[c] ->ic read sensor sleep 2s\n");
 			usleep(3000000);
 		}
