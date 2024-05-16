@@ -158,14 +158,14 @@ void ic_read(){
 			printf("[c] ->ic read len=%d\n",ret);
 			Sys_BeepMs(100);
 			//dump_data("Mifare Read0",data,data_len);
-  	        unsigned char tmpBuffer[data_len+1];
+  	        unsigned char tmpBuffer[5];
 			tmpBuffer[0]=type;
 			tmpBuffer[1]=data[0];
 			tmpBuffer[2]=data[1];
 			tmpBuffer[3]=data[2];
 			tmpBuffer[4]=data[3];
 	        dump_data("[c] ->Send IC Data:\n",tmpBuffer,sizeof(tmpBuffer));
-			send(client_socket, tmpBuffer, data_len+1, 0);
+			send(client_socket, tmpBuffer, sizeof(tmpBuffer)+1, 0);
 			printf("[c] ->ic read sensor sleep 2s\n");
 			usleep(3000000);
 		}
