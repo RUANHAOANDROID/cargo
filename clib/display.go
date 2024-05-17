@@ -72,7 +72,7 @@ func (d *Display) showTitleArea(title string) {
 	d.LCDRow(title, 1, 8+2, DISP_FONT24)
 }
 func (d *Display) ShowPassedCount(count string) {
-	showContext := "P:" + count
+	showContext := " " + count
 	textWidth := (len([]rune(showContext)) + 2) * 12
 	pkg.Log.Printf("内容%s,宽度%d\n", showContext, textWidth)
 	x := 160 - textWidth
