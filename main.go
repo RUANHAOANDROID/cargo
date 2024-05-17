@@ -147,6 +147,7 @@ func parseResp(err error, resp *icbc.CheckResponse) {
 	showNormal(passedCount)
 }
 func showNormal(pCount int) {
+	pkg.Log.Printf("passed count=%d\n", pCount)
 	if pCount == 0 {
 		passedCount, err := internal.ReadPassedCount()
 		if err != nil {

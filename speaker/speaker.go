@@ -2,11 +2,12 @@ package speaker
 
 import (
 	"cargo/decaros"
+	"cargo/pkg"
 	"strings"
 )
 
 func Speaker(msg string, success bool) {
-
+	pkg.Log.Println(msg, success)
 	if success {
 		decaros.APlay("A")
 	} else {

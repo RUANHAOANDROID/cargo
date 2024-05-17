@@ -24,6 +24,7 @@ var (
 )
 
 func APlay(wav string) {
+	pkg.Log.Println(wav + ".wav")
 	// 判断字符串是否包含 .wav 后缀
 	if !strings.HasSuffix(wav, ".wav") {
 		// 如果不包含，添加上 .wav 后缀
@@ -37,4 +38,12 @@ func APlay(wav string) {
 		pkg.Log.Println("cmd run error:", err)
 		return
 	}
+	// 使用 Goroutine 等待命令完成并捕获错误
+	go func() {
+		defer func() {
+			if err := cmd.Wait(); err != nil {
+				pkg.Log.Println("cmd wait error:", err)
+			}
+		}()
+	}()
 }
