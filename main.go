@@ -125,23 +125,23 @@ func parseResp(err error, resp *icbc.CheckResponse) {
 	if err != nil {
 		pkg.Log.Error(err)
 		pkg.Log.Error(resp)
-		go speaker.Speaker("验票失败", false)
+		speaker.Speaker("验票失败", false)
 		screen.Show(err.Error(), false)
 		return
 	}
 	var passedCount = 0
 	if resp.RetCode == "0" {
 		pkg.Log.Println("Check ticket SUCCESS!")
-		go speaker.Speaker(resp.RetMsg, true)
 		screen.Show(resp.RetMsg, true)
+		speaker.Speaker(resp.RetMsg, true)
 		passedCount, err = internal.WritePassedCount()
 		if err != nil {
 			pkg.Log.Println(err)
 		}
 	} else {
 		pkg.Log.Println("Check ticket Fail!")
-		go speaker.Speaker(resp.RetMsg, false)
 		screen.Show(resp.RetMsg, false)
+		speaker.Speaker(resp.RetMsg, false)
 	}
 	time.Sleep(3 * time.Second)
 	showNormal(passedCount)
