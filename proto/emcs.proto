@@ -1,0 +1,25 @@
+syntax = "proto3";
+option go_package = "../proto";
+package emcs;
+message ApiLogRequest{
+    string timestamp=1;
+    string deviceId=2;
+    string appVersion=3;
+    string type =4;
+    uint32 status=5;
+    string requestUrl=6;
+    string requestContent=7;
+    string responseContent=8;
+}
+message ApiLogResp{
+    bool success=1;
+}
+
+message NumUploadRequest{
+    string deviceId=1;
+    string timeStamp=2;
+    int32  peopleNum=3;
+}
+message BasicResp{
+    bool success=1;
+}
