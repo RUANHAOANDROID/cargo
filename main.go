@@ -2,7 +2,7 @@ package main
 
 import "C"
 import (
-	"cargo/api/icbc"
+	"cargo/api"
 	"cargo/clib"
 	"cargo/config"
 	"cargo/decaros"
@@ -93,7 +93,7 @@ func main() {
 	//---------设置NTP
 	display.Show("启动中..", "正在配置NTP..")
 	decaros.SetNTP()
-	icbc.SetConfig(conf.ServerUrl, conf.Sha, emcsConf)
+	api.SetConfig(conf.ServerUrl, conf.Sha, emcsConf)
 	showNormal(0)
 	internal.CheckUpdate(conf.DeviceType, config.Version, emcsConf.EquipmentNo)
 	wg.Add(1)
@@ -108,11 +108,11 @@ func main() {
 		switch cMsg.Type {
 		case msg.IC_CARD:
 			pkg.Log.Printf("ic card=%s\n", cMsg.Content)
-			resp, err := icbc.CheckTicket(cMsg.Content, icbc.ProtoIC)
+			resp, err := api.CheckTicket(cMsg.Content, api.ProtoIC)
 			parseResp(err, resp)
 		case msg.QRCODE:
 			pkg.Log.Printf("qrocde=%s\n", cMsg.Content)
-			resp, err := icbc.CheckTicket(cMsg.Content, icbc.ProtoQr)
+			resp, err := api.CheckTicket(cMsg.Content, api.ProtoQr)
 			parseResp(err, resp)
 		default:
 			pkg.Log.Println("undefined type")
@@ -121,7 +121,7 @@ func main() {
 	pkg.Log.Print("End......")
 }
 
-func parseResp(err error, resp *icbc.CheckResponse) {
+func parseResp(err error, resp *api.CheckResponse) {
 	if err != nil {
 		pkg.Log.Error(err)
 		pkg.Log.Error(resp)

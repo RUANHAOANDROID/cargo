@@ -1,4 +1,4 @@
-package icbc
+package api
 
 import (
 	"cargo/config"

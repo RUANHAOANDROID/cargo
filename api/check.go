@@ -1,4 +1,4 @@
-package icbc
+package api
 
 import (
 	"bytes"
@@ -59,10 +59,13 @@ func CheckTicket(ticket string, protocolNo string) (*CheckResponse, error) {
 		return nil, err
 	}
 	pkg.Log.Printf("resp code=%s,msg=%s,resortId=%s\n", checkResponse.RetCode, checkResponse.RetMsg, checkResponse.ResortId)
+	status := 2
 	if checkResponse.RetCode == "0" {
+		status = 1
 		pkg.Log.Println("check ticket success! verify ticket")
 		VerifyTicket(protocolNo, &checkResponse)
 	}
+	upCheckLog("string(resp)", "", uint32(status))
 	return &checkResponse, err
 }
 
