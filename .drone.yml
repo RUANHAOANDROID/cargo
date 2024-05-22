@@ -21,7 +21,7 @@ steps:
       - chmod +x updav
       - arm-linux-gnueabihf-gcc --version
       - go env -w GONOSUMDB=*
-      - export GOPROXY=http://mirrors.aliyun.com/goproxy/
+      #- export GOPROXY=http://mirrors.aliyun.com/goproxy/
       - ./build.sh
       - tar -cvf cargo.tar runner upgrade.sh config.yml
       - version=$(head -n 3 config/version.go | tail -n 1 | cut -d '"' -f 2)
