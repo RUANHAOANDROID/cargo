@@ -5,7 +5,7 @@ import (
 	"cargo/config"
 	"cargo/emcs"
 	"cargo/pkg"
-	"google.golang.org/protobuf/proto"
+	"github.com/golang/protobuf/proto"
 	"net/http"
 	"strconv"
 	"time"
