@@ -34,7 +34,7 @@ steps:
       username: root
       password: root
       port: 22
-      target: /cargo
+      target: /uchi
       source:
        - config.yml
        - runner
