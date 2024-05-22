@@ -32,7 +32,8 @@ func monitorResources() {
 	}
 }
 
-var sleepTime = 10 * time.Second
+// 自启动至少需要10秒，等待系统组件加载完毕
+var sleepTime = 0 * time.Second
 
 // main  -lpos -lm -lpng -lfontconfig -lfreetype -liconv
 func main() {
