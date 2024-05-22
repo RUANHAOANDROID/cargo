@@ -40,13 +40,20 @@ func VerifyTicket(protocolNo string, ctr *CheckResponse) error {
 	}
 	defer resp.Body.Close()
 	var verifyResp VerifyResponse
+	status := 2
 	if resp.StatusCode == 200 {
+		status = 1
 		err = json.NewDecoder(resp.Body).Decode(&verifyResp)
 		if err != nil {
 			return err
 		}
 	}
 	pkg.Log.Printf("verify response=%q\n", verifyResp)
+	jsonResp, err := json.Marshal(verifyResp)
+	if err != nil {
+		pkg.Log.Error(err)
+	}
+	upCheckLog(string(requestBody), string(jsonResp), uint32(status))
 	return err
 }
 
