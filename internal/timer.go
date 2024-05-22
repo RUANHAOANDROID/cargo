@@ -16,7 +16,7 @@ func StartTimer(conf *config.Config, display *clib.Display) {
 		select {
 		case <-timer.C:
 			display.ShowTime()
-			pkg.PrinterRunnerInfo()
+			pkg.RunInfo()
 		}
 	}
 }

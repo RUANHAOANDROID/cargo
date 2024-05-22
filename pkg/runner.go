@@ -2,7 +2,7 @@ package pkg
 
 import "runtime"
 
-func PrinterRunnerInfo() {
+func RunInfo() {
 	var memStats runtime.MemStats
 	runtime.ReadMemStats(&memStats)
 	M := memStats.Alloc / 1024 / 1024
