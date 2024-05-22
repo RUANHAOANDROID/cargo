@@ -3,7 +3,7 @@ package internal
 import (
 	"cargo/clib"
 	"cargo/config"
-	"fmt"
+	"cargo/pkg"
 	"runtime"
 	"time"
 )
@@ -21,7 +21,7 @@ func StartTimer(conf *config.Config, display *clib.Display) {
 			runtime.ReadMemStats(&memStats)
 			M := memStats.Alloc / 1024 / 1024
 			KB := memStats.Alloc / 1024
-			fmt.Printf("routines: %d, Memory: %d MB , %d KB\n", runtime.NumGoroutine(), M, KB)
+			pkg.Log.Printf("routines: %d, Memory: %d MB , %d KB\n", runtime.NumGoroutine(), M, KB)
 		}
 	}
 }
