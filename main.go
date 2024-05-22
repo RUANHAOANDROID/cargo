@@ -12,7 +12,6 @@ import (
 	"cargo/screen"
 	"cargo/speaker"
 	"fmt"
-	"net/http"
 	"runtime"
 	"strconv"
 	"sync"
@@ -42,26 +41,26 @@ func main() {
 			pkg.Log.Error("main panic:", r)
 		}
 	}()
-	go func() {
-		http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-			// 设置HTTP头部，指示这是一个SSE连接
-			w.Header().Set("Content-Type", "text/event-stream")
-			w.Header().Set("Cache-Control", "no-cache")
-			w.Header().Set("Connection", "keep-alive")
-
-			// 向客户端发送数据
-			for {
-				var memStats runtime.MemStats
-				runtime.ReadMemStats(&memStats)
-				M := memStats.Alloc / 1024 / 1024
-				KB := memStats.Alloc / 1024
-				fmt.Fprintf(w, "Goroutines: %d, Memory: %d MB , %d KB\n", runtime.NumGoroutine(), M, KB)
-				w.(http.Flusher).Flush() // 强制发送到客户端
-				time.Sleep(1 * time.Second)
-			}
-		})
-		http.ListenAndServe(":6060", nil)
-	}()
+	//go func() {
+	//	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+	//		// 设置HTTP头部，指示这是一个SSE连接
+	//		w.Header().Set("Content-Type", "text/event-stream")
+	//		w.Header().Set("Cache-Control", "no-cache")
+	//		w.Header().Set("Connection", "keep-alive")
+	//
+	//		// 向客户端发送数据
+	//		for {
+	//			var memStats runtime.MemStats
+	//			runtime.ReadMemStats(&memStats)
+	//			M := memStats.Alloc / 1024 / 1024
+	//			KB := memStats.Alloc / 1024
+	//			fmt.Fprintf(w, "Goroutines: %d, Memory: %d MB , %d KB\n", runtime.NumGoroutine(), M, KB)
+	//			w.(http.Flusher).Flush() // 强制发送到客户端
+	//			time.Sleep(1 * time.Second)
+	//		}
+	//	})
+	//	http.ListenAndServe(":6060", nil)
+	//}()
 	go monitorResources()
 	var wg sync.WaitGroup
 	conf, err := config.Load("config.yml")
