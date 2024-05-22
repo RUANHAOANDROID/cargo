@@ -65,7 +65,11 @@ func CheckTicket(ticket string, protocolNo string) (*CheckResponse, error) {
 		pkg.Log.Println("check ticket success! verify ticket")
 		VerifyTicket(protocolNo, &checkResponse)
 	}
-	upCheckLog("string(resp)", "", uint32(status))
+	jsonResp, err := json.Marshal(checkResponse)
+	if err != nil {
+		pkg.Log.Error(err)
+	}
+	upCheckLog(string(requestBody), string(jsonResp), uint32(status))
 	return &checkResponse, err
 }
 
