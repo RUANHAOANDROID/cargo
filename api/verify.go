@@ -53,7 +53,7 @@ func VerifyTicket(protocolNo string, ctr *CheckResponse) error {
 	if err != nil {
 		pkg.Log.Error(err)
 	}
-	upCheckLog(string(requestBody), string(jsonResp), uint32(status))
+	upVerifyLog(string(requestBody), string(jsonResp), uint32(status))
 	return err
 }
 
