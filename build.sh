@@ -7,7 +7,7 @@ export CC=arm-linux-gnueabihf-gcc
 export GODEBUG=cgocheck=2
 
 # 构建 Go 项目
-go mod tidy
+#go mod tidy
 go build -o runner
 #列出
 
