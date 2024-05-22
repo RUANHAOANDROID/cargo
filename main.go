@@ -158,4 +158,5 @@ func showNormal(pCount int) {
 	}
 	str := strconv.Itoa(pCount)
 	display.ShowNormal(str)
+	api.SyncDayCount(int32(pCount))
 }
