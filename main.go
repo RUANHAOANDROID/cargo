@@ -61,7 +61,7 @@ func main() {
 	//	})
 	//	http.ListenAndServe(":6060", nil)
 	//}()
-	go monitorResources()
+	//go monitorResources()
 	var wg sync.WaitGroup
 	conf, err := config.Load("config.yml")
 	if err != nil {
