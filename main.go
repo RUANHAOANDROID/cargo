@@ -11,25 +11,12 @@ import (
 	"cargo/pkg"
 	"cargo/screen"
 	"cargo/speaker"
-	"fmt"
-	"runtime"
 	"strconv"
 	"sync"
 	"time"
 )
 
 var display *clib.Display
-
-func monitorResources() {
-	for {
-		var memStats runtime.MemStats
-		runtime.ReadMemStats(&memStats)
-		M := memStats.Alloc / 1024 / 1024
-		KB := memStats.Alloc / 1024
-		fmt.Printf("routines: %d, Memory: %d MB , %d KB\n", runtime.NumGoroutine(), M, KB)
-		time.Sleep(1 * time.Second)
-	}
-}
 
 // 自启动至少需要10秒，等待系统组件加载完毕
 var sleepTime = 10 * time.Second
@@ -61,7 +48,6 @@ func main() {
 	//	})
 	//	http.ListenAndServe(":6060", nil)
 	//}()
-	//go monitorResources()
 	var wg sync.WaitGroup
 	conf, err := config.Load("config.yml")
 	if err != nil {
