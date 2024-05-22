@@ -26,7 +26,7 @@ func monitorResources() {
 		runtime.ReadMemStats(&memStats)
 		M := memStats.Alloc / 1024 / 1024
 		KB := memStats.Alloc / 1024
-		fmt.Printf("Goroutines: %d, Memory: %d MB , %d KB\n", runtime.NumGoroutine(), M, KB)
+		fmt.Printf("routines: %d, Memory: %d MB , %d KB\n", runtime.NumGoroutine(), M, KB)
 		time.Sleep(1 * time.Second)
 	}
 }
