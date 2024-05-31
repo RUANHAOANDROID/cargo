@@ -32,9 +32,9 @@ func CheckUpdate(dType string, version string, eqp string) {
 			pkg.Log.Error("Update panic:", r)
 		}
 	}()
-	pkg.Log.Printf("current version%s", version)
-	pkg.Log.Printf("Device No %s", eqp)
-	pkg.Log.Printf("DeviceType No %s", dType)
+	pkg.Log.Printf("Current Version -> %s", version)
+	pkg.Log.Printf("Device No-> %s", eqp)
+	pkg.Log.Printf("DeviceType-> %s", dType)
 	// 定义请求体结构
 	requestBody := map[string]interface{}{
 		"data": map[string]string{
