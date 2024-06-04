@@ -75,7 +75,6 @@ func CheckTicket(ticket string, protocolNo string) (*CheckResponse, error) {
 		if err != nil {
 			pkg.Log.Error(err)
 		}
-		pkg.Log.Printf("upload logs jsonResp=%s", jsonResp)
 		upCheckLog(string(requestBody), string(jsonResp), uint32(status))
 	}()
 	return &checkResponse, err
