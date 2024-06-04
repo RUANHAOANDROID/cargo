@@ -115,11 +115,11 @@ func parseResp(err error, resp *api.CheckResponse) {
 	}
 	var passedCount = 0
 	if resp.RetCode == "0" {
-		screen.Show(resp.RetMsg, true)
 		if resp.MerNotVerTktNum != "" && resp.MerNotVerTktNum != "1" {
 			go speaker.SpeakerGroup(resp.MerNotVerTktNum)
-			screen.Show("团票可通行"+resp.MerNotVerTktNum+"人", true)
+			go screen.Show("团票可通行"+resp.MerNotVerTktNum+"人", true)
 		} else {
+			go screen.Show(resp.RetMsg, true)
 			go speaker.Speaker(resp.RetMsg, true)
 		}
 		passedCount, err = internal.WritePassedCount()
