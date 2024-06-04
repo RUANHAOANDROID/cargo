@@ -127,8 +127,8 @@ func parseResp(err error, resp *api.CheckResponse) {
 		}
 	} else {
 		pkg.Log.Println("Check ticket Fail!")
-		screen.Show(resp.RetMsg, false)
-		speaker.Speaker(resp.RetMsg, false)
+		go screen.Show(resp.RetMsg, false)
+		go speaker.Speaker(resp.RetMsg, false)
 	}
 	time.Sleep(3 * time.Second)
 	showNormal(passedCount)
