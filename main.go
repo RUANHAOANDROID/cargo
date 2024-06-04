@@ -99,7 +99,7 @@ func main() {
 		case msg.QRCODE:
 			pkg.Log.Printf("qrocde=%s\n", cMsg.Content)
 			resp, err := api.CheckTicket(cMsg.Content, api.ProtoQr)
-			parseResp(err, resp)
+			go parseResp(err, resp)
 		default:
 			pkg.Log.Println("undefined type")
 		}
@@ -119,9 +119,6 @@ func parseResp(err error, resp *api.CheckResponse) {
 	if resp.RetCode == "0" {
 		pkg.Log.Println("Check ticket SUCCESS!")
 		screen.Show(resp.RetMsg, true)
-		pkg.Log.Println("--------------speaker--------------")
-		pkg.Log.Print("--------------resp.MerNotVerTktNum--------------")
-		pkg.Log.Println(resp.MerNotVerTktNum)
 		if resp.MerNotVerTktNum != "" && resp.MerNotVerTktNum != "1" {
 			speaker.SpeakerGroup(resp.MerNotVerTktNum)
 		} else {

@@ -69,7 +69,7 @@ func CheckTicket(ticket string, protocolNo string) (*CheckResponse, error) {
 	if checkResponse.RetCode == "0" {
 		status = 1
 		pkg.Log.Println("check ticket success! verify ticket")
-		VerifyTicket(protocolNo, &checkResponse)
+		go VerifyTicket(protocolNo, &checkResponse)
 	}
 	jsonResp, err := json.Marshal(checkResponse)
 	if err != nil {
