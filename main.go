@@ -119,15 +119,17 @@ func parseResp(err error, resp *api.CheckResponse) {
 	if resp.RetCode == "0" {
 		pkg.Log.Println("Check ticket SUCCESS!")
 		screen.Show(resp.RetMsg, true)
-
-		passedCount, err = internal.WritePassedCount()
-		if err != nil {
-			pkg.Log.Println(err)
-		}
+		pkg.Log.Println("--------------speaker--------------")
+		pkg.Log.Print("--------------resp.MerNotVerTktNum--------------")
+		pkg.Log.Println(resp.MerNotVerTktNum)
 		if resp.MerNotVerTktNum != "" && resp.MerNotVerTktNum != "1" {
 			speaker.SpeakerGroup(resp.MerNotVerTktNum)
 		} else {
 			speaker.Speaker(resp.RetMsg, true)
+		}
+		passedCount, err = internal.WritePassedCount()
+		if err != nil {
+			pkg.Log.Println(err)
 		}
 	} else {
 		pkg.Log.Println("Check ticket Fail!")
