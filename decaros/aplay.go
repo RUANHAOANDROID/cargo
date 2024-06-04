@@ -31,9 +31,7 @@ func APlay(wav string) {
 		wav += ".wav"
 	}
 	cmd := exec.Command("aplay", "/opt/sound/"+wav)
-
 	cmd.Stderr = nil
-
 	if err := cmd.Start(); err != nil {
 		pkg.Log.Println("cmd run error:", err)
 		return
