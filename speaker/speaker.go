@@ -46,9 +46,9 @@ func SpeakerGroup(number string) {
 		decaros.APlay(fmt.Sprintf("%d", tens))
 		time.Sleep(300 * time.Millisecond)
 		decaros.APlay("10")
-		time.Sleep(500 * time.Millisecond)
+		time.Sleep(300 * time.Millisecond)
 		decaros.APlay(fmt.Sprintf("%d", units))
-		time.Sleep(500 * time.Millisecond)
+		time.Sleep(300 * time.Millisecond)
 		decaros.APlay("ren")
 	}
 }
