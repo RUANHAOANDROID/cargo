@@ -33,7 +33,7 @@ func SpeakerGroup(number string) {
 	} else {
 		pkg.Log.Println("整数值:", num)
 	}
-	if num > 10 && num < 20 {
+	if num > 10 && num < 100 {
 		tens := num / 10  // 取十位
 		units := num % 10 // 取个位
 		decaros.APlay(fmt.Sprintf("%d", tens))
