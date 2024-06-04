@@ -26,6 +26,7 @@ func VerifyTicket(protocolNo string, ctr *CheckResponse) error {
 	vrt.Data.TicketNo = ctr.TicketNo
 	vrt.Data.TicketType = ctr.TicketType
 	vrt.Data.ClientType = "006"
+	vrt.Data.PackageTicketNo = ctr.PackageTicketNo
 	vrt.Data.MergeTicketNo = ctr.MergeTicketNo
 	vrt.Data.MerNotVerTktNum = ctr.MerNotVerTktNum
 	clt := &http.Client{}

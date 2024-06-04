@@ -34,14 +34,16 @@ func SpeakerGroup(number string) {
 		pkg.Log.Println("整数值:", num)
 	}
 	if num < 10 {
-		decaros.APlay("tp")
-		time.Sleep(300 * time.Millisecond)
+		decaros.APlay("tdp")
+		time.Sleep(1200 * time.Millisecond)
 		decaros.APlay(fmt.Sprintf("%d", num))
+		time.Sleep(400 * time.Millisecond)
+		decaros.APlay("ren")
 	}
 	if num > 10 && num < 100 {
 		tens := num / 10  // 取十位
 		units := num % 10 // 取个位
-		decaros.APlay("tp")
+		decaros.APlay("tdp")
 		time.Sleep(1200 * time.Millisecond)
 		decaros.APlay(fmt.Sprintf("%d", tens))
 		time.Sleep(400 * time.Millisecond)
