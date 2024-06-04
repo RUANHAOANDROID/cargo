@@ -40,7 +40,7 @@ func SpeakerGroup(number string) {
 		time.Sleep(400 * time.Millisecond)
 		decaros.APlay("ren")
 	}
-	if num > 10 && num < 100 {
+	if num > 10 && num < 40 {
 		tens := num / 10  // 取十位
 		units := num % 10 // 取个位
 		decaros.APlay("tdp")
@@ -52,5 +52,8 @@ func SpeakerGroup(number string) {
 		decaros.APlay(fmt.Sprintf("%d", units))
 		time.Sleep(400 * time.Millisecond)
 		decaros.APlay("ren")
+	}
+	if num >= 40 {
+		decaros.APlay("tdp")
 	}
 }
