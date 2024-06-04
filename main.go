@@ -93,13 +93,11 @@ func main() {
 		pkg.Log.Printf("msg chan-> type=%v,content=%v \n", cMsg.Type, cMsg.Content)
 		switch cMsg.Type {
 		case msg.IC_CARD:
-			pkg.Log.Printf("ic card=%s\n", cMsg.Content)
 			resp, err := api.CheckTicket(cMsg.Content, api.ProtoIC)
 			parseResp(err, resp)
 		case msg.QRCODE:
-			pkg.Log.Printf("qrocde=%s\n", cMsg.Content)
 			resp, err := api.CheckTicket(cMsg.Content, api.ProtoQr)
-			go parseResp(err, resp)
+			parseResp(err, resp)
 		default:
 			pkg.Log.Println("undefined type")
 		}
@@ -117,12 +115,11 @@ func parseResp(err error, resp *api.CheckResponse) {
 	}
 	var passedCount = 0
 	if resp.RetCode == "0" {
-		pkg.Log.Println("Check ticket SUCCESS!")
-		screen.Show(resp.RetMsg, true)
+		go screen.Show(resp.RetMsg, true)
 		if resp.MerNotVerTktNum != "" && resp.MerNotVerTktNum != "1" {
-			speaker.SpeakerGroup(resp.MerNotVerTktNum)
+			go speaker.SpeakerGroup(resp.MerNotVerTktNum)
 		} else {
-			speaker.Speaker(resp.RetMsg, true)
+			go speaker.Speaker(resp.RetMsg, true)
 		}
 		passedCount, err = internal.WritePassedCount()
 		if err != nil {
