@@ -7,17 +7,13 @@ import (
 )
 
 func GetSN() (string, error) {
-	return "02211101538", nil
-	//// 执行 Linux 命令 02211101501
-	//cmd := exec.Command("cat", "/opt/config/sn")
-	//// 捕获命令输出
-	//var out bytes.Buffer
-	//cmd.Stdout = &out
-	//// 执行命令
-	//err := cmd.Run()
-	//// 输出 SN 码
-	//sn := out.String()
-	//return sn, err
+	//return "02211101538", nil
+	cmd := exec.Command("cat", "/opt/config/sn")
+	var out bytes.Buffer
+	cmd.Stdout = &out
+	err := cmd.Run()
+	sn := out.String()
+	return sn, err
 }
 func SetNTP() {
 	// 执行 Linux 命令 02211101501

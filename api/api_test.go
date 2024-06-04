@@ -1,6 +1,7 @@
 package api
 
 import (
+	"cargo/internal"
 	"fmt"
 	"testing"
 )
@@ -15,7 +16,14 @@ func TestIDTicket(t *testing.T) {
 }
 
 func TestQRTicket(t *testing.T) {
-	resp, err := CheckTicket("86465099669896<MjAwMDAwMTkyNDIwMjQtMDItMDIyMDI0LTAzLTAy>", ProtoQr)
+	emcsUrl := "http://emcs-api.youchiyun.com"
+	conf, err := internal.GetConfig(emcsUrl)
+	if err != nil {
+		fmt.Println(err.Error())
+		t.Error(err)
+	}
+	SetConfig(emcsUrl, "a65b71425f8067a7503b48ae366a9e588e1e47e9", conf)
+	resp, err := CheckTicket("98820252298378<MjAwMDAwMTkyNDIwMjQtMDYtMDQyMDM0LTA2LTA0>", ProtoQr)
 	if err != nil {
 		fmt.Println(err.Error())
 		t.Error(err)

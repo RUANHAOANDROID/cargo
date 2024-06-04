@@ -58,7 +58,13 @@ func CheckTicket(ticket string, protocolNo string) (*CheckResponse, error) {
 		pkg.Log.Error(err)
 		return nil, err
 	}
-	pkg.Log.Printf("resp code=%s,msg=%s,resortId=%s\n", checkResponse.RetCode, checkResponse.RetMsg, checkResponse.ResortId)
+	pkg.Log.Printf("resp code=%s,msg=%s,resortId=%s,ticketNo=%s,merNotVerTktNum=%s\n",
+		checkResponse.RetCode,
+		checkResponse.RetMsg,
+		checkResponse.ResortId,
+		checkResponse.TicketNo,
+		checkResponse.MerNotVerTktNum,
+	)
 	status := 2
 	if checkResponse.RetCode == "0" {
 		status = 1
