@@ -29,9 +29,9 @@ func Speaker(msg string, success bool) {
 func SpeakerGroup(number string) {
 	num, err := strconv.Atoi(number)
 	if err != nil {
-		fmt.Println("转换错误:", err)
+		pkg.Log.Println("转换错误:", err)
 	} else {
-		fmt.Println("整数值:", num)
+		pkg.Log.Println("整数值:", num)
 	}
 	if num > 10 && num < 20 {
 		tens := num / 10  // 取十位
