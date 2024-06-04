@@ -42,7 +42,7 @@ func SpeakerGroup(number string) {
 		tens := num / 10  // 取十位
 		units := num % 10 // 取个位
 		decaros.APlay("tdp")
-		time.Sleep(1500 * time.Millisecond)
+		time.Sleep(1400 * time.Millisecond)
 		decaros.APlay(fmt.Sprintf("%d", tens))
 		time.Sleep(400 * time.Millisecond)
 		decaros.APlay("10")
