@@ -75,7 +75,7 @@ func CheckTicket(ticket string, protocolNo string) (*CheckResponse, error) {
 	if err != nil {
 		pkg.Log.Error(err)
 	}
-	upCheckLog(string(requestBody), string(jsonResp), uint32(status))
+	go upCheckLog(string(requestBody), string(jsonResp), uint32(status))
 	return &checkResponse, err
 }
 
