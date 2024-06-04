@@ -33,7 +33,7 @@ func SpeakerGroup(number string) {
 	} else {
 		pkg.Log.Println("整数值:", num)
 	}
-	if num < 10 {
+	if num <= 10 {
 		decaros.APlay("tdp")
 		time.Sleep(1200 * time.Millisecond)
 		decaros.APlay(fmt.Sprintf("%d", num))
