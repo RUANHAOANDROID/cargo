@@ -131,8 +131,10 @@ func parseResp(err error, resp *api.CheckResponse) {
 		go screen.Show(resp.RetMsg, false)
 		go speaker.Speaker(resp.RetMsg, false)
 	}
-	time.Sleep(3 * time.Second)
-	showNormal(passedCount)
+	go func() {
+		time.Sleep(3 * time.Second)
+		showNormal(passedCount)
+	}()
 }
 func showNormal(pCount int) {
 	pkg.Log.Printf("passed count=%d\n", pCount)
