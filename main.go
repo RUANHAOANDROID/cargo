@@ -118,7 +118,7 @@ func parseResp(err error, resp *api.CheckResponse) {
 		go screen.Show(resp.RetMsg, true)
 		if resp.MerNotVerTktNum != "" && resp.MerNotVerTktNum != "1" {
 			go speaker.SpeakerGroup(resp.MerNotVerTktNum)
-			go display.ShowSuccess("团队票 可通行" + resp.MergeTicketNo + " 人")
+			screen.Show("团票可通行"+resp.MergeTicketNo+"人", true)
 		} else {
 			go speaker.Speaker(resp.RetMsg, true)
 		}
