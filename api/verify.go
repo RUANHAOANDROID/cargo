@@ -26,6 +26,7 @@ func VerifyTicket(protocolNo string, ctr *CheckResponse) error {
 	vrt.Data.TicketNo = ctr.TicketNo
 	vrt.Data.TicketType = ctr.TicketType
 	vrt.Data.ClientType = "006"
+	vrt.Data.MerNotVerTktNum = ctr.MerNotVerTktNum
 	clt := &http.Client{}
 	requestBody, err := json.Marshal(vrt)
 	if err != nil {
