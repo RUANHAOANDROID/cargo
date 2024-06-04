@@ -58,6 +58,7 @@ func upVerifyLog(request string, resp string, status uint32) {
 	upLogs(strconv.Itoa(2), request, resp, status)
 }
 func upLogs(upType string, requestContent string, responseContent string, status uint32) {
+	pkg.Log.Printf("upload logs upType=%s,requestContent=%s,responseContent=%s,status=%d", upType, requestContent, responseContent, status)
 	defer func() {
 		if r := recover(); r != nil {
 			pkg.Log.Error("上传日志失败", r)

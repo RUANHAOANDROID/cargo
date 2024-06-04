@@ -107,10 +107,12 @@ func parseResp(err error, resp *api.CheckResponse) {
 			go screen.Show(resp.RetMsg, true)
 			go speaker.Speaker(resp.RetMsg, true)
 		}
-		passedCount, err = internal.WritePassedCount()
-		if err != nil {
-			pkg.Log.Println(err)
-		}
+		go func() {
+			passedCount, err = internal.WritePassedCount()
+			if err != nil {
+				pkg.Log.Println(err)
+			}
+		}()
 	} else {
 		pkg.Log.Println("Check ticket Fail!")
 		go screen.Show(resp.RetMsg, false)

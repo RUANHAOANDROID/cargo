@@ -9,6 +9,7 @@ import (
 
 // VerifyTicket 核销票据
 func VerifyTicket(protocolNo string, ctr *CheckResponse) error {
+	pkg.Log.Println("check ticket success! verify ticket")
 	defer func() {
 		if r := recover(); r != nil {
 			pkg.Log.Println("VerifyTicket panic:", r)

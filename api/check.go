@@ -68,14 +68,16 @@ func CheckTicket(ticket string, protocolNo string) (*CheckResponse, error) {
 	status := 2
 	if checkResponse.RetCode == "0" {
 		status = 1
-		pkg.Log.Println("check ticket success! verify ticket")
 		go VerifyTicket(protocolNo, &checkResponse)
 	}
-	jsonResp, err := json.Marshal(checkResponse)
-	if err != nil {
-		pkg.Log.Error(err)
-	}
-	go upCheckLog(string(requestBody), string(jsonResp), uint32(status))
+	go func() {
+		jsonResp, err := json.Marshal(checkResponse)
+		if err != nil {
+			pkg.Log.Error(err)
+		}
+		pkg.Log.Printf("upload logs jsonResp=%s", jsonResp)
+		upCheckLog(string(requestBody), string(jsonResp), uint32(status))
+	}()
 	return &checkResponse, err
 }
 
