@@ -2,8 +2,6 @@ module cargo
 
 go 1.23
 
-toolchain go1.23.7
-
 require (
 	github.com/getsentry/sentry-go v0.31.1
 	github.com/golang/protobuf v1.5.3
