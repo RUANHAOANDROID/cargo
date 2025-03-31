@@ -1,10 +1,11 @@
 module cargo
 
-go 1.21
+go 1.23
 
 toolchain go1.23.7
 
 require (
+	github.com/getsentry/sentry-go v0.31.1
 	github.com/golang/protobuf v1.5.3
 	github.com/lestrrat/go-file-rotatelogs v0.0.0-20180223000712-d3151e2a480f
 	github.com/rifflock/lfshook v0.0.0-20180920164130-b9218ef580f5
@@ -17,7 +18,6 @@ require (
 require (
 	github.com/fastly/go-utils v0.0.0-20180712184237-d95a45783239 // indirect
 	github.com/fsnotify/fsnotify v1.6.0 // indirect
-	github.com/getsentry/sentry-go v0.31.1 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
 	github.com/jehiah/go-strftime v0.0.0-20171201141054-1d33003b3869 // indirect
 	github.com/jonboulle/clockwork v0.4.0 // indirect
