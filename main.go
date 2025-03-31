@@ -42,7 +42,6 @@ func main() {
 	if debug {
 		sleepTime = 0 * time.Second
 	}
-	sentry.CaptureMessage("TEST Message")
 	var wg sync.WaitGroup
 	conf, err := config.Load("config.yml")
 	if err != nil {
