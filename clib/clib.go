@@ -172,6 +172,10 @@ void ic_read(){
 		usleep(300000);
 	}
 }
+void id_read(){
+	printf("[c] ->start id read\n");
+
+}
 */
 import "C"
 import (
