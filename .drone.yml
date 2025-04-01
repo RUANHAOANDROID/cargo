@@ -37,7 +37,7 @@ steps:
   - name: scp-files
     image: appleboy/drone-scp:1.6
     settings:
-      host: 192.168.8.24
+      host: 192.168.8.29
       username: root
       password: root
       port: 22
