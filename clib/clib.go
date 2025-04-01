@@ -172,9 +172,62 @@ void ic_read(){
 		usleep(300000);
 	}
 }
-void id_read(){
+int id_read(int dumpInfo){
 	printf("[c] ->start id read\n");
+	// 定义缓冲区和变量
+    unsigned char idtwo_getbuff[2400] = {0};    // 存储身份证数据的缓冲区
+    ushort len = 0;                             // 数据长度
+    ushort ret = 0;                             // 函数返回状态
+    ID_DATA id_data;                            // 身份证信息结构体
+    unsigned long tick;                         // 时间戳，用于性能测量
+	// 1. 初始化显示（如果需要显示信息）
+    if (dumpInfo) {
+        LCD_ClearScreen(0);                     // 清空屏幕
+        LCD_ClearAll();                         // 清空所有显示内容
+        LCD_Printf(10 + 0, DISP_FONT12, "身份证测试：");    // 显示测试标题
+        LCD_Printf(10 + 24, DISP_FONT24 | DISP_CENTER, "请放身份证"); // 提示放置身份证
+    }
+	// 2. 执行身份证读取操作
+    tick = OSTIMER_GetTickCount();              // 记录开始时间
+    pthread_spin_lock(&lock);                   // 加锁，保护共享资源
 
+    #if 1
+        // 标准身份证读取模式
+        ret = IDCARD_AutoRead(&len, idtwo_getbuff);
+    #else
+        // 带指纹的身份证读取模式
+        ret = IDCARD_AutoRead_Fig(&len, idtwo_getbuff);
+    #endif
+	pthread_spin_unlock(&lock);                 // 解锁
+	// 3. 处理读取结果
+    if (ret == 0) {
+        // 读取成功
+        unsigned long duration = OSTIMER_GetTickCount() - tick;  // 计算耗时
+        printf("读身份证ok[%ld ms]！！！！！！！！！！！！！！！！\n", duration);
+        // Sys_Beep();                          // 可选：成功时发出提示音
+
+        // 解析身份证数据
+        #if 1
+            parse_id_info((char*)&idtwo_getbuff[7], &id_data);
+        #else
+            parse_id_info((char*)&idtwo_getbuff[9], &id_data);   // 带指纹模式偏移不同
+        #endif
+
+        // 根据dumpInfo选择显示详细程度
+        if (dumpInfo) {
+            dump_id_info(&id_data);         // 显示详细信息
+        } else {
+            dump_id_info2(&id_data);        // 显示简略信息
+        }
+    } else {
+        // 读取失败
+        printf("读身份证fail,ret=%d\n", ret);
+        if (dumpInfo) {
+            LCD_Printf(10 + 48, DISP_FONT12, "测试失败 [%d]", ret);  // 显示错误码
+        }
+    }
+
+    return ret;     // 返回操作结果
 }
 */
 import "C"
@@ -253,6 +306,11 @@ func StartC(wg sync.WaitGroup) {
 	go func() {
 		defer wg.Done()
 		C.ic_read()
+	}()
+	wg.Add(1)
+	go func() {
+		defer wg.Done()
+		C.id_read(0)
 	}()
 	//C.start_tcp()
 	//time.Sleep(time.Second)
