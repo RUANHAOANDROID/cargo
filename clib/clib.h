@@ -36,7 +36,7 @@ int connect_to_server(const char *server_ip, int server_port);
 int send_message(int client_socket, const char *message);
 void close_connection(int client_socket);
 int start_tcp(void);
-int qr_read(void);
+void qr_read(void);
 void ic_read(void);
 void id_read(void);
 void read_data(void);
