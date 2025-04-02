@@ -54,4 +54,32 @@ void id_read(void);
 void read_data(void);
 void parse_id_info(char *rx_buffer, ID_DATA *id_data);
 void dump_id_info2(ID_DATA *id_data);
+static short dc_ParseOtherInfo(int flag, char *in_info,char *out_info)
+{
+  if (flag == 0) {
+    if (in_info[0] == '1') {
+      strcpy(out_info, "男");
+    } else {
+      strcpy(out_info, "女");
+    }
+    return 0;
+  } else if (flag == 1) {
+    int nation;
+    in_info[2] = 0;
+    nation = atoi(in_info);
+
+    if(nation == 97) {
+      strcpy(out_info, "其他");
+    } else if(nation == 98) {
+      strcpy(out_info, "外国血统中国籍人士");
+    } else if(nation <= 96){
+    	strcpy(out_info, nation_group[nation]);
+    } else{
+      strcpy(out_info, "无");
+    }
+    return 0;
+  }
+
+  return -1;
+}
 #endif // CLIB_H
