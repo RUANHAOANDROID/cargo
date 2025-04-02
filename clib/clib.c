@@ -150,7 +150,7 @@ void ic_read(void) {
     }
 }
 
-void parse_id_info(char *buffer, ID_DATA *data) {
+void parse_info(char *buffer, ID_DATA *data) {
     snprintf(data->name, sizeof(data->name), "%s", buffer);
     snprintf(data->sex, sizeof(data->sex), "%s", buffer + 100);
     snprintf(data->nation, sizeof(data->nation), "%s", buffer + 200);
@@ -169,17 +169,17 @@ void dump_id_info(ID_DATA *data) {
 
 void id_read(void) {
     printf("[c] ->start ID read\n");
-    unsigned char idtwo_getbuff[2400] = {0};
+    unsigned char buffer[2400] = {0};
     ushort len;
     ushort ret;
     ID_DATA id_data;
     pthread_spin_lock(&lock);
-    ret = IDCARD_AutoRead(&len, idtwo_getbuff);
+    ret = IDCARD_AutoRead(&len, buffer);
     printf("[c] -> IDCARD_AutoRead returned: %d, len: %d\n", ret, len);
     pthread_spin_unlock(&lock);
     if (ret == 0) {
         printf("[c] ->read id card success\n");
-        parse_id_info((char*)&idtwo_getbuff[7], &id_data);
+        parse_info((char*)&buffer, &id_data);
         dump_id_info(&id_data);
         usleep(3000000);
     } else {
