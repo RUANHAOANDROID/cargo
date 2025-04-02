@@ -105,7 +105,7 @@ int start_tcp(void) {
 }
 
 int qr_read(){
-	printf("[c] ->start qr read\n");
+	printf("[c] ->start QR read\n");
 	int qrfd1,qrfd2,ret;
 	unsigned char TmpBuff[512];
     qrfd1 = QRCode_Open(0);
@@ -139,7 +139,7 @@ int qr_read(){
 }
 
 void ic_read(){
-	printf("[c] ->start ic read\n");
+	printf("[c] ->start IC read\n");
     int ret = -1;
     uint8_t key[] = "\xFF\xFF\xFF\xFF\xFF\xFF";
     uint8_t data[16],data_len = 16;
