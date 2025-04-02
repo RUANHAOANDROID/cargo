@@ -216,10 +216,10 @@ void id_read(){
 	ID_DATA id_data;
 	unsigned long tick;
 	while(!stop_requested){
+		tick = OSTIMER_GetTickCount();
+		printf("[c] ->Current tick: %lu\n", tick);
 		{
 		#if 1
-			tick = OSTIMER_GetTickCount();
-			printf("[c] ->Current tick: %lu\n", tick);
 			pthread_spin_lock(&lock);
 			ret = IDCARD_AutoRead(&len,idtwo_getbuff);
 			printf("[c] -> IDCARD_AutoRead returned: %d, len: %d\n", ret, len);
@@ -233,7 +233,6 @@ void id_read(){
 				printf("读身份证fail,ret=%d\n",ret);
 			}
 		#else
-			tick = OSTIMER_GetTickCount();
 			pthread_spin_lock(&lock);
 			ret = IDCARD_AutoRead_Fig(&len,idtwo_getbuff);
 			//pthread_spin_unlock(&lock);
