@@ -151,8 +151,15 @@ void ic_read(void) {
 }
 
 void parse_id_info(char *buffer, ID_DATA *data) {
-    snprintf(data->name, sizeof(data->name), "Test Name");
-    snprintf(data->id_number, sizeof(data->id_number), "123456789012345678");
+    snprintf(data->name, sizeof(data->name), "%s", buffer);
+    snprintf(data->sex, sizeof(data->sex), "%s", buffer + 100);
+    snprintf(data->nation, sizeof(data->nation), "%s", buffer + 200);
+    snprintf(data->birth_day, sizeof(data->birth_day), "%s", buffer + 300);
+    snprintf(data->address, sizeof(data->address), "%s", buffer + 400);
+    snprintf(data->id_number, sizeof(data->id_number), "%s", buffer + 500);
+    snprintf(data->department, sizeof(data->department), "%s", buffer + 600);
+    snprintf(data->expire_start_day, sizeof(data->expire_start_day), "%s", buffer + 700);
+    snprintf(data->expire_end_day, sizeof(data->expire_end_day), "%s", buffer + 800);
 }
 
 void dump_id_info(ID_DATA *data) {
