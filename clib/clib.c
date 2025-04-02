@@ -146,19 +146,7 @@ void ic_read(void) {
         usleep(300000);
     }
 }
-// 定义身份证信息结构体
-typedef struct{
-    char name[100];
-    char sex[100];
-    char nation[100];
-    char birth_day[100];
-    char address[100];
-    char id_number[100];
-    char department[100];
-    char expire_start_day[100];
-    char expire_end_day[100];
-    char reserved[2400];
-}ID_DATA;
+
 // 全局自旋锁
 pthread_spinlock_t lock;
 // 锁状态
