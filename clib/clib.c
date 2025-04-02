@@ -155,8 +155,6 @@ void id_read(void) {
     unsigned char buffer[2400] = {0};
     ushort len;
     ushort ret;
-    char name[100];
-    char id_number[100];
     pthread_spin_lock(&lock);
     ret = IDCARD_AutoRead(&len, buffer);
     printf("[c] -> IDCARD_AutoRead returned: %d, len: %d\n", ret, len);
@@ -164,12 +162,11 @@ void id_read(void) {
     if (ret == 0) {
         printf("[c] ->read id card success\n");
         dump_data("[c] ->id data:\n", buffer, len);
-        strncpy(name, (char*)buffer, 100);
-        strncpy(id_number, (char*)(buffer + 500), 100);
         unsigned char tmpBuffer[101];
-        tmpBuffer[0] = 0x03;
-        memcpy(tmpBuffer + 1, name, 100);
-        //memcpy(tmpBuffer + 101, id_number, 100);
+        // 拷贝姓名 (buffer[0] - buffer[99]) 到 tmpBuffer[1] 开始的位置
+        memcpy(&tmpBuffer[1], &buffer[0], 100);
+        // 拷贝号码 (buffer[500] - buffer[599]) 到 tmpBuffer[101] 开始的位置
+        memcpy(&tmpBuffer[101], &buffer[500], 100);
         dump_data("[c] ->Send ID Data:\n", tmpBuffer, sizeof(tmpBuffer));
         send(client_socket,tmpBuffer,sizeof(tmpBuffer),0);
         usleep(3000000);
