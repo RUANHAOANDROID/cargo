@@ -208,8 +208,7 @@ void dump_id_info2(ID_DATA *data) {
     printf("Name: %s, ID: %s\n", data->name, data->id_number);
 }
 
-int id_read(int dumpInfo)
-{
+int id_read(int dumpInfo){
 	unsigned char idtwo_getbuff[2400] = {0};
 	ushort  len;
 	ushort  ret ;
