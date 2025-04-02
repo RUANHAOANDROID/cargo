@@ -215,6 +215,8 @@ int id_read(int dumpInfo){
 		lock_status ==1;
 	}
 	printf("[c] ->start id read\n");
+while(!stop_requested){
+
 	// 定义缓冲区和变量
     unsigned char idtwo_getbuff[2400] = {0};    // 存储身份证数据的缓冲区
     ushort len = 0;                             // 数据长度
@@ -267,7 +269,8 @@ int id_read(int dumpInfo){
             LCD_Printf(10 + 48, DISP_FONT12, "测试失败 [%d]", ret);  // 显示错误码
         }
     }
-
+	usleep(300000);
+}
     return ret;     // 返回操作结果
 }
 */
