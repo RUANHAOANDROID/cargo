@@ -178,12 +178,12 @@ void id_read(void) {
     printf("[c] -> IDCARD_AutoRead returned: %d, len: %d\n", ret, len);
     pthread_spin_unlock(&lock);
     if (ret == 0) {
-        printf("读身份证成功");
+        printf("[c] ->read id card success\n");
         parse_id_info((char*)&idtwo_getbuff[7], &id_data);
         dump_id_info(&id_data);
         usleep(3000000);
     } else {
-        printf("读身份证fail, ret=%d\n", ret);
+        printf("[c] ->read id card fail,ret=%d\n",ret);
     }
 }
 
