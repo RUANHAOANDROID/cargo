@@ -166,7 +166,7 @@ void id_read(void) {
         printf("[c] ->buffer  content: %s\n", buffer);
         strncpy(name, (char*)buffer, 100);
         strncpy(id_number, (char*)(buffer + 500), 99);
-
+        dump_data("[c] ->Send IC Data:\n", buffer, sizeof(buffer));
         printf("[c] ->id card Info: Name: %s\n", name);
         usleep(3000000);
     } else {
