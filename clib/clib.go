@@ -185,17 +185,13 @@ typedef struct{
 	char expire_end_day[100];
 	char reserved[2400];
 }ID_DATA;
-// 全局自旋锁
-pthread_spinlock_t lock;
 // 锁状态
-int lock_status =-1;
 void parse_id_info(char *buffer, ID_DATA *data) {
     // 示例实现：从 buffer 解析数据到 data
     snprintf(data->name, sizeof(data->name), "Test Name");
     snprintf(data->id_number, sizeof(data->id_number), "123456789012345678");
     // 其他字段类似
 }
-
 void dump_id_info(ID_DATA *data) {
     // 显示详细信息
     printf("Name: %s\n", data->name);
