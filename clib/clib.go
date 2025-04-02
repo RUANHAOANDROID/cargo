@@ -172,6 +172,19 @@ void ic_read(){
 		usleep(300000);
 	}
 }
+// 定义身份证信息结构体
+typedef struct {
+    char name[32];            // 姓名
+    char sex[4];              // 性别
+    char nation[16];          // 民族
+    char birth_day[12];       // 出生日期
+    char address[128];        // 住址
+    char id_number[20];       // 身份证号码
+    char department[64];      // 签发机关
+    char expire_start_day[12]; // 有效期起始日期
+    char expire_end_day[12];  // 有效期截止日期
+    char reserved[256];       // 保留字段
+} ID_DATA;
 int id_read(int dumpInfo){
 	printf("[c] ->start id read\n");
 	// 定义缓冲区和变量
