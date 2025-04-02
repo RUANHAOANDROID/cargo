@@ -193,7 +193,7 @@ int lock_status =-1;
 int id_read(int dumpInfo){
 	if(lock_status == -1){
 		printf("init lock")
-		pthread_spin_init(&lock, PTHREAD_PROCESS_PRIVATE);
+		pthread_spin_init(&lock, 0);
 		lock_status ==1;
 	}
 	printf("[c] ->start id read\n");
