@@ -163,13 +163,7 @@ void id_read(void) {
     pthread_spin_unlock(&lock);
     if (ret == 0) {
         printf("[c] ->read id card success\n");
-        // 提取 name (偏移 0)
-        strncpy(name, (char*)buffer, 99);  // 使用 99 留空间给 '\0'
-        name[99] = '\0';                   // 确保字符串以 null 结尾
-        // 提取 id_number (偏移 500)
-        strncpy(id_number, (char*)(buffer + 500), 99);
-        id_number[99] = '\0';              // 确保字符串以 null 结尾
-        printf("[c] ->name: %s, id_number: %s\n", name, id_number);
+
         usleep(3000000);
     } else {
         printf("[c] ->read id card fail,ret=%d\n",ret);
