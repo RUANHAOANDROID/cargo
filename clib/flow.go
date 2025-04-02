@@ -57,35 +57,39 @@ func process(conn net.Conn) {
 			fmt.Println("Error reading data:", err)
 			return
 		}
-		if bytesRead > 0 && buffer[1] != 0 {
-			trimmedBuffer := trimTrailingZeros(buffer[:bytesRead])
-			pkg.Log.Printf("trimmed buffer len=%v buffer=%v\n", len(trimmedBuffer), trimmedBuffer)
-			types := int(trimmedBuffer[0])
-			pkg.Log.Println("ticket type", types)
-			switch types {
-			case msg.IC_CARD:
-				content := bytesToHexString(trimmedBuffer[1:])
-				content, err = swapHexOrder(content)
-				if err != nil {
-					fmt.Println("Error swapping hex order:", err)
-					return
-				}
-				content, err = hexToDecimal(content)
-				if err != nil {
-					fmt.Println("Error converting hex to decimal:", err)
-					return
-				}
-				chanMsg <- msg.Message{Type: msg.IC_CARD, Content: content}
-			case msg.QRCODE:
-				content := string(trimmedBuffer[1:])
-				chanMsg <- msg.Message{Type: msg.QRCODE, Content: content}
+		if bytesRead > 0 {
+			pkg.Log.Printf("buffer len=%v ", len(buffer))
+			if buffer[1] != 0 {
+				trimmedBuffer := trimTrailingZeros(buffer[:bytesRead])
+				pkg.Log.Printf("trimmed buffer len=%v buffer=%v\n", len(trimmedBuffer), trimmedBuffer)
+				types := int(trimmedBuffer[0])
+				pkg.Log.Println("ticket type", types)
+				switch types {
+				case msg.IC_CARD:
+					content := bytesToHexString(trimmedBuffer[1:])
+					content, err = swapHexOrder(content)
+					if err != nil {
+						fmt.Println("Error swapping hex order:", err)
+						return
+					}
+					content, err = hexToDecimal(content)
+					if err != nil {
+						fmt.Println("Error converting hex to decimal:", err)
+						return
+					}
+					chanMsg <- msg.Message{Type: msg.IC_CARD, Content: content}
+				case msg.QRCODE:
+					content := string(trimmedBuffer[1:])
+					chanMsg <- msg.Message{Type: msg.QRCODE, Content: content}
 
-			case msg.ID_CARD:
-				content := bytesToHexString(trimmedBuffer[1:])
-				chanMsg <- msg.Message{Type: msg.ID_CARD, Content: content}
-			default:
-				fmt.Println("undefined type")
+				case msg.ID_CARD:
+					content := bytesToHexString(trimmedBuffer[1:])
+					chanMsg <- msg.Message{Type: msg.ID_CARD, Content: content}
+				default:
+					fmt.Println("undefined type")
+				}
 			}
+
 		} else {
 			pkg.Log.Println("bytesRead <=0 or buffer is null")
 		}
