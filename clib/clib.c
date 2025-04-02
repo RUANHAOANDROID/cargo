@@ -85,9 +85,11 @@ int start_tcp(void) {
     return 0;
 }
 
-void read_data() {
+void read_data(void) {
     while (!stop_requested) {
-        usleep(300000);
+        qr_read();
+        id_read();
+        id_read();
     }
 }
 
