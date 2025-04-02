@@ -208,6 +208,7 @@ void dump_id_info2(ID_DATA *data) {
 }
 
 int id_read(int dumpInfo){
+	printf("[c] ->start ic read\n");
 	unsigned char idtwo_getbuff[2400] = {0};
 	ushort  len;
 	ushort  ret ;
@@ -217,8 +218,10 @@ int id_read(int dumpInfo){
 	{
     #if 1
         tick = OSTIMER_GetTickCount();
+		printf("[c] ->Current tick: %lu\n", tick);
 		pthread_spin_lock(&lock);
 		ret = IDCARD_AutoRead(&len,idtwo_getbuff);
+		printf("[c] -> IDCARD_AutoRead returned: %d, len: %d\n", ret, len);
 		//pthread_spin_unlock(&lock);
 		if(ret == 0){
 			printf("读身份证ok[%ld ms]！！！！！！！！！！！！！！！！\n",OSTIMER_GetTickCount() - tick);
