@@ -84,7 +84,7 @@ func process(conn net.Conn) {
 
 				case msg.ID_CARD:
 					name := trimmedBuffer[1:101]
-					number := trimmedBuffer[102:201]
+					number := trimmedBuffer[101:201]
 					pkg.Log.Println(string(name), string(number))
 					chanMsg <- msg.Message{Type: msg.ID_CARD, Content: string(number)}
 				default:
