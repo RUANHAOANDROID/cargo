@@ -208,7 +208,7 @@ void dump_id_info2(ID_DATA *data) {
 }
 
 void id_read(){
-	printf("[c] ->start ic read\n");
+	printf("[c] ->start ID read\n");
 	unsigned char idtwo_getbuff[2400] = {0};
 	ushort  len;
 	ushort  ret ;
