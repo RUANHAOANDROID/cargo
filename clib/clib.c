@@ -90,6 +90,7 @@ void read_data(void) {
         qr_read();
         id_read();
         id_read();
+        usleep(1000000);
     }
 }
 
@@ -156,11 +157,7 @@ void parse_id_info(char *buffer, ID_DATA *data) {
 
 void dump_id_info(ID_DATA *data) {
     printf("Name: %s\n", data->name);
-    printf("ID Number: %s\n", data->id_number);
-}
-
-void dump_id_info2(ID_DATA *data) {
-    printf("Name: %s, ID: %s\n", data->name, data->id_number);
+     printf("ID Number: %s\n", data->id_number);
 }
 
 void id_read(void) {
@@ -179,7 +176,7 @@ void id_read(void) {
     if (ret == 0) {
         printf("读身份证ok[%ld ms]！！！！！！！！！！！！！！！！\n", OSTIMER_GetTickCount() - tick);
         parse_id_info((char*)&idtwo_getbuff[7], &id_data);
-        dump_id_info2(&id_data);
+        dump_id_info(&id_data);
         usleep(3000000);
     } else {
         printf("读身份证fail, ret=%d\n", ret);
