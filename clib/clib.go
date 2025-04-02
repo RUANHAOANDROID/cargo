@@ -64,18 +64,22 @@ func StartC(wg sync.WaitGroup) {
 	wg.Add(1)
 	go func() {
 		defer wg.Done()
-		C.qr_read()
+		C.read_data()
 	}()
-	wg.Add(1)
-	go func() {
-		defer wg.Done()
-		C.ic_read()
-	}()
-	wg.Add(1)
-	go func() {
-		defer wg.Done()
-		C.id_read()
-	}()
+	//go func() {
+	//	defer wg.Done()
+	//	C.qr_read()
+	//}()
+	//wg.Add(1)
+	//go func() {
+	//	defer wg.Done()
+	//	C.ic_read()
+	//}()
+	//wg.Add(1)
+	//go func() {
+	//	defer wg.Done()
+	//	C.id_read()
+	//}()
 }
 
 func StopC() {

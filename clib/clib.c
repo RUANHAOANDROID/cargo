@@ -3,6 +3,7 @@
 char buffer[BUFFER_SIZE];
 int stop_requested = 0;
 int client_socket = -1;
+pthread_spinlock_t lock;
 
 void dump_data(char *str, unsigned char *text, int len) {
     int i;
@@ -84,35 +85,37 @@ int start_tcp(void) {
     return 0;
 }
 
-int qr_read(void) {
+void read_data() {
+    while (!stop_requested) {
+        usleep(300000);
+    }
+}
+
+void qr_read(void) {
     printf("[c] ->start QR read\n");
     int qrfd1, qrfd2, ret;
     unsigned char TmpBuff[512];
     qrfd1 = QRCode_Open(0);
     qrfd2 = QRCode_Open(1);
     uint8_t type = 0x02;
-    while (!stop_requested) {
-        ret = QRCode_RxStr(qrfd1, TmpBuff, 512, 100);
-        if (ret <= 0)
-            ret = QRCode_RxStr(qrfd2, TmpBuff, 512, 100);
-        if (ret > 0) {
-            Sys_BeepMs(100);
-            memset(buffer, 0, sizeof(buffer));
-            buffer[0] = type;
-            char str[512];
-            snprintf(str, sizeof(str), "%s", TmpBuff);
-            memcpy(buffer + 1, TmpBuff, sizeof(TmpBuff));
-            printf("[c] -> QR len=%d cod=%s\n", ret, str);
-            char onlyLenBuffer[ret + 1];
-            onlyLenBuffer[0] = type;
-            memcpy(onlyLenBuffer + 1, TmpBuff, ret);
-            send(client_socket, onlyLenBuffer, ret + 1, 0);
-            usleep(3000000);
-            printf("[c] ->QR scanner sleep 2s\n");
-        }
-        usleep(300000);
+    ret = QRCode_RxStr(qrfd1, TmpBuff, 512, 100);
+    if (ret <= 0)
+        ret = QRCode_RxStr(qrfd2, TmpBuff, 512, 100);
+    if (ret > 0) {
+        Sys_BeepMs(100);
+        memset(buffer, 0, sizeof(buffer));
+        buffer[0] = type;
+        char str[512];
+        snprintf(str, sizeof(str), "%s", TmpBuff);
+        memcpy(buffer + 1, TmpBuff, sizeof(TmpBuff));
+        printf("[c] -> QR len=%d cod=%s\n", ret, str);
+        char onlyLenBuffer[ret + 1];
+        onlyLenBuffer[0] = type;
+        memcpy(onlyLenBuffer + 1, TmpBuff, ret);
+        send(client_socket, onlyLenBuffer, ret + 1, 0);
+        usleep(3000000);
+        printf("[c] ->QR scanner sleep 2s\n");
     }
-    return 0;
 }
 
 void ic_read(void) {
@@ -124,50 +127,40 @@ void ic_read(void) {
     int i;
     PICC_Open(0);
     uint8_t type = 0x01;
-    while (!stop_requested) {
-        if (ret) ret = Mifare_PowerOn(0, snr, &snr_len);
-        if (!ret) ret = Mifare_AuthenBlock(i * 4, 0, key);
-        if (!ret) ret = Mifare_ReadBlock(0 + i * 4, data);
-        if (!ret) dump_data("Mifare Read0", data, data_len);
-        if (!ret) {
-            printf("[c] ->ic read len=%d\n", ret);
-            Sys_BeepMs(100);
-            unsigned char tmpBuffer[5];
-            tmpBuffer[0] = type;
-            tmpBuffer[1] = data[0];
-            tmpBuffer[2] = data[1];
-            tmpBuffer[3] = data[2];
-            tmpBuffer[4] = data[3];
-            dump_data("[c] ->Send IC Data:\n", tmpBuffer, sizeof(tmpBuffer));
-            send(client_socket, tmpBuffer, sizeof(tmpBuffer) + 1, 0);
-            printf("[c] ->ic read sensor sleep 2s\n");
-            usleep(3000000);
-        }
-        usleep(300000);
+    if (ret) ret = Mifare_PowerOn(0, snr, &snr_len);
+    if (!ret) ret = Mifare_AuthenBlock(i * 4, 0, key);
+    if (!ret) ret = Mifare_ReadBlock(0 + i * 4, data);
+    if (!ret) dump_data("Mifare Read0", data, data_len);
+    if (!ret) {
+        printf("[c] ->ic read len=%d\n", ret);
+        Sys_BeepMs(100);
+        unsigned char tmpBuffer[5];
+        tmpBuffer[0] = type;
+        tmpBuffer[1] = data[0];
+        tmpBuffer[2] = data[1];
+        tmpBuffer[3] = data[2];
+        tmpBuffer[4] = data[3];
+        dump_data("[c] ->Send IC Data:\n", tmpBuffer, sizeof(tmpBuffer));
+        send(client_socket, tmpBuffer, sizeof(tmpBuffer) + 1, 0);
+        printf("[c] ->ic read sensor sleep 2s\n");
+        usleep(3000000);
     }
 }
 
-// 全局自旋锁
-pthread_spinlock_t lock;
-// 锁状态
 void parse_id_info(char *buffer, ID_DATA *data) {
-    // 示例实现：从 buffer 解析数据到 data
     snprintf(data->name, sizeof(data->name), "Test Name");
     snprintf(data->id_number, sizeof(data->id_number), "123456789012345678");
-    // 其他字段类似
 }
 
 void dump_id_info(ID_DATA *data) {
-    // 显示详细信息
     printf("Name: %s\n", data->name);
     printf("ID Number: %s\n", data->id_number);
-    // 其他字段类似
 }
 
 void dump_id_info2(ID_DATA *data) {
-    // 显示简略信息
     printf("Name: %s, ID: %s\n", data->name, data->id_number);
 }
+
 void id_read(void) {
     printf("[c] ->start ID read\n");
     unsigned char idtwo_getbuff[2400] = {0};
@@ -175,19 +168,25 @@ void id_read(void) {
     ushort ret;
     ID_DATA id_data;
     unsigned long tick;
-    while (!stop_requested) {
-        tick = OSTIMER_GetTickCount();
-        printf("[c] ->current tick: %lu\n", tick);
-        pthread_spin_lock(&lock);
-        ret = IDCARD_AutoRead(&len, idtwo_getbuff);
-        printf("[c] -> IDCARD_AutoRead returned: %d, len: %d\n", ret, len);
-        pthread_spin_unlock(&lock);
-        if (ret == 0) {
-            printf("读身份证ok[%ld ms]！！！！！！！！！！！！！！！！\n", OSTIMER_GetTickCount() - tick);
-            parse_id_info((char*)&idtwo_getbuff[7], &id_data);
-            dump_id_info2(&id_data);
-        } else {
-            printf("读身份证fail, ret=%d\n", ret);
-        }
+    tick = OSTIMER_GetTickCount();
+    printf("[c] ->current tick: %lu\n", tick);
+    pthread_spin_lock(&lock);
+    ret = IDCARD_AutoRead(&len, idtwo_getbuff);
+    printf("[c] -> IDCARD_AutoRead returned: %d, len: %d\n", ret, len);
+    pthread_spin_unlock(&lock);
+    if (ret == 0) {
+        printf("读身份证ok[%ld ms]！！！！！！！！！！！！！！！！\n", OSTIMER_GetTickCount() - tick);
+        parse_id_info((char*)&idtwo_getbuff[7], &id_data);
+        dump_id_info2(&id_data);
+    } else {
+        printf("读身份证fail, ret=%d\n", ret);
     }
+}
+
+void init_spinlock() {
+    pthread_spin_init(&lock, 0);
+}
+
+void destroy_spinlock() {
+    pthread_spin_destroy(&lock);
 }
