@@ -39,5 +39,5 @@ int start_tcp(void);
 int qr_read(void);
 void ic_read(void);
 void id_read(void);
-
+void read_data(void);
 #endif // CLIB_H
