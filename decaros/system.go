@@ -7,7 +7,7 @@ import (
 )
 
 func GetSN() (string, error) {
-	return "02211101538", nil //第一部设备
+	//return "02211101538", nil //第一部设备
 	//return "02211101541", nil //第二部带身份证的
 	cmd := exec.Command("cat", "/opt/config/sn")
 	var out bytes.Buffer
