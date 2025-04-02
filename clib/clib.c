@@ -213,9 +213,6 @@ void parse_id_info(char *rx_buffer, ID_DATA *id_data){
     unicode_utf8(&ptr,kExpireEndDayLen,id_data->expire_start_day);
     unicode_utf8(&ptr,kExpireEndDayLen,id_data->expire_end_day);
     unicode_utf8(&ptr,kReservedLen    ,id_data->reserved);
-
-    dc_ParseOtherInfo(0,id_data->sex,id_data->sex);
-    dc_ParseOtherInfo(1,id_data->nation,id_data->nation);
 #ifdef IDTWO_PHOTO
     unpackBmp(&rx_buffer[256]);
 #endif
