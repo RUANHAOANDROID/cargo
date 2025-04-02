@@ -163,17 +163,9 @@ void id_read(void) {
     pthread_spin_unlock(&lock);
     if (ret == 0) {
         printf("[c] ->read id card success\n");
-        // 提取并转换 name (偏移 0)
-        strncpy(name, (char*)buffer, 99);
-        name[99] = '\0';  // 确保字符串终止
-
-        // 提取并转换 id_number (偏移 500)
+        strncpy(name, (char*)buffer, 100);
         strncpy(id_number, (char*)(buffer + 500), 99);
-        id_number[99] = '\0';  // 确保字符串终止
-        // 打印转换后的字符串
         printf("[INFO] [c] ->ID Card Info: Name: %s\n", name);
-        // 直接使用 printf 打印
-        printf("[INFO] [c] ->ID Card Info:ID Number: %s\n",id_number);
         usleep(3000000);
     } else {
         printf("[c] ->read id card fail,ret=%d\n",ret);
