@@ -192,7 +192,7 @@ int lock_status =-1;
 
 int id_read(int dumpInfo){
 	if(lock_status == -1){
-		printf("init lock")
+		printf("init lock");
 		pthread_spin_init(&lock, 0);
 		lock_status ==1;
 	}
