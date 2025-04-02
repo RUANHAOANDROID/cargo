@@ -11,12 +11,24 @@
 #include "unistd.h"
 #include <arpa/inet.h>
 #include <pthread.h>
+#include <stdbool.h>
 
 #define BUFFER_SIZE 512
 
 extern char buffer[BUFFER_SIZE];
 extern int stop_requested;
 extern int client_socket;
+
+static const int kNameLen = (15 << 1);
+static const int kSexLen = (1 << 1);
+static const int kNationLen = (2 << 1);
+static const int kBirthDayLen = (8 << 1);
+static const int kAddressLen = (35 << 1);
+static const int kIdNumberLen = (18 << 1);
+static const int kDepartmentLen = (15 << 1);
+static const int kExpireStartDayLen = (8 << 1);
+static const int kExpireEndDayLen = (8 << 1);
+static const int kReservedLen = (18 << 1);
 // 定义身份证信息结构体
 typedef struct{
 	char name[100];
@@ -40,4 +52,6 @@ void qr_read(void);
 void ic_read(void);
 void id_read(void);
 void read_data(void);
+void parse_id_info(char *rx_buffer, ID_DATA *id_data);
+void dump_id_info2(ID_DATA *id_data);
 #endif // CLIB_H

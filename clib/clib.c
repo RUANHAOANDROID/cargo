@@ -171,7 +171,6 @@ void id_read(void) {
     }
 }
 void dump_id_info2(ID_DATA *id_data){
-
     printf("姓名 %s\n",id_data->name);
     printf("性别 %s 民族:%s\n",id_data->sex,id_data->nation);
     printf("出生 %s\n",id_data->birth_day);
