@@ -163,6 +163,7 @@ void id_read(void) {
         printf("[c] ->read id card success\n");
         dump_data("[c] ->id data:\n", buffer, len);
         unsigned char tmpBuffer[101];
+        tmpBuffer[0]=0x03;
         // 拷贝姓名 (buffer[0] - buffer[99]) 到 tmpBuffer[1] 开始的位置
         memcpy(&tmpBuffer[1], &buffer[0], 100);
         // 拷贝号码 (buffer[500] - buffer[599]) 到 tmpBuffer[101] 开始的位置
