@@ -10,7 +10,7 @@ import (
 	"strings"
 )
 
-const bufferSize = 512 // 1MB 缓冲区大小
+const bufferSize = 2048 // 缓冲区大小
 
 var chanMsg chan msg.Message
 
@@ -79,6 +79,10 @@ func process(conn net.Conn) {
 			case msg.QRCODE:
 				content := string(trimmedBuffer[1:])
 				chanMsg <- msg.Message{Type: msg.QRCODE, Content: content}
+
+			case msg.ID_CARD:
+				content := bytesToHexString(trimmedBuffer[1:])
+				chanMsg <- msg.Message{Type: msg.ID_CARD, Content: content}
 			default:
 				fmt.Println("undefined type")
 			}
