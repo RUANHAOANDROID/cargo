@@ -217,9 +217,10 @@ void id_read(){
 	unsigned long tick;
 	while(!stop_requested){
 		tick = OSTIMER_GetTickCount();
-		printf("[c] ->Current tick: %lu\n", tick);
+		printf("[c] ->current tick: %lu\n", tick);
 		{
 		#if 1
+			printf("[c] ->current tick: %lu\n", tick);
 			pthread_spin_lock(&lock);
 			ret = IDCARD_AutoRead(&len,idtwo_getbuff);
 			printf("[c] -> IDCARD_AutoRead returned: %d, len: %d\n", ret, len);
@@ -315,16 +316,16 @@ func StartC(wg sync.WaitGroup) {
 	time.Sleep(time.Second)
 	//defer StopC()
 	C.start_tcp()
-	wg.Add(1)
-	go func() {
-		defer wg.Done()
-		C.qr_read()
-	}()
-	wg.Add(1)
-	go func() {
-		defer wg.Done()
-		C.ic_read()
-	}()
+	//wg.Add(1)
+	//go func() {
+	//	defer wg.Done()
+	//	C.qr_read()
+	//}()
+	//wg.Add(1)
+	//go func() {
+	//	defer wg.Done()
+	//	C.ic_read()
+	//}()
 	wg.Add(1)
 	go func() {
 		defer wg.Done()
