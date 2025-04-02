@@ -150,38 +150,26 @@ void ic_read(void) {
     }
 }
 
-void parse_info(char *buffer, ID_DATA *data) {
-    snprintf(data->name, sizeof(data->name), "%s", buffer);
-    snprintf(data->sex, sizeof(data->sex), "%s", buffer + 100);
-    snprintf(data->nation, sizeof(data->nation), "%s", buffer + 200);
-    snprintf(data->birth_day, sizeof(data->birth_day), "%s", buffer + 300);
-    snprintf(data->address, sizeof(data->address), "%s", buffer + 400);
-    snprintf(data->id_number, sizeof(data->id_number), "%s", buffer + 500);
-    snprintf(data->department, sizeof(data->department), "%s", buffer + 600);
-    snprintf(data->expire_start_day, sizeof(data->expire_start_day), "%s", buffer + 700);
-    snprintf(data->expire_end_day, sizeof(data->expire_end_day), "%s", buffer + 800);
-}
-
-void dump_id_info(ID_DATA *data) {
-    printf("Name: %s\n", data->name);
-    printf("ID Number: %s\n", data->id_number);
-}
-
 void id_read(void) {
     printf("[c] ->start ID read\n");
     unsigned char buffer[2400] = {0};
     ushort len;
     ushort ret;
-    ID_DATA id_data;
+    char name[100];
+    char id_number[100];
     pthread_spin_lock(&lock);
     ret = IDCARD_AutoRead(&len, buffer);
     printf("[c] -> IDCARD_AutoRead returned: %d, len: %d\n", ret, len);
     pthread_spin_unlock(&lock);
     if (ret == 0) {
         printf("[c] ->read id card success\n");
-//        parse_info((char*)&buffer, &id_data);
-        memcpy(&id_data, buffer, sizeof(ID_DATA));
-        dump_id_info(&id_data);
+        // 提取 name (偏移 0)
+        strncpy(name, (char*)buffer, 99);  // 使用 99 留空间给 '\0'
+        name[99] = '\0';                   // 确保字符串以 null 结尾
+        // 提取 id_number (偏移 500)
+        strncpy(id_number, (char*)(buffer + 500), 99);
+        id_number[99] = '\0';              // 确保字符串以 null 结尾
+        printf("[c] ->name: %s, id_number: %s\n", name, id_number);
         usleep(3000000);
     } else {
         printf("[c] ->read id card fail,ret=%d\n",ret);
