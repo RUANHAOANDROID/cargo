@@ -173,18 +173,18 @@ void ic_read(){
 	}
 }
 // 定义身份证信息结构体
-typedef struct {
-    char name[32];            // 姓名
-    char sex[4];              // 性别
-    char nation[16];          // 民族
-    char birth_day[12];       // 出生日期
-    char address[128];        // 住址
-    char id_number[20];       // 身份证号码
-    char department[64];      // 签发机关
-    char expire_start_day[12]; // 有效期起始日期
-    char expire_end_day[12];  // 有效期截止日期
-    char reserved[256];       // 保留字段
-} ID_DATA;
+typedef struct{
+	char name[100];
+	char sex[100];
+	char nation[100];
+	char birth_day[100];
+	char address[100];
+	char id_number[100];
+	char department[100];
+	char expire_start_day[100];
+	char expire_end_day[100];
+	char reserved[2400];
+}ID_DATA;
 // 全局自旋锁
 pthread_spinlock_t lock;
 // 锁状态
