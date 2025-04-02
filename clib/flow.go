@@ -83,8 +83,10 @@ func process(conn net.Conn) {
 					chanMsg <- msg.Message{Type: msg.QRCODE, Content: content}
 
 				case msg.ID_CARD:
-					content := bytesToHexString(trimmedBuffer[1:])
-					chanMsg <- msg.Message{Type: msg.ID_CARD, Content: content}
+					name := trimmedBuffer[1:101]
+					number := trimmedBuffer[102:201]
+					pkg.Log.Println(string(name), string(number))
+					chanMsg <- msg.Message{Type: msg.ID_CARD, Content: string(number)}
 				default:
 					fmt.Println("undefined type")
 				}
