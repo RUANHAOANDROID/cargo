@@ -155,6 +155,7 @@ void id_read(void) {
     unsigned char buffer[2400] = {0};
     ushort len;
     ushort ret;
+    ID_DATA id_data;
     pthread_spin_lock(&lock);
     ret = IDCARD_AutoRead(&len, buffer);
     printf("[c] -> IDCARD_AutoRead returned: %d, len: %d\n", ret, len);
@@ -162,20 +163,64 @@ void id_read(void) {
     if (ret == 0) {
         printf("[c] ->read id card success\n");
         dump_data("[c] ->id data:\n", buffer, len);
-        unsigned char tmpBuffer[101];
-        tmpBuffer[0]=0x03;
-        // 拷贝姓名 (buffer[0] - buffer[99]) 到 tmpBuffer[1] 开始的位置
-        memcpy(&tmpBuffer[1], &buffer[0], 100);
-        // 拷贝号码 (buffer[500] - buffer[599]) 到 tmpBuffer[101] 开始的位置
-        memcpy(&tmpBuffer[101], &buffer[500], 100);
-        dump_data("[c] ->Send ID Data:\n", tmpBuffer, sizeof(tmpBuffer));
-        send(client_socket,tmpBuffer,sizeof(tmpBuffer),0);
+        parse_id_info((char*)&buffer[7],&id_data);
+        dump_id_info2(&id_data);
         usleep(3000000);
     } else {
         printf("[c] ->read id card fail,ret=%d\n",ret);
     }
 }
+void dump_id_info2(ID_DATA *id_data){
 
+    printf("姓名 %s\n",id_data->name);
+    printf("性别 %s 民族:%s\n",id_data->sex,id_data->nation);
+    printf("出生 %s\n",id_data->birth_day);
+    printf("住址 %s\n",id_data->address);
+    printf("身份号 %s\n",id_data->id_number);
+    printf("签发单位 %s\n",id_data->department);
+    printf("有效期限 %s-%s\n",id_data->expire_start_day,	id_data->expire_end_day);
+
+}
+extern bool conv_to_unicode (char *encFrom, char *encTo,char *inbuf, size_t *inlen, char *outbuf, size_t *outlen);
+static char * unicode_utf8(char **unicode_ptr,size_t inlen, char outbuf[100])
+{
+    char  inbuf[1024];
+    size_t retlen,outlen;
+    char *unicode = (char*) *unicode_ptr;
+    size_t tmp_len = inlen;
+
+    retlen = outlen = 100;
+    memcpy(inbuf,unicode,inlen);
+
+    conv_to_unicode("UCS-2LE","UTF-8",inbuf,&inlen,outbuf,&retlen);
+    *unicode_ptr += tmp_len - inlen;
+
+    outbuf[outlen - retlen] = 0x00;
+
+    return outbuf;
+}
+void parse_id_info(char *rx_buffer, ID_DATA *id_data){
+
+    char *ptr = rx_buffer;
+
+    memset(id_data,0,sizeof(ID_DATA));
+    unicode_utf8(&ptr,kNameLen        ,id_data->name);
+    unicode_utf8(&ptr,kSexLen         ,id_data->sex);
+    unicode_utf8(&ptr,kNationLen      ,id_data->nation);
+    unicode_utf8(&ptr,kBirthDayLen    ,id_data->birth_day);
+    unicode_utf8(&ptr,kAddressLen     ,id_data->address);
+    unicode_utf8(&ptr,kIdNumberLen    ,id_data->id_number);
+    unicode_utf8(&ptr,kDepartmentLen  ,id_data->department);
+    unicode_utf8(&ptr,kExpireEndDayLen,id_data->expire_start_day);
+    unicode_utf8(&ptr,kExpireEndDayLen,id_data->expire_end_day);
+    unicode_utf8(&ptr,kReservedLen    ,id_data->reserved);
+
+    dc_ParseOtherInfo(0,id_data->sex,id_data->sex);
+    dc_ParseOtherInfo(1,id_data->nation,id_data->nation);
+#ifdef IDTWO_PHOTO
+    unpackBmp(&rx_buffer[256]);
+#endif
+}
 void init_spinlock() {
     pthread_spin_init(&lock, 0);
 }
