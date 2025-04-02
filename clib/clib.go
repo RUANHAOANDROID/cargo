@@ -219,7 +219,7 @@ int id_read(int dumpInfo){
         tick = OSTIMER_GetTickCount();
 		pthread_spin_lock(&lock);
 		ret = IDCARD_AutoRead(&len,idtwo_getbuff);
-		pthread_spin_unlock(&lock);
+		//pthread_spin_unlock(&lock);
 		if(ret == 0){
 			printf("读身份证ok[%ld ms]！！！！！！！！！！！！！！！！\n",OSTIMER_GetTickCount() - tick);
 	        //Sys_Beep();
@@ -232,7 +232,7 @@ int id_read(int dumpInfo){
         tick = OSTIMER_GetTickCount();
 		pthread_spin_lock(&lock);
 		ret = IDCARD_AutoRead_Fig(&len,idtwo_getbuff);
-		pthread_spin_unlock(&lock);
+		//pthread_spin_unlock(&lock);
 		if(ret == 0){
 			printf("读身份证带指纹ok[%ld ms]！！！！！！！！！！！！！！！！\n",OSTIMER_GetTickCount() - tick);
 	        //Sys_Beep();
