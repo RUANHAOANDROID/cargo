@@ -211,7 +211,7 @@ void id_read(){
 	printf("[c] ->start ID read\n");
 	unsigned char idtwo_getbuff[2400] = {0};
 	ushort  len;
-	ushort  ret ;
+	ushort  ret ; // 0x00 success, 0x01 未找到卡,0x02 PICCAPDU
 
 	ID_DATA id_data;
 	unsigned long tick;
@@ -220,10 +220,10 @@ void id_read(){
 		printf("[c] ->Current tick: %lu\n", tick);
 		{
 		#if 1
-			//pthread_spin_lock(&lock);
+			pthread_spin_lock(&lock);
 			ret = IDCARD_AutoRead(&len,idtwo_getbuff);
 			printf("[c] -> IDCARD_AutoRead returned: %d, len: %d\n", ret, len);
-			//pthread_spin_unlock(&lock);
+			pthread_spin_unlock(&lock);
 			if(ret == 0){
 				printf("读身份证ok[%ld ms]！！！！！！！！！！！！！！！！\n",OSTIMER_GetTickCount() - tick);
 				//Sys_Beep();
@@ -233,9 +233,9 @@ void id_read(){
 				printf("读身份证fail,ret=%d\n",ret);
 			}
 		#else
-			//pthread_spin_lock(&lock);
+			pthread_spin_lock(&lock);
 			ret = IDCARD_AutoRead_Fig(&len,idtwo_getbuff);
-			//pthread_spin_unlock(&lock);
+			pthread_spin_unlock(&lock);
 			if(ret == 0){
 				printf("读身份证带指纹ok[%ld ms]！！！！！！！！！！！！！！！！\n",OSTIMER_GetTickCount() - tick);
 				//Sys_Beep();
@@ -245,7 +245,6 @@ void id_read(){
 			}
 		#endif
 		}
-		usleep(300000);
 	}
 }
 */
