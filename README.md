@@ -48,3 +48,77 @@ Serial          : 0000000000000000
 * Q员工卡
 * T门票已过期
 * Z无权限访问
+
+```c 
+int idtwotest(int dumpInfo)
+{
+	unsigned char idtwo_getbuff[2400] = {0};
+	ushort  len;
+	ushort  ret ;
+	
+	ID_DATA id_data;
+    unsigned long tick;
+    
+/*
+    unsigned char *version;
+
+    version = (unsigned char*)malloc(2048);
+
+    ret = IDCARD_Get_Sam_Ver(&len, version);
+    if(ret == 0){
+        printf("IDCARD_Get_Sam_Ver success\n");
+        dump_data("SAM_Ver-->",version,len);
+        free(version);
+        if((version[0] != 0xaa) || (version[1] != 0xaa)){
+            printf("IDCARD_Get_Sam_Ver failed\n");
+            return -1;
+        }
+    }else{
+        printf("IDCARD_Get_Sam_Ver failed\n");
+        return -1;
+    }
+*/
+	//while(1)
+	{
+    #if 1
+		if(dumpInfo){
+			LCD_ClearScreen(0);
+			LCD_ClearAll();
+			LCD_Printf(10+ 0,DISP_FONT12,"身份证测试：");
+			LCD_Printf(10+24,DISP_FONT24|DISP_CENTER,"请放身份证");
+		}
+        tick = OSTIMER_GetTickCount();
+		pthread_spin_lock(&lock);	
+		ret = IDCARD_AutoRead(&len,idtwo_getbuff);
+		pthread_spin_unlock(&lock);	
+
+		if(ret == 0){
+			printf("读身份证ok[%ld ms]！！！！！！！！！！！！！！！！\n",OSTIMER_GetTickCount() - tick);
+	        //Sys_Beep();
+			parse_id_info((char*)&idtwo_getbuff[7],&id_data);
+			if(dumpInfo)
+				dump_id_info(&id_data);
+			else
+				dump_id_info2(&id_data);
+		}else{
+			printf("读身份证fail,ret=%d\n",ret);
+			if(dumpInfo)
+				LCD_Printf(10+48,DISP_FONT12,"测试失败 [%d]", ret);
+		}
+	#else
+        tick = OSTIMER_GetTickCount();
+		pthread_spin_lock(&lock);	
+		ret = IDCARD_AutoRead_Fig(&len,idtwo_getbuff);
+		pthread_spin_unlock(&lock);	
+		if(ret == 0){
+			printf("读身份证带指纹ok[%ld ms]！！！！！！！！！！！！！！！！\n",OSTIMER_GetTickCount() - tick);
+	        //Sys_Beep();
+			parse_id_info((char*)&idtwo_getbuff[9],&id_data);
+			dump_id_info(&id_data);
+			dump_id_info2(&id_data);
+		}
+	#endif
+	}
+	return ret;
+}
+```
