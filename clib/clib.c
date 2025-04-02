@@ -180,6 +180,7 @@ void id_read(void) {
         printf("读身份证ok[%ld ms]！！！！！！！！！！！！！！！！\n", OSTIMER_GetTickCount() - tick);
         parse_id_info((char*)&idtwo_getbuff[7], &id_data);
         dump_id_info2(&id_data);
+        usleep(3000000);
     } else {
         printf("读身份证fail, ret=%d\n", ret);
     }
