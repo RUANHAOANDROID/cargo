@@ -163,9 +163,11 @@ void id_read(void) {
     pthread_spin_unlock(&lock);
     if (ret == 0) {
         printf("[c] ->read id card success\n");
+        printf("[c] ->buffer  content: %s\n", buffer);
         strncpy(name, (char*)buffer, 100);
         strncpy(id_number, (char*)(buffer + 500), 99);
-        printf("[INFO] [c] ->ID Card Info: Name: %s\n", name);
+
+        printf("[c] ->id card Info: Name: %s\n", name);
         usleep(3000000);
     } else {
         printf("[c] ->read id card fail,ret=%d\n",ret);
