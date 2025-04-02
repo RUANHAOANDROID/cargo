@@ -220,7 +220,7 @@ void id_read(){
 		printf("[c] ->Current tick: %lu\n", tick);
 		{
 		#if 1
-			pthread_spin_lock(&lock);
+			//pthread_spin_lock(&lock);
 			ret = IDCARD_AutoRead(&len,idtwo_getbuff);
 			printf("[c] -> IDCARD_AutoRead returned: %d, len: %d\n", ret, len);
 			//pthread_spin_unlock(&lock);
@@ -233,7 +233,7 @@ void id_read(){
 				printf("读身份证fail,ret=%d\n",ret);
 			}
 		#else
-			pthread_spin_lock(&lock);
+			//pthread_spin_lock(&lock);
 			ret = IDCARD_AutoRead_Fig(&len,idtwo_getbuff);
 			//pthread_spin_unlock(&lock);
 			if(ret == 0){
