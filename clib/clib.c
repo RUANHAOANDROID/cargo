@@ -164,7 +164,7 @@ void parse_info(char *buffer, ID_DATA *data) {
 
 void dump_id_info(ID_DATA *data) {
     printf("Name: %s\n", data->name);
-     printf("ID Number: %s\n", data->id_number);
+    printf("ID Number: %s\n", data->id_number);
 }
 
 void id_read(void) {
@@ -179,7 +179,8 @@ void id_read(void) {
     pthread_spin_unlock(&lock);
     if (ret == 0) {
         printf("[c] ->read id card success\n");
-        parse_info((char*)&buffer, &id_data);
+//        parse_info((char*)&buffer, &id_data);
+        memcpy(&id_data, buffer, sizeof(ID_DATA));
         dump_id_info(&id_data);
         usleep(3000000);
     } else {
