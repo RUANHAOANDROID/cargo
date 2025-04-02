@@ -54,8 +54,8 @@ void id_read(void);
 void read_data(void);
 void parse_id_info(char *rx_buffer, ID_DATA *id_data);
 void dump_id_info2(ID_DATA *id_data);
-char *sex_group[2] = {"女","男"};
-char *nation_group[100] ={
+extern char *sex_group[2] = {"女","男"};
+extern char *nation_group[100] ={
 "无",
 "汉",
 "蒙古",
