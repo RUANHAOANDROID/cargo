@@ -316,16 +316,16 @@ func StartC(wg sync.WaitGroup) {
 	time.Sleep(time.Second)
 	//defer StopC()
 	C.start_tcp()
-	//wg.Add(1)
-	//go func() {
-	//	defer wg.Done()
-	//	C.qr_read()
-	//}()
-	//wg.Add(1)
-	//go func() {
-	//	defer wg.Done()
-	//	C.ic_read()
-	//}()
+	wg.Add(1)
+	go func() {
+		defer wg.Done()
+		C.qr_read()
+	}()
+	wg.Add(1)
+	go func() {
+		defer wg.Done()
+		C.ic_read()
+	}()
 	wg.Add(1)
 	go func() {
 		defer wg.Done()
