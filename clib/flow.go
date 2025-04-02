@@ -88,6 +88,8 @@ func process(conn net.Conn) {
 				default:
 					fmt.Println("undefined type")
 				}
+			} else {
+				pkg.Log.Printf("buffer len=%v ", buffer)
 			}
 
 		} else {
