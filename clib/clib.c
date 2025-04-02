@@ -163,7 +163,7 @@ void id_read(void) {
     pthread_spin_unlock(&lock);
     if (ret == 0) {
         printf("[c] ->read id card success\n");
-
+        printf("[c] ->ID card data: %s\n", buffer);
         usleep(3000000);
     } else {
         printf("[c] ->read id card fail,ret=%d\n",ret);
