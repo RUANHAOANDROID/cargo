@@ -92,7 +92,6 @@ func main() {
 		case msg.QRCODE:
 			resp, err := api.CheckTicket(cMsg.Content, api.ProtoQr)
 			parseResp(err, resp)
-
 		case msg.ID_CARD:
 			resp, err := api.CheckTicket(cMsg.Content, api.ProtoID)
 			parseResp(err, resp)
