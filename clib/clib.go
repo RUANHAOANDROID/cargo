@@ -12,7 +12,7 @@ package clib
 #include "string.h"
 #include "unistd.h"
 #include <arpa/inet.h>
-
+#include <pthread.h>
 #define BUFFER_SIZE 512
 char buffer[BUFFER_SIZE];
 int stop_requested = 0;
@@ -185,7 +185,17 @@ typedef struct {
     char expire_end_day[12];  // 有效期截止日期
     char reserved[256];       // 保留字段
 } ID_DATA;
+// 全局自旋锁
+pthread_spinlock_t lock;
+// 锁状态
+int lock_status =-1;
+
 int id_read(int dumpInfo){
+	if(lock_status == -1){
+		printf("init lock")
+		pthread_spin_init(&lock, PTHREAD_PROCESS_PRIVATE);
+		lock_status ==1;
+	}
 	printf("[c] ->start id read\n");
 	// 定义缓冲区和变量
     unsigned char idtwo_getbuff[2400] = {0};    // 存储身份证数据的缓冲区
