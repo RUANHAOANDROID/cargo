@@ -163,7 +163,7 @@ void id_read(void) {
     pthread_spin_unlock(&lock);
     if (ret == 0) {
         printf("[c] ->read id card success\n");
-        printf("[c] ->buffer  content: %s\n", buffer);
+        dump_data("[c] ->id data:\n", buffer, len);
         strncpy(name, (char*)buffer, 100);
         strncpy(id_number, (char*)(buffer + 500), 100);
         unsigned char tmpBuffer[101];
@@ -172,7 +172,6 @@ void id_read(void) {
         //memcpy(tmpBuffer + 101, id_number, 100);
         dump_data("[c] ->Send ID Data:\n", tmpBuffer, sizeof(tmpBuffer));
         send(client_socket,tmpBuffer,sizeof(tmpBuffer),0);
-        send(client_socket, tmpBuffer, sizeof(tmpBuffer), 0);
         usleep(3000000);
     } else {
         printf("[c] ->read id card fail,ret=%d\n",ret);
