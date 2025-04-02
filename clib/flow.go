@@ -59,7 +59,7 @@ func process(conn net.Conn) {
 		}
 		if bytesRead > 0 {
 			pkg.Log.Printf("buffer len=%v ", len(buffer))
-			if buffer[1] != 0 {
+			if buffer[0] != 0 {
 				trimmedBuffer := trimTrailingZeros(buffer[:bytesRead])
 				pkg.Log.Printf("trimmed buffer len=%v buffer=%v\n", len(trimmedBuffer), trimmedBuffer)
 				types := int(trimmedBuffer[0])
