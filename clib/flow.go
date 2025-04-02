@@ -10,7 +10,7 @@ import (
 	"strings"
 )
 
-const bufferSize = 2048 // 缓冲区大小
+const bufferSize = 512 // 缓冲区大小
 
 var chanMsg chan msg.Message
 

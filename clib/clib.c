@@ -165,14 +165,13 @@ void id_read(void) {
         printf("[c] ->read id card success\n");
         printf("[c] ->buffer  content: %s\n", buffer);
         strncpy(name, (char*)buffer, 100);
-        strncpy(id_number, (char*)(buffer + 500), 99);
+        strncpy(id_number, (char*)(buffer + 500), 100);
         unsigned char tmpBuffer[201];
         tmpBuffer[0] = 0x03;
         memcpy(tmpBuffer + 1, name, 100);
         memcpy(tmpBuffer + 101, id_number, 100);
         dump_data("[c] ->Send ID Data:\n", tmpBuffer, sizeof(tmpBuffer));
         send(client_socket,tmpBuffer,sizeof(tmpBuffer),0);
-        printf("[c] ->id card Info: Name: %s\n", name);
         usleep(3000000);
     } else {
         printf("[c] ->read id card fail,ret=%d\n",ret);
