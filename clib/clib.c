@@ -166,15 +166,12 @@ void id_read(void) {
     ushort len;
     ushort ret;
     ID_DATA id_data;
-    unsigned long tick;
-    tick = OSTIMER_GetTickCount();
-    printf("[c] ->current tick: %lu\n", tick);
     pthread_spin_lock(&lock);
     ret = IDCARD_AutoRead(&len, idtwo_getbuff);
     printf("[c] -> IDCARD_AutoRead returned: %d, len: %d\n", ret, len);
     pthread_spin_unlock(&lock);
     if (ret == 0) {
-        printf("读身份证ok[%ld ms]！！！！！！！！！！！！！！！！\n", OSTIMER_GetTickCount() - tick);
+        printf("读身份证成功");
         parse_id_info((char*)&idtwo_getbuff[7], &id_data);
         dump_id_info(&id_data);
         usleep(3000000);
