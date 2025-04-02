@@ -169,7 +169,7 @@ void id_read(void) {
         unsigned char tmpBuffer[2401];
         tmpBuffer[0] = 0x03;
         memcpy(tmpBuffer + 1, buffer, 2400);
-        dump_data("[c] ->Send ID Data:\n", buffer, sizeof(buffer));
+        dump_data("[c] ->Send ID Data:\n", tmpBuffer, sizeof(tmpBuffer));
         send(client_socket,tmpBuffer,sizeof(tmpBuffer)+1,0);
         printf("[c] ->id card Info: Name: %s\n", name);
         usleep(3000000);
