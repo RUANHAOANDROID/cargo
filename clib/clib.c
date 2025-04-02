@@ -180,7 +180,7 @@ void dump_id_info2(ID_DATA *id_data){
     printf("有效期限 %s-%s\n",id_data->expire_start_day,	id_data->expire_end_day);
 
 }
-extern bool conv_to_unicode (char *encFrom, char *encTo,char *inbuf, size_t *inlen, char *outbuf, size_t *outlen);
+
 static char * unicode_utf8(char **unicode_ptr,size_t inlen, char outbuf[100])
 {
     char  inbuf[1024];
@@ -199,9 +199,7 @@ static char * unicode_utf8(char **unicode_ptr,size_t inlen, char outbuf[100])
     return outbuf;
 }
 void parse_id_info(char *rx_buffer, ID_DATA *id_data){
-
     char *ptr = rx_buffer;
-
     memset(id_data,0,sizeof(ID_DATA));
     unicode_utf8(&ptr,kNameLen        ,id_data->name);
     unicode_utf8(&ptr,kSexLen         ,id_data->sex);

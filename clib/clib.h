@@ -55,4 +55,6 @@ void read_data(void);
 void parse_id_info(char *rx_buffer, ID_DATA *id_data);
 void dump_id_info2(ID_DATA *id_data);
 
+extern bool conv_to_unicode (char *encFrom, char *encTo,char *inbuf, size_t *inlen, char *outbuf, size_t *outlen);
+
 #endif // CLIB_H
