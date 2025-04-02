@@ -146,7 +146,40 @@ void ic_read(void) {
         usleep(300000);
     }
 }
+// 定义身份证信息结构体
+typedef struct{
+    char name[100];
+    char sex[100];
+    char nation[100];
+    char birth_day[100];
+    char address[100];
+    char id_number[100];
+    char department[100];
+    char expire_start_day[100];
+    char expire_end_day[100];
+    char reserved[2400];
+}ID_DATA;
+// 全局自旋锁
+pthread_spinlock_t lock;
+// 锁状态
+void parse_id_info(char *buffer, ID_DATA *data) {
+    // 示例实现：从 buffer 解析数据到 data
+    snprintf(data->name, sizeof(data->name), "Test Name");
+    snprintf(data->id_number, sizeof(data->id_number), "123456789012345678");
+    // 其他字段类似
+}
 
+void dump_id_info(ID_DATA *data) {
+    // 显示详细信息
+    printf("Name: %s\n", data->name);
+    printf("ID Number: %s\n", data->id_number);
+    // 其他字段类似
+}
+
+void dump_id_info2(ID_DATA *data) {
+    // 显示简略信息
+    printf("Name: %s, ID: %s\n", data->name, data->id_number);
+}
 void id_read(void) {
     printf("[c] ->start ID read\n");
     unsigned char idtwo_getbuff[2400] = {0};
