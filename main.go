@@ -20,7 +20,7 @@ import (
 
 var display *clib.Display
 
-var debug = true
+var debug = false
 
 // 自启动至少需要10秒，等待系统组件加载完毕
 var sleepTime = 10 * time.Second
