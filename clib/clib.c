@@ -132,7 +132,7 @@ int init_devices(void) {
     }
 
     // 初始化IC卡设备
-    if (PICC_Open(0) {
+    if (PICC_Open(0)) {
         fprintf(stderr, "[c] ->Failed to open IC card device\n");
         return -1;
     }
