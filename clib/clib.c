@@ -122,7 +122,6 @@ void init_devices(void) {
     qrfd2 = QRCode_Open(1);
     // 初始化IC卡设备
     PICC_Open(0));
-    return 0;
 }
 // 关闭所有设备
 void close_devices(void) {
