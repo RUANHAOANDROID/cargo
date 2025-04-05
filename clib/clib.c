@@ -100,20 +100,19 @@ void qr_read(void) {
     unsigned char TmpBuff[512];
     qrfd1 = QRCode_Open(0);
     qrfd2 = QRCode_Open(1);
-    uint8_t type = 0x02;
     ret = QRCode_RxStr(qrfd1, TmpBuff, 512, 100);
     if (ret <= 0)
         ret = QRCode_RxStr(qrfd2, TmpBuff, 512, 100);
     if (ret > 0) {
         Sys_BeepMs(100);
         memset(buffer, 0, sizeof(buffer));
-        buffer[0] = type;
+        buffer[0] = 0x02;
         char str[512];
         snprintf(str, sizeof(str), "%s", TmpBuff);
         memcpy(buffer + 1, TmpBuff, sizeof(TmpBuff));
         printf("[c] -> QR len=%d cod=%s\n", ret, str);
         char onlyLenBuffer[ret + 1];
-        onlyLenBuffer[0] = type;
+        onlyLenBuffer[0] = 0x02;
         memcpy(onlyLenBuffer + 1, TmpBuff, ret);
         send(client_socket, onlyLenBuffer, ret + 1, 0);
         usleep(3000000);
