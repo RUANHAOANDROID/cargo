@@ -30,6 +30,10 @@ Serial          : 0000000000000000
 
 ```
 
+``` bash
+
+ssh -o HostKeyAlgorithms=ssh-rsa root@192.168.x.x
+```
 验票语音提示
 
 * A验票成功
