@@ -122,21 +122,11 @@ void read_data(void) {
 // 初始化所有设备
 int init_devices(void) {
     printf("[c] ->Initializing devices\n");
-
     // 初始化QR码设备
     qrfd1 = QRCode_Open(0);
     qrfd2 = QRCode_Open(1);
-    if (qrfd1 < 0 || qrfd2 < 0) {
-        fprintf(stderr, "[c] ->Failed to open QR code devices\n");
-        return -1;
-    }
-
     // 初始化IC卡设备
-    if (PICC_Open(0)) {
-        fprintf(stderr, "[c] ->Failed to open IC card device\n");
-        return -1;
-    }
-
+    PICC_Open(0))
     return 0;
 }
 // 关闭所有设备
