@@ -7,6 +7,7 @@ trigger:
     - dev
     - master
     - refactor
+    - mm
 steps:
   - name: build
     image: ubuntu:16.04
