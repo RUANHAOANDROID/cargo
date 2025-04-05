@@ -3,7 +3,26 @@
 char buffer[BUFFER_SIZE];
 int stop_requested = 0;
 int client_socket = -1;
+
+
+// QR码相关资源
+static int qrfd1 = -1;
+static int qrfd2 = -1;
+static unsigned char qrTmpBuff[512];
+
+// IC卡相关资源
+static uint8_t icKey[] = "\xFF\xFF\xFF\xFF\xFF\xFF";
+static uint8_t icData[16];
+static uint8_t icSnr[16];
+static uint8_t icSnrLen;
+static uint8_t icType = 0x01;
+static unsigned char icTmpBuffer[5];
+
+// ID卡相关资源
+static unsigned char idBuffer[2400] = {0};
+static ID_DATA idData;
 pthread_spinlock_t lock;
+
 
 void dump_data(char *str, unsigned char *text, int len) {
     int i;
@@ -86,94 +105,137 @@ int start_tcp(void) {
 }
 
 void read_data(void) {
+    if (init_devices() != 0) {
+        fprintf(stderr, "[c] ->Device initialization failed\n");
+        return;
+    }
+
     while (!stop_requested) {
         qr_read();
         ic_read();
         id_read();
         usleep(1000000);
     }
-}
 
-void qr_read(void) {
-    printf("[c] ->start QR read\n");
-    int qrfd1, qrfd2, ret;
-    unsigned char TmpBuff[512];
+    close_devices();
+}
+// 初始化所有设备
+int init_devices(void) {
+    printf("[c] ->Initializing devices\n");
+
+    // 初始化QR码设备
     qrfd1 = QRCode_Open(0);
     qrfd2 = QRCode_Open(1);
-    ret = QRCode_RxStr(qrfd1, TmpBuff, 512, 100);
-    if (ret <= 0)
-        ret = QRCode_RxStr(qrfd2, TmpBuff, 512, 100);
+    if (qrfd1 < 0 || qrfd2 < 0) {
+        fprintf(stderr, "[c] ->Failed to open QR code devices\n");
+        return -1;
+    }
+
+    // 初始化IC卡设备
+    if (PICC_Open(0) {
+        fprintf(stderr, "[c] ->Failed to open IC card device\n");
+        return -1;
+    }
+
+    return 0;
+}
+// 关闭所有设备
+void close_devices(void) {
+    printf("[c] ->Closing devices\n");
+
+    if (qrfd1 >= 0) {
+        QRCode_Close(qrfd1);
+        qrfd1 = -1;
+    }
+    if (qrfd2 >= 0) {
+        QRCode_Close(qrfd2);
+        qrfd2 = -1;
+    }
+
+    PICC_Close(0);
+}
+void qr_read(void) {
+    printf("[c] ->start QR read\n");
+    int ret = QRCode_RxStr(qrfd1, qrTmpBuff, sizeof(qrTmpBuff), 100);
+
+    if (ret <= 0) {
+        ret = QRCode_RxStr(qrfd2, qrTmpBuff, sizeof(qrTmpBuff), 100);
+    }
+
     if (ret > 0) {
         Sys_BeepMs(100);
         memset(buffer, 0, sizeof(buffer));
         buffer[0] = 0x02;
-        char str[512];
-        snprintf(str, sizeof(str), "%s", TmpBuff);
-        memcpy(buffer + 1, TmpBuff, sizeof(TmpBuff));
-        printf("[c] -> QR len=%d cod=%s\n", ret, str);
+
+        // 确保字符串以null结尾
+        qrTmpBuff[ret] = '\0';
+        printf("[c] -> QR len=%d cod=%s\n", ret, qrTmpBuff);
+
+        memcpy(buffer + 1, qrTmpBuff, ret);
         char onlyLenBuffer[ret + 1];
         onlyLenBuffer[0] = 0x02;
-        memcpy(onlyLenBuffer + 1, TmpBuff, ret);
+        memcpy(onlyLenBuffer + 1, qrTmpBuff, ret);
+
         send(client_socket, onlyLenBuffer, ret + 1, 0);
         usleep(3000000);
-        printf("[c] ->QR scanner sleep 2s\n");
+        printf("[c] ->QR scanner sleep 3s\n");
     }
 }
 
 void ic_read(void) {
     printf("[c] ->start IC read\n");
     int ret = -1;
-    uint8_t key[] = "\xFF\xFF\xFF\xFF\xFF\xFF";
-    uint8_t data[16], data_len = 16;
-    uint8_t snr[16], snr_len;
-    int i;
-    PICC_Open(0);
-    uint8_t type = 0x01;
-    if (ret) ret = Mifare_PowerOn(0, snr, &snr_len);
-    if (!ret) ret = Mifare_AuthenBlock(i * 4, 0, key);
-    if (!ret) ret = Mifare_ReadBlock(0 + i * 4, data);
-    if (!ret) dump_data("Mifare Read0", data, data_len);
+    int i = 0; // 假设i为0，原代码中i未初始化
+
+    ret = Mifare_PowerOn(0, icSnr, &icSnrLen);
+    if (!ret) ret = Mifare_AuthenBlock(i * 4, 0, icKey);
+    if (!ret) ret = Mifare_ReadBlock(0 + i * 4, icData);
+
     if (!ret) {
+        dump_data("Mifare Read0", icData, sizeof(icData));
         printf("[c] ->ic read len=%d\n", ret);
         Sys_BeepMs(100);
-        unsigned char tmpBuffer[5];
-        tmpBuffer[0] = type;
-        tmpBuffer[1] = data[0];
-        tmpBuffer[2] = data[1];
-        tmpBuffer[3] = data[2];
-        tmpBuffer[4] = data[3];
-        dump_data("[c] ->Send IC Data:\n", tmpBuffer, sizeof(tmpBuffer));
-        send(client_socket, tmpBuffer, sizeof(tmpBuffer) + 1, 0);
-        printf("[c] ->ic read sensor sleep 2s\n");
+
+        icTmpBuffer[0] = icType;
+        icTmpBuffer[1] = icData[0];
+        icTmpBuffer[2] = icData[1];
+        icTmpBuffer[3] = icData[2];
+        icTmpBuffer[4] = icData[3];
+
+        dump_data("[c] ->Send IC Data:\n", icTmpBuffer, sizeof(icTmpBuffer));
+        send(client_socket, icTmpBuffer, sizeof(icTmpBuffer), 0);
+        printf("[c] ->ic read sensor sleep 3s\n");
         usleep(3000000);
     }
 }
 
 void id_read(void) {
     printf("[c] ->start ID read\n");
-    unsigned char buffer[2400] = {0};
     ushort len;
     ushort ret;
-    ID_DATA id_data;
+
     pthread_spin_lock(&lock);
-    ret = IDCARD_AutoRead(&len, buffer);
+    ret = IDCARD_AutoRead(&len, idBuffer);
     printf("[c] -> IDCARD_AutoRead returned: %d, len: %d\n", ret, len);
     pthread_spin_unlock(&lock);
+
     if (ret == 0) {
         printf("[c] ->read id card success\n");
-        parse_id_info((char*)&buffer[7],&id_data);
-        dump_id_info2(&id_data);
-        // Prepare buffer to send name and id_number
+        parse_id_info((char*)&idBuffer[7], &idData);
+        dump_id_info2(&idData);
+
         unsigned char tmpBuffer[201] = {0};
         tmpBuffer[0] = 0x03; // ID_CARD type
-        memcpy(tmpBuffer + 1, id_data.name, 100);
-        memcpy(tmpBuffer + 101, id_data.id_number, 100);
+        memcpy(tmpBuffer + 1, idData.name, 100);
+        memcpy(tmpBuffer + 101, idData.id_number, 100);
+
         send(client_socket, tmpBuffer, sizeof(tmpBuffer), 0);
         usleep(3000000);
     } else {
-        printf("[c] ->read id card fail,ret=%d\n",ret);
+        printf("[c] ->read id card fail,ret=%d\n", ret);
     }
 }
+
 void dump_id_info2(ID_DATA *id_data){
     printf("姓名 %s\n",id_data->name);
     printf("性别 %s 民族:%s\n",id_data->sex,id_data->nation);
