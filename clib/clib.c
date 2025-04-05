@@ -88,7 +88,7 @@ int start_tcp(void) {
 void read_data(void) {
     while (!stop_requested) {
         qr_read();
-        id_read();
+        ic_read();
         id_read();
         usleep(1000000);
     }
