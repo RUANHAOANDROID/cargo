@@ -192,7 +192,6 @@ void id_read(void) {
 
     pthread_spin_lock(&lock);
     ret = IDCARD_AutoRead(&len, idBuffer);
-    printf("[c] -> IDCARD_AutoRead returned: %d, len: %d\n", ret, len);
     pthread_spin_unlock(&lock);
 
     if (ret == 0) {
