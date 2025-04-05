@@ -161,7 +161,7 @@ void qr_read(void) {
 void ic_read(void) {
     printf("[c] ->start IC read\n");
     int ret = -1;
-    int i = 0; // 假设i为0，原代码中i未初始化
+    int i = 0;
 
     ret = Mifare_PowerOn(0, icSnr, &icSnrLen);
     if (!ret) ret = Mifare_AuthenBlock(i * 4, 0, icKey);
@@ -195,6 +195,7 @@ void id_read(void) {
     pthread_spin_unlock(&lock);
 
     if (ret == 0) {
+        Sys_BeepMs(100);
         printf("[c] ->read id card success\n");
         parse_id_info((char*)&idBuffer[7], &idData);
         dump_id_info2(&idData);
