@@ -105,43 +105,30 @@ int start_tcp(void) {
 }
 
 void read_data(void) {
-    if (init_devices() != 0) {
-        fprintf(stderr, "[c] ->Device initialization failed\n");
-        return;
-    }
-
+    init_devices();
     while (!stop_requested) {
         qr_read();
         ic_read();
         id_read();
         usleep(1000000);
     }
-
     close_devices();
 }
 // 初始化所有设备
-int init_devices(void) {
+void init_devices(void) {
     printf("[c] ->Initializing devices\n");
     // 初始化QR码设备
     qrfd1 = QRCode_Open(0);
     qrfd2 = QRCode_Open(1);
     // 初始化IC卡设备
-    PICC_Open(0))
+    PICC_Open(0));
     return 0;
 }
 // 关闭所有设备
 void close_devices(void) {
     printf("[c] ->Closing devices\n");
-
-    if (qrfd1 >= 0) {
-        QRCode_Close(qrfd1);
-        qrfd1 = -1;
-    }
-    if (qrfd2 >= 0) {
-        QRCode_Close(qrfd2);
-        qrfd2 = -1;
-    }
-
+    QRCode_Close(qrfd1);
+    QRCode_Close(qrfd2);
     PICC_Close(0);
 }
 void qr_read(void) {

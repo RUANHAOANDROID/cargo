@@ -47,7 +47,7 @@ void dump_data(char *str, unsigned char *text, int len);
 int connect_to_server(const char *server_ip, int server_port);
 int send_message(int client_socket, const char *message);
 void close_connection(int client_socket);
-int init_devices();
+void init_devices();
 void close_devices();
 int start_tcp(void);
 void qr_read(void);
