@@ -65,7 +65,7 @@ func StartC(wg sync.WaitGroup, conf *config.Config) {
 	wg.Add(1)
 	go func() {
 		defer wg.Done()
-		C.read_data(conf.EnableICCard, conf.EnableIDCard)
+		C.read_data(C.int(conf.EnableICCard), conf.EnableIDCard)
 	}()
 	//go func() {
 	//	defer wg.Done()
