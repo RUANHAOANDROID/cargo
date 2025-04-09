@@ -85,7 +85,7 @@ func (d *Display) LCDRow(text string, x int16, y int16, mode C.uint) {
 func (d *Display) showTitleArea(title string) {
 	//l := int16(len(title) * 24)
 	//x := 160 - l/2
-	d.LCDRow(title, 1, 8+8+2, DISP_FONT24)
+	d.LCDRow(title, 1, 8+4, DISP_FONT24)
 }
 func (d *Display) ShowPassedCount(count string) {
 	showContext := " " + count
