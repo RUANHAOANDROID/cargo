@@ -12,8 +12,8 @@ import (
 type Config struct {
 	ServerUrl    string `yaml:"serverUrl"`
 	DeviceType   string `yaml:"deviceType"`
-	EnableIDCard string `yaml:"enableIDCard"`
-	EnableICCard string `yaml:"enableICCard"`
+	EnableIDCard int    `yaml:"enableIDCard"`
+	EnableICCard int    `yaml:"enableICCard"`
 	Sha          string `yaml:"sha"`
 }
 
