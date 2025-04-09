@@ -121,7 +121,7 @@ func (d *Display) Show(title string, content string) {
 	d.AddTopLine(9)
 	d.showTitleArea(title)
 	d.showContentArea(content)
-	d.AddTopLine(600)
+	d.AddTopLine(70)
 	d.showBottomArea()
 
 }
@@ -131,17 +131,16 @@ func (d *Display) ShowNormal(passedCount string) {
 	d.AddTopLine(9)
 	d.showTitleArea("请刷票")
 	d.showContentArea("扫描二维码或刷IC卡")
-	d.AddTopLine(600)
+	d.AddTopLine(70)
 	d.ShowPassedCount(passedCount)
 	d.showBottomArea()
 }
 func (d *Display) ShowError(content string) {
 	d.ClearScreen()
 	d.AddTopLine(9)
-	d.AddTopLine(600)
 	d.ShowTime()
 	d.showTitleArea("验票失败")
-	d.AddTopLine(600)
+	d.AddTopLine(70)
 	d.showContentArea(content)
 }
 func (d *Display) ShowSuccess(content string) {
@@ -150,6 +149,6 @@ func (d *Display) ShowSuccess(content string) {
 	d.AddTopLine(9)
 	d.showTitleArea("验票成功")
 	d.showContentArea(content)
-	d.AddTopLine(600)
+	d.AddTopLine(70)
 	d.showBottomArea()
 }
