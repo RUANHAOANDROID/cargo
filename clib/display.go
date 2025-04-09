@@ -112,8 +112,11 @@ func (d *Display) ShowPassedCount(count string) {
 	//d.LCDRow(showContext, int16(x), int16(80-12), DISP_FONT12)
 }
 func (d *Display) showBottomArea() {
-
 	d.LCDRow("v"+config.Version, int16(d.Width-30), int16(d.Height-10), DISP_FONT6X8)
+}
+func (d *Display) showIpV4() {
+	//启动的时候显示IPV4
+	d.LCDRow(pkg.IPV4(), 0, int16(d.Height-10), DISP_FONT6X8)
 }
 func (d *Display) Show(title string, content string) {
 	d.ClearScreen()
@@ -123,8 +126,7 @@ func (d *Display) Show(title string, content string) {
 	d.showContentArea(content)
 	d.AddTopLine(60)
 	d.showBottomArea()
-	//启动的时候显示IPV4
-	d.LCDRow(pkg.IPV4(), 0, int16(d.Height-10), DISP_FONT6X8)
+	d.showIpV4()
 }
 func (d *Display) ShowNormal(passedCount string) {
 	d.ClearScreen()
