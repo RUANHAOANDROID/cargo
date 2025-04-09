@@ -13,13 +13,14 @@ package clib
 #include "unistd.h"
 
 uint32_t blueColor = RTGUI_RGB(0x00, 0x00, 0xFF); // ARGB: Alpha=255, Red=0, Green=0, Blue=255
-void ClearScreenBlue(void) {
+void ShowScreenBlue(void) {
     LCD_ClearScreen(blueColor); // Set the screen background to blue
 }
 uint8_t revert = DISP_REVERT;
-void NetworkIcon(void){
+void ShowNetworkIcon(void){
 	LCD_DisplayIcon(ICON_SIGNAL,28);
 }
+void
 */
 import "C"
 import (
@@ -59,11 +60,11 @@ func NewDisplay() *Display {
 
 // ClearScreen 清理屏幕
 func (d *Display) ClearScreen() {
-	cScreen := C.uint32_t(0)
-	pkg.Log.Println("ClearScreen")
-	C.LCD_ClearScreen(cScreen)
-	C.NetworkIcon()
-	//C.ClearScreenBlue()
+	//cScreen := C.uint32_t(0)
+	//pkg.Log.Println("ClearScreen")
+	//C.LCD_ClearScreen(cScreen)
+	C.ShowScreenBlue()
+	C.ShowNetworkIcon()
 }
 
 // LCDRow 显示文字
