@@ -87,15 +87,7 @@ func (d *Display) showTitleArea(title string) {
 	//x := 160 - l/2
 	d.LCDRow(title, 1, 8+6, DISP_FONT24)
 }
-func (d *Display) ShowPassedCount(count string) {
-	showContext := " " + count
-	textWidth := (len([]rune(showContext)) + 2) * 12
-	pkg.Log.Printf("内容%s,宽度%d\n", showContext, textWidth)
-	x := 160 - textWidth
-	pkg.Log.Println(x)
-	d.LCDRow(showContext, 0, int16(d.Height-10), DISP_FONT12)
-	//d.LCDRow(showContext, int16(x), int16(80-12), DISP_FONT12)
-}
+
 func (d *Display) ShowTime() {
 	currentTime := time.Now()
 	formattedTime := currentTime.Format("06/01/02 15:04")
@@ -110,7 +102,15 @@ func (d *Display) showContentArea(content string) {
 	y := 8 + 6 + 24 + 2
 	d.LCDRow(content, 1, int16(y), DISP_FONT12)
 }
-
+func (d *Display) ShowPassedCount(count string) {
+	showContext := " " + count
+	textWidth := (len([]rune(showContext)) + 2) * 12
+	pkg.Log.Printf("内容%s,宽度%d\n", showContext, textWidth)
+	x := 160 - textWidth
+	pkg.Log.Println(x)
+	d.LCDRow(showContext, 0, int16(d.Height-13), DISP_FONT12)
+	//d.LCDRow(showContext, int16(x), int16(80-12), DISP_FONT12)
+}
 func (d *Display) showBottomArea() {
 	//d.LCDRow(pkg.IPV4(), 0, int16(d.Height-8), DISP_FONT6X8)
 	d.LCDRow("v"+config.Version, int16(d.Width-30), int16(d.Height-10), DISP_FONT6X8)
