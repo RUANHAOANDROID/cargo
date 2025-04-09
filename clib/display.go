@@ -65,7 +65,7 @@ func (d *Display) ClearScreen() {
 }
 
 func (d *Display) AddTopLine(y uint16) {
-	cTitle := C.CString("--------------------------")
+	cTitle := C.CString("---------------------------")
 	defer C.free(unsafe.Pointer(cTitle))
 	cX := C.uint16_t(0)
 	cY := C.uint16_t(y)
@@ -118,15 +118,18 @@ func (d *Display) showBottomArea() {
 func (d *Display) Show(title string, content string) {
 	d.ClearScreen()
 	d.ShowTime()
+	d.AddTopLine(9)
+	d.AddTopLine(780)
 	d.showTitleArea(title)
 	d.showContentArea(content)
 	d.showBottomArea()
-	d.AddTopLine(9)
-	d.AddTopLine(780)
+
 }
 func (d *Display) ShowNormal(passedCount string) {
 	d.ClearScreen()
 	d.ShowTime()
+	d.AddTopLine(9)
+	d.AddTopLine(780)
 	d.showTitleArea("请刷票")
 	d.showContentArea("扫描二维码或刷IC卡")
 	d.ShowPassedCount(passedCount)
@@ -134,6 +137,8 @@ func (d *Display) ShowNormal(passedCount string) {
 }
 func (d *Display) ShowError(content string) {
 	d.ClearScreen()
+	d.AddTopLine(9)
+	d.AddTopLine(780)
 	d.ShowTime()
 	d.showTitleArea("验票失败")
 	d.showContentArea(content)
@@ -141,6 +146,8 @@ func (d *Display) ShowError(content string) {
 func (d *Display) ShowSuccess(content string) {
 	d.ClearScreen()
 	d.ShowTime()
+	d.AddTopLine(9)
+	d.AddTopLine(780)
 	d.showTitleArea("验票成功")
 	d.showContentArea(content)
 	d.showBottomArea()
