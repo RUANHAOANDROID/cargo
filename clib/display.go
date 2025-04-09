@@ -18,7 +18,7 @@ void ShowScreenBlue(void) {
 }
 uint8_t revert = DISP_REVERT;
 void ShowNetworkIcon(void){
-	LCD_DisplayIcon(ICON_SIGNAL,28);
+	LCD_DisplayIcon(ICON_SIGNAL,50);
 	LCD_DisplayIcon(ICON_NETWORK,3);
 }
 void ShowLine(void){
@@ -63,9 +63,9 @@ func NewDisplay() *Display {
 
 // ClearScreen 清理屏幕
 func (d *Display) ClearScreen() {
-	cScreen := C.uint32_t(1)
-	pkg.Log.Println("ClearScreen")
-	C.LCD_ClearScreen(cScreen)
+	//cScreen := C.uint32_t(1)
+	//pkg.Log.Println("ClearScreen")
+	//C.LCD_ClearScreen(cScreen)
 	C.ShowScreenBlue()
 	C.ShowNetworkIcon()
 }
