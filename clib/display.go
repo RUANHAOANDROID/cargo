@@ -53,6 +53,8 @@ func (d *Display) ClearScreen() {
 	cScreen := C.uint32_t(1)
 	pkg.Log.Println("ClearScreen")
 	C.LCD_ClearScreen(cScreen)
+	blueColor := C.uint32_t(C.RTGUI_RGB(0, 0, 255))
+	C.LCD_ClearScreen(blueColor)
 }
 
 // LCDRow 显示文字
