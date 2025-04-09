@@ -65,7 +65,7 @@ func (d *Display) ClearScreen() {
 }
 
 func (d *Display) AddTopLine(y uint16) {
-	cTitle := C.CString("---------------------------------------")
+	cTitle := C.CString("--------------------------")
 	defer C.free(unsafe.Pointer(cTitle))
 	cX := C.uint16_t(0)
 	cY := C.uint16_t(y)
