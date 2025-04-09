@@ -93,7 +93,7 @@ func (d *Display) ShowPassedCount(count string) {
 	pkg.Log.Printf("内容%s,宽度%d\n", showContext, textWidth)
 	x := 160 - textWidth
 	pkg.Log.Println(x)
-	d.LCDRow(showContext, 0, int16(d.Height-8), DISP_FONT12)
+	d.LCDRow(showContext, 0, int16(d.Height-10), DISP_FONT12)
 	//d.LCDRow(showContext, int16(x), int16(80-12), DISP_FONT12)
 }
 func (d *Display) ShowTime() {
