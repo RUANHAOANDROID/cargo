@@ -19,6 +19,7 @@ void ShowScreenBlue(void) {
 uint8_t revert = DISP_REVERT;
 void ShowNetworkIcon(void){
 	LCD_DisplayIcon(ICON_SIGNAL,28);
+	LCD_DisplayIcon(ICON_NETWORK,3)
 }
 void ShowLine(void){
 
