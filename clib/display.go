@@ -12,12 +12,10 @@ package clib
 #include "string.h"
 #include "unistd.h"
 
-uint32_t blueColor = RTGUI_ARGB(0xFF, 0x00, 0x00, 0xFF);
 void ShowScreenBlue(void) {
-    uint32_t blueColor = RTGUI_RGB(0xFF, 0x00, 0x00, 0xFF); // ARGB: Alpha=255, Red=0, Green=0, Blue=255
+    uint32_t blueColor = RTGUI_RGB(0x00, 0x00, 0xFF); // ARGB: Alpha=255, Red=0, Green=0, Blue=255
     LCD_ClearScreen(blueColor); // Set the screen background to blue
 }
-uint8_t revert = DISP_REVERT;
 void ShowNetworkIcon(void){
 	LCD_DisplayIcon(ICON_SIGNAL,50);
 	//LCD_DisplayIcon(ICON_NETWORK,3);//网络类型
