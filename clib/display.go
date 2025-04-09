@@ -62,7 +62,11 @@ func (d *Display) ClearScreen() {
 	C.LCD_ClearScreen(cScreen)
 	C.LCD_ClearAll()
 	C.ShowNetworkIcon()
-	d.LCDRow("---------------------------------------", 0, 9, DISP_FONT6X8)
+	cTitle := C.CString("---------------------------------------")
+	defer C.free(unsafe.Pointer(cTitle))
+	cX := C.uint16_t(0)
+	cY := C.uint16_t(9)
+	C.LCD_Display_Row(cTitle, cY, cX, DISP_FONT6X8)
 }
 
 // LCDRow 显示文字
