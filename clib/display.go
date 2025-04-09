@@ -69,7 +69,7 @@ func (d *Display) ClearScreen() {
 	cScreen := C.uint32_t(1)
 	C.LCD_ClearScreen(cScreen)
 
-	C.ClearScreenBlue()
+	//C.ClearScreenBlue()
 	C.ShowNetworkIcon()
 	//C.ShowScreenBlue()
 	//cTitle := C.CString("---------------------------------------")
