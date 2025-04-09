@@ -62,10 +62,13 @@ func (d *Display) ClearScreen() {
 	C.LCD_ClearScreen(cScreen)
 	C.LCD_ClearAll()
 	C.ShowNetworkIcon()
+}
+
+func (d *Display) AddTopLine(y uint16) {
 	cTitle := C.CString("---------------------------------------")
 	defer C.free(unsafe.Pointer(cTitle))
 	cX := C.uint16_t(0)
-	cY := C.uint16_t(9)
+	cY := C.uint16_t(y)
 	C.LCD_Display_Row(cTitle, cY, cX, DISP_FONT6X8)
 }
 
@@ -118,6 +121,8 @@ func (d *Display) Show(title string, content string) {
 	d.showTitleArea(title)
 	d.showContentArea(content)
 	d.showBottomArea()
+	d.AddTopLine(9)
+	d.AddTopLine(780)
 }
 func (d *Display) ShowNormal(passedCount string) {
 	d.ClearScreen()
