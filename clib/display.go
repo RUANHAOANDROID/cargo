@@ -16,12 +16,13 @@ uint32_t blueColor = RTGUI_RGB(0x00, 0x00, 0xFF); // ARGB: Alpha=255, Red=0, Gre
 void ShowScreenBlue(void) {
 	LCD_ClearScreen(0);//clear
 	LCD_ClearScreen(1);
-    LCD_ClearScreen(blueColor); // Set the screen background to blue
+    //LCD_ClearScreen(blueColor); // Set the screen background to blue
 }
 uint8_t revert = DISP_REVERT;
 void ShowNetworkIcon(void){
 	LCD_DisplayIcon(ICON_SIGNAL,50);
-	LCD_DisplayIcon(ICON_NETWORK,3);
+	//LCD_DisplayIcon(ICON_NETWORK,3);//网络类型
+	LCD_DisplayIcon(ICON_WIFI,3);//wifi
 }
 void ShowLine(void){
 
