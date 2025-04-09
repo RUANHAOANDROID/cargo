@@ -14,11 +14,8 @@ package clib
 
 uint32_t blueColor = RTGUI_ARGB(0xFF, 0x00, 0x00, 0xFF);
 void ShowScreenBlue(void) {
-	//LCD_ClearScreen(0);//clear
-	LCD_ClearAll();
-	//LCD_ClearScreen(blueColor);
-	LCD_ClearScreen(1);
-    //LCD_ClearScreen(blueColor);
+    uint32_t blueColor = RTGUI_ARGB(0xFF, 0x00, 0x00, 0xFF); // ARGB: Alpha=255, Red=0, Green=0, Blue=255
+    LCD_ClearScreen(blueColor); // Set the screen background to blue
 }
 uint8_t revert = DISP_REVERT;
 void ShowNetworkIcon(void){
@@ -72,11 +69,7 @@ func (d *Display) ClearScreen() {
 	fmt.Println("--------------clear screen----------------")
 	cScreen := C.uint32_t(1)
 	C.LCD_ClearScreen(cScreen)
-
-	blueColor := C.uint32_t(C.RTGUI_RGB(0, 0, 255))
-	C.LCD_ClearScreen(blueColor)
-
-	//C.ShowScreenBlue()
+	C.ShowScreenBlue()
 	C.ShowNetworkIcon()
 	cTitle := C.CString("---------------------------------------")
 	defer C.free(unsafe.Pointer(cTitle))
