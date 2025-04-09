@@ -52,7 +52,14 @@ func main() {
 
 	screen.Set(display)
 	display.Show("启动中..", "正在等待系统组件加载..")
-	time.Sleep(sleepTime)
+	for i := 0; i < 10; i++ {
+		if i%2 != 0 {
+			display.Show("启动中..", "正在等待系统组件加载..")
+		} else {
+			display.Show("启动中...", "正在等待系统组件加载...")
+		}
+		time.Sleep(time.Second)
+	}
 	display.Show("启动中..", "正在获取配置..")
 	emcsConf, err := internal.GetConfig(conf.ServerUrl)
 	if err != nil {
