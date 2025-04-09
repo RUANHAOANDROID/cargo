@@ -16,13 +16,14 @@ void ShowScreenBlue(void) {
     uint32_t blueColor = RTGUI_RGB(0x00, 0x00, 0xFF); // ARGB: Alpha=255, Red=0, Green=0, Blue=255
     LCD_ClearScreen(blueColor); // Set the screen background to blue
 }
+void ClearScreenBlue(void) {
+    uint32_t blueColor = RTGUI_RGB(0x00, 0x00, 0xFF); // ARGB: Alpha=255, Red=0, Green=0, Blue=255
+    LCD_ClearScreen(blueColor); // Set the screen background to blue
+}
 void ShowNetworkIcon(void){
 	LCD_DisplayIcon(ICON_SIGNAL,50);
 	//LCD_DisplayIcon(ICON_NETWORK,3);//网络类型
 	LCD_DisplayIcon(ICON_WIFI,3);//wifi
-}
-void ShowLine(void){
-
 }
 */
 import "C"
@@ -68,13 +69,14 @@ func (d *Display) ClearScreen() {
 	cScreen := C.uint32_t(0)
 	C.LCD_ClearScreen(cScreen)
 
+	C.ClearScreenBlue()
 	C.ShowNetworkIcon()
-	C.ShowScreenBlue()
-	cTitle := C.CString("---------------------------------------")
-	defer C.free(unsafe.Pointer(cTitle))
-	cX := C.uint16_t(0)
-	cY := C.uint16_t(9)
-	C.LCD_Display_Row(cTitle, cY, cX, DISP_FONT6X8)
+	//C.ShowScreenBlue()
+	//cTitle := C.CString("---------------------------------------")
+	//defer C.free(unsafe.Pointer(cTitle))
+	//cX := C.uint16_t(0)
+	//cY := C.uint16_t(9)
+	//C.LCD_Display_Row(cTitle, cY, cX, DISP_FONT6X8)
 }
 
 // LCDRow 显示文字
