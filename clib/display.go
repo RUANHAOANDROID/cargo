@@ -71,7 +71,7 @@ func (d *Display) ClearScreen() {
 	cTitle := C.CString("---------------------------------------")
 	defer C.free(unsafe.Pointer(cTitle))
 	cX := C.uint16_t(0)
-	cY := C.uint16_t(13)
+	cY := C.uint16_t(9)
 	C.LCD_Display_Row(cTitle, cY, cX, DISP_FONT6X8)
 }
 
