@@ -144,7 +144,10 @@ func (d *Display) ShowError(content string) {
 	d.ShowTime()
 	d.showTitleArea("验票失败")
 	d.showContentArea(content)
-	d.AddTopLine(60)
+	if len(content) < 12 {
+		d.AddTopLine(60)
+		d.showBottomArea()
+	}
 }
 func (d *Display) ShowSuccess(content string) {
 	d.ClearScreen()
