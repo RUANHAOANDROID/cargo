@@ -14,6 +14,8 @@ package clib
 
 uint32_t blueColor = RTGUI_RGB(0x00, 0x00, 0xFF); // ARGB: Alpha=255, Red=0, Green=0, Blue=255
 void ShowScreenBlue(void) {
+	LCD_ClearScreen(1);
+	LCD_ClearScreen(0);
     LCD_ClearScreen(blueColor); // Set the screen background to blue
 }
 uint8_t revert = DISP_REVERT;
@@ -65,8 +67,8 @@ func NewDisplay() *Display {
 // ClearScreen 清理屏幕
 func (d *Display) ClearScreen() {
 	fmt.Println("--------------clear screen----------------")
-	cScreen := C.uint32_t(0)
-	C.LCD_ClearScreen(cScreen)
+	//cScreen := C.uint32_t(0)
+	//C.LCD_ClearScreen(cScreen)
 
 	C.ShowScreenBlue()
 	C.ShowNetworkIcon()
