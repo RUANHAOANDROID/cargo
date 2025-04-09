@@ -11,6 +11,11 @@ package clib
 #include "stdio.h"
 #include "string.h"
 #include "unistd.h"
+
+void SetScreenBackgroundToBlue() {
+    uint32_t blueColor = RTGUI_ARGB(0xFF, 0x00, 0x00, 0xFF); // ARGB: Alpha=255, Red=0, Green=0, Blue=255
+    LCD_ClearScreen(blueColor); // Set the screen background to blue
+}
 */
 import "C"
 import (
@@ -53,8 +58,7 @@ func (d *Display) ClearScreen() {
 	cScreen := C.uint32_t(1)
 	pkg.Log.Println("ClearScreen")
 	C.LCD_ClearScreen(cScreen)
-	blueColor := C.uint32_t(C.RTGUI_RGB(0, 0, 255))
-	C.LCD_ClearScreen(blueColor)
+	C.SetScreenBackgroundToBlue()
 }
 
 // LCDRow 显示文字
