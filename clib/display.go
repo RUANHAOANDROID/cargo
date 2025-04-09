@@ -113,7 +113,7 @@ func (d *Display) showContentArea(content string) {
 
 func (d *Display) showBottomArea() {
 	//d.LCDRow(pkg.IPV4(), 0, int16(d.Height-8), DISP_FONT6X8)
-	d.LCDRow("v"+config.Version, int16(d.Width-30), int16(d.Height-8), DISP_FONT6X8)
+	d.LCDRow("v"+config.Version, int16(d.Width-30), int16(d.Height-8)+2, DISP_FONT6X8)
 }
 func (d *Display) Show(title string, content string) {
 	d.ClearScreen()
@@ -121,7 +121,7 @@ func (d *Display) Show(title string, content string) {
 	d.AddTopLine(9)
 	d.showTitleArea(title)
 	d.showContentArea(content)
-	d.AddTopLine(66)
+	d.AddTopLine(60)
 	d.showBottomArea()
 
 }
@@ -131,7 +131,7 @@ func (d *Display) ShowNormal(passedCount string) {
 	d.AddTopLine(9)
 	d.showTitleArea("请刷票")
 	d.showContentArea("扫描二维码或刷IC卡")
-	d.AddTopLine(66)
+	d.AddTopLine(60)
 	d.ShowPassedCount(passedCount)
 	d.showBottomArea()
 }
@@ -140,8 +140,8 @@ func (d *Display) ShowError(content string) {
 	d.AddTopLine(9)
 	d.ShowTime()
 	d.showTitleArea("验票失败")
-	d.AddTopLine(66)
 	d.showContentArea(content)
+	d.AddTopLine(60)
 }
 func (d *Display) ShowSuccess(content string) {
 	d.ClearScreen()
@@ -149,6 +149,6 @@ func (d *Display) ShowSuccess(content string) {
 	d.AddTopLine(9)
 	d.showTitleArea("验票成功")
 	d.showContentArea(content)
-	d.AddTopLine(66)
+	d.AddTopLine(60)
 	d.showBottomArea()
 }
