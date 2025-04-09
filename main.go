@@ -89,7 +89,7 @@ func main() {
 		clib.StartTcpServer(msgChan)
 	}()
 	go internal.StartTimer(conf, display)
-	go clib.StartC(wg)
+	go clib.StartC(wg, conf)
 	for cMsg := range msgChan {
 		pkg.Log.Printf("msg chan-> type=%v,content=%v \n", cMsg.Type, cMsg.Content)
 		switch cMsg.Type {

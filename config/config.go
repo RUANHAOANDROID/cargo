@@ -10,9 +10,11 @@ import (
 
 // Config 系统整体配置
 type Config struct {
-	ServerUrl  string `yaml:"serverUrl"`
-	DeviceType string `yaml:"deviceType"`
-	Sha        string `yaml:"sha"`
+	ServerUrl    string `yaml:"serverUrl"`
+	DeviceType   string `yaml:"deviceType"`
+	EnableIDCard string `yaml:"enableIDCard"`
+	EnableICCard string `yaml:"enableICCard"`
+	Sha          string `yaml:"sha"`
 }
 
 var path string

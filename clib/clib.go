@@ -7,6 +7,7 @@ package clib
 */
 import "C"
 import (
+	"cargo/config"
 	"cargo/msg"
 	"cargo/pkg"
 	"fmt"
@@ -57,14 +58,14 @@ func (q *Scanner) Receive() {
 	}
 }
 
-func StartC(wg sync.WaitGroup) {
+func StartC(wg sync.WaitGroup, conf *config.Config) {
 	pkg.Log.Println("Start C TCP Client wait 1 Second---")
 	time.Sleep(time.Second)
 	C.start_tcp()
 	wg.Add(1)
 	go func() {
 		defer wg.Done()
-		C.read_data(1, 0)
+		C.read_data(conf, 0)
 	}()
 	//go func() {
 	//	defer wg.Done()
