@@ -67,7 +67,6 @@ func (d *Display) ClearScreen() {
 	//C.LCD_ClearScreen(cScreen)
 	C.ShowScreenBlue()
 	C.ShowNetworkIcon()
-	C.fb_show_wifi(4)
 }
 
 // LCDRow 显示文字
