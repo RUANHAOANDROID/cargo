@@ -104,13 +104,17 @@ int start_tcp(void) {
     return 0;
 }
 
-void read_data(void) {
+void read_data(int enable_ic, int enable_id) {
     init_devices();
     while (!stop_requested) {
         qr_read();
-        ic_read();
-        id_read();
-        usleep(1000000);
+        if(enable_ic){
+            ic_read();
+        }
+        if(enable_id){
+            id_read();
+        }
+        usleep(500000);
     }
     close_devices();
 }

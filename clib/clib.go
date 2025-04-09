@@ -64,7 +64,7 @@ func StartC(wg sync.WaitGroup) {
 	wg.Add(1)
 	go func() {
 		defer wg.Done()
-		C.read_data()
+		C.read_data(1, 0)
 	}()
 	//go func() {
 	//	defer wg.Done()

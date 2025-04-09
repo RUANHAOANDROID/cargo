@@ -1,2 +1,4 @@
 deviceType: 1467826845670965269
 serverUrl: "http://emcs-api.youchiyun.com"
+enableIDCard: true
+enableICCard: false

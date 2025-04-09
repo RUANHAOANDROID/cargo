@@ -53,7 +53,7 @@ int start_tcp(void);
 void qr_read(void);
 void ic_read(void);
 void id_read(void);
-void read_data(void);
+void read_data(int enable_ic, int enable_id);
 void parse_id_info(char *rx_buffer, ID_DATA *id_data);
 void dump_id_info2(ID_DATA *id_data);
 
