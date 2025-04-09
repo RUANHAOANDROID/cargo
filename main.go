@@ -51,12 +51,12 @@ func main() {
 	display = clib.NewDisplay()
 
 	screen.Set(display)
-	display.Show("启动中..", "正在等待系统组件加载..")
+	display.Show("启动中..", "等待系统组件加载..")
 	for i := 0; i < 10; i++ {
 		if i%2 != 0 {
-			display.Show("启动中..", "正在等待系统组件加载..")
+			display.Show("启动中..", "等待系统组件加载..")
 		} else {
-			display.Show("启动中...", "正在等待系统组件加载...")
+			display.Show("启动中...", "等待系统组件加载...")
 		}
 		time.Sleep(time.Second)
 	}

@@ -133,7 +133,7 @@ func (d *Display) ShowNormal(passedCount string) {
 	d.ShowTime()
 	d.AddTopLine(9)
 	d.showTitleArea("请刷票")
-	d.showContentArea("扫描二维码或刷IC卡")
+	d.showContentArea("扫描二维码或刷卡")
 	d.AddTopLine(60)
 	d.ShowPassedCount(passedCount)
 	d.showBottomArea()
