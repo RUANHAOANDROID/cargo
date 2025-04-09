@@ -16,7 +16,6 @@ import "C"
 import (
 	"cargo/config"
 	"cargo/pkg"
-	"strings"
 	"time"
 	"unsafe"
 )
@@ -82,12 +81,10 @@ func (d *Display) ShowPassedCount(count string) {
 func (d *Display) ShowTime() {
 	currentTime := time.Now()
 	formattedTime := currentTime.Format("06/01/02 15:04")
-	parts := strings.Split(formattedTime, " ")
 	// 打印格式化后的时间
 	pkg.Log.Println("当前时间:", formattedTime)
-	dataLen := len(parts[0]) * 6
+	dataLen := len(formattedTime) * 6
 	C.LCD_Clear_rows(C.uint16_t(160), C.uint16_t(8))
-	d.LCDRow(parts[1], 1, 1, DISP_FONT6X8)
 	d.LCDRow(formattedTime, int16(160-dataLen), 1, DISP_FONT6X8)
 }
 func (d *Display) showContentArea(content string) {
