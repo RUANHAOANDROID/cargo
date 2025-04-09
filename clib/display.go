@@ -15,7 +15,7 @@ package clib
 uint32_t blueColor = RTGUI_ARGB(0xFF, 0x00, 0x00, 0xFF);
 void ShowScreenBlue(void) {
 	LCD_ClearScreen(0);//clear
-	LCD_ClearAll();
+	//LCD_ClearAll();
 	LCD_ClearScreen(blueColor);
 	LCD_ClearScreen(1);
     LCD_ClearScreen(blueColor);
