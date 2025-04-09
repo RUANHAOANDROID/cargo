@@ -76,7 +76,8 @@ func (d *Display) ShowPassedCount(count string) {
 	pkg.Log.Printf("内容%s,宽度%d\n", showContext, textWidth)
 	x := 160 - textWidth
 	pkg.Log.Println(x)
-	d.LCDRow(showContext, int16(x), int16(80-12), DISP_FONT12)
+	d.LCDRow(showContext, 0, int16(d.Height-8), DISP_FONT12)
+	//d.LCDRow(showContext, int16(x), int16(80-12), DISP_FONT12)
 }
 func (d *Display) ShowTime() {
 	currentTime := time.Now()
@@ -94,8 +95,8 @@ func (d *Display) showContentArea(content string) {
 }
 
 func (d *Display) showBottomArea() {
-	d.LCDRow(pkg.IPV4(), 0, int16(d.Height-8), DISP_FONT6X8)
-	d.LCDRow(config.Version, int16(d.Width-30), int16(d.Height-8), DISP_FONT6X8)
+	//d.LCDRow(pkg.IPV4(), 0, int16(d.Height-8), DISP_FONT6X8)
+	d.LCDRow("v"+config.Version, int16(d.Width-30), int16(d.Height-8), DISP_FONT6X8)
 }
 func (d *Display) Show(title string, content string) {
 	d.ClearScreen()
