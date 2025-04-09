@@ -81,7 +81,7 @@ func (d *Display) ShowPassedCount(count string) {
 }
 func (d *Display) ShowTime() {
 	currentTime := time.Now()
-	formattedTime := currentTime.Format("2006-01-02 15:04")
+	formattedTime := currentTime.Format("06/01/02 15:04")
 	parts := strings.Split(formattedTime, " ")
 	// 打印格式化后的时间
 	pkg.Log.Println("当前时间:", formattedTime)
