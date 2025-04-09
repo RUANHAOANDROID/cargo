@@ -126,3 +126,7 @@ int idtwotest(int dumpInfo)
 	return ret;
 }
 ```
+
+```bash
+ssh -o HostKeyAlgorithms=+ssh-rsa user@192.168.8.24
+```

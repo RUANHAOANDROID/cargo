@@ -66,7 +66,7 @@ func NewDisplay() *Display {
 // ClearScreen 清理屏幕
 func (d *Display) ClearScreen() {
 	fmt.Println("--------------clear screen----------------")
-	cScreen := C.uint32_t(0)
+	cScreen := C.uint32_t(1)
 	C.LCD_ClearScreen(cScreen)
 
 	C.ClearScreenBlue()
