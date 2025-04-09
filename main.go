@@ -49,7 +49,7 @@ func main() {
 	}
 	msgChan := make(chan msg.Message)
 	display = clib.NewDisplay()
-	display.ClearScreen()
+
 	screen.Set(display)
 	display.Show("启动中..", "正在等待系统组件加载..")
 	time.Sleep(sleepTime)
