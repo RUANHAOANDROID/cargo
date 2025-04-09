@@ -20,7 +20,8 @@ uint8_t revert = DISP_REVERT;
 void ShowNetworkIcon(void){
 	LCD_DisplayIcon(ICON_SIGNAL,28);
 }
-void
+void ShowLine(void){
+}
 */
 import "C"
 import (
