@@ -63,9 +63,10 @@ func NewDisplay() *Display {
 
 // ClearScreen 清理屏幕
 func (d *Display) ClearScreen() {
-	//cScreen := C.uint32_t(1)
-	//pkg.Log.Println("ClearScreen")
-	//C.LCD_ClearScreen(cScreen)
+
+	cScreen := C.uint32_t(1)
+	C.LCD_ClearScreen(cScreen)
+
 	C.ShowScreenBlue()
 	C.ShowNetworkIcon()
 	cTitle := C.CString("---------------------------------------")
