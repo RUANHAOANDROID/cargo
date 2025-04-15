@@ -13,7 +13,9 @@ package clib
 #include "unistd.h"
 
 void ShowNetworkIcon(void){
-	LCD_DisplayIcon(ICON_SIGNAL,ppp_get_signal());
+ 	int signal_strength = ppp_get_signal();
+    printf("Signal strength: %d\n", signal_strength);
+	LCD_DisplayIcon(ICON_SIGNAL,signal_strength);
 	//LCD_DisplayIcon(ICON_NETWORK,3);//网络类型
 	//LCD_DisplayIcon(ICON_WIFI,3);//wifi
 }
