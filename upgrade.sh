@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/upgrade_on_usb/bash
 
 # 获取当前日期时间，格式为YYYY-MM-DD-HH-MM
 current_date_time=$(date +"%Y-%m-%d-%H-%M")
