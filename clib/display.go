@@ -13,9 +13,9 @@ package clib
 #include "unistd.h"
 
 void ShowNetworkIcon(void){
-	//LCD_DisplayIcon(ICON_SIGNAL,60);
+	LCD_DisplayIcon(ICON_SIGNAL,60);
 	//LCD_DisplayIcon(ICON_NETWORK,3);//网络类型
-	LCD_DisplayIcon(ICON_WIFI,3);//wifi
+	//LCD_DisplayIcon(ICON_WIFI,3);//wifi
 }
 */
 import "C"
