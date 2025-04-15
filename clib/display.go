@@ -15,6 +15,9 @@ package clib
 void ShowNetworkIcon(void){
  	int signal_strength = ppp_get_signal();
     printf("Signal strength: %d\n", signal_strength);
+    if (signal_strength > 5) {
+        signal_strength = 5;  // 限制最大值
+    }
 	LCD_DisplayIcon(ICON_SIGNAL,signal_strength);
 	//LCD_DisplayIcon(ICON_NETWORK,3);//网络类型
 	//LCD_DisplayIcon(ICON_WIFI,3);//wifi
