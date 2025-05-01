@@ -128,5 +128,5 @@ int idtwotest(int dumpInfo)
 ```
 
 ```bash
-ssh -o HostKeyAlgorithms=+ssh-rsa user@192.168.8.24
+ssh -o HostKeyAlgorithms=+ssh-rsa user@192.168.8.30
 ```
