@@ -57,7 +57,7 @@ steps:
       command_timeout: 5m
       script:
         - echo "login success"
-        - reboot
+        - /sbin/reboot
 
 volumes:
   - name: gcc
