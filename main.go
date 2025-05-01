@@ -11,6 +11,8 @@ import (
 	"cargo/pkg"
 	"cargo/screen"
 	"cargo/speaker"
+	"github.com/getsentry/sentry-go"
+	"log"
 	"strconv"
 	"sync"
 	"time"
@@ -25,16 +27,16 @@ var sleepTime = 10 * time.Second
 
 // main  -lpos -lm -lpng -lfontconfig -lfreetype -liconv
 func main() {
-	//err := sentry.Init(sentry.ClientOptions{
-	//	Dsn: "https://626c099b135d7682a75e78e8b9342e29@o4508631282155520.ingest.us.sentry.io/4509071466102784",
-	//})
-	//if err != nil {
-	//	log.Fatalf("sentry.Init: %s", err)
-	//}
+	err := sentry.Init(sentry.ClientOptions{
+		Dsn: "https://626c099b135d7682a75e78e8b9342e29@o4508631282155520.ingest.us.sentry.io/4509071466102784",
+	})
+	if err != nil {
+		log.Fatalf("sentry.Init: %s", err)
+	}
 	defer func() {
 		if r := recover(); r != nil {
 			pkg.Log.Error("main panic:", r)
-			//sentry.CaptureException(err)
+			sentry.CaptureException(err)
 		}
 	}()
 	if debug {
