@@ -69,6 +69,7 @@ func GetConfig(url string) (*Config, error) {
 		"timestamp": time.Now().Unix(),
 	})
 	if err != nil {
+		pkg.Log.Println("request body:", string(requestBody))
 		pkg.Log.Println("Error marshalling request body:", err)
 		return nil, err
 	}
