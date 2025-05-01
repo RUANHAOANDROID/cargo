@@ -46,25 +46,19 @@ steps:
        - config.yml
        - runner
        - upgrade.sh
-#  - name: remote-runner
-#    image: appleboy/drone-ssh:1.7
-#    settings:
-#      host:
-#        - 192.168.8.39
-#      username: root
-#      password: root
-#      port: 22
-#      command_timeout: 5m
-#      script:
-#        - cd /hao88/app/cargo
-#        - chmod +x runner
-#        - touch runner
-##        - ldconfig
-#        - ldd ./runner
-##        - sleep 2
-##        - nohup ./runner &
-##        - ./runner
-#        - ls
+  - name: ssh-cmd
+    image: appleboy/drone-ssh
+    settings:
+      host:
+        - 192.168.8.30
+      username: root
+      password:
+      port: 22
+      command_timeout: 5m
+      script:
+        - echo "login success"
+        - reboot
+
 volumes:
   - name: gcc
     host:
