@@ -46,7 +46,7 @@ steps:
        - config.yml
        - runner
        - upgrade.sh
-  - name: ssh-cmd
+  - name: ssh-cmd-reboot
     image: appleboy/drone-ssh
     settings:
       host:
